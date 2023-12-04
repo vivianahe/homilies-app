@@ -18,7 +18,7 @@ use App\Http\Controllers\HomiliesController;
 
 Auth::routes(['register' => false]);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
-Route::view('/pag', 'home')->name('pag');
+Route::view('/pag', 'pag')->name('pag');
 Route::view('/homilyAll', 'home')->name('homilyAll');
 Route::view('/homilyDetail', 'home')->name('homilyDetail');
 Route::view('/donateView', 'home')->name('donateView');

@@ -12,7 +12,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ 'favicon32.png' }}" type="image/x-icon">
-    <title>{{ config('app.name', 'Homilías MENÚ') }}</title>
+    <title>{{ config('app.name', 'Homilías') }}</title>
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>

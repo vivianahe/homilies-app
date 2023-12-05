@@ -42,7 +42,7 @@
                     <div class="flex items-center">
                         <div class="flex items-center ml-3">
                             <p class="text-md text-white font-bold px-2" role="none">
-                                User
+                                {{ auth()->user()->name }}
                             </p>
                             <div>
                                 <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-700" aria-expanded="false" data-dropdown-toggle="dropdown-user">
@@ -53,10 +53,10 @@
                             <div class="z-50 hidden my-4 text-base list-none bg-gray-800 divide-y divide-gray-100 rounded shadow" id="dropdown-user">
                                 <div class="px-4 py-3" role="none">
                                     <p class="text-sm text-white" role="none">
-                                        user
+                                        {{ auth()->user()->name }}
                                     </p>
                                     <p class="text-sm font-medium text-white truncate" role="none">
-                                        email.com
+                                        {{ auth()->user()->email }}
                                     </p>
                                 </div>
                                 <ul class="py-1" role="none">

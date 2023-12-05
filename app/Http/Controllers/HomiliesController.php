@@ -40,13 +40,13 @@ class HomiliesController extends Controller
             $fileImg = $img->getClientOriginalExtension();
             $name_audio = $request->date . '_audio.' . $fileAudio;
             $name_img = $request->date . '_img.' . $fileImg;
-            //$img->move(public_path('/support/imgHomily'), $name_img);
-            //$audio->move(public_path('/support/audioHomily'), $name_audio);
+            $img->move(public_path('support/imgHomily'), $name_img);
+            $audio->move(public_path('support/audioHomily'), $name_audio);
             //$request->file('audio')->storeAs('audioHomily', $name_audio);
             //$request->file('img')->storeAs('imgHomily', $name_img);
 
-            Storage::disk('audioHomily')->put($name_audio, file_get_contents($audio->getRealPath()));
-            Storage::disk('imgHomily')->put($name_img, file_get_contents($img->getRealPath()));
+            //Storage::disk('audioHomily')->put($name_audio, file_get_contents($audio->getRealPath()));
+            //Storage::disk('imgHomily')->put($name_img, file_get_contents($img->getRealPath()));
 
             $hom = Homilie::Create([
                 'date' => $request->date,

@@ -74,7 +74,7 @@
                 <label for="audio" class="block mb-2 text-sm font-medium text-gray-900">Audio</label>
                 <div v-if="shouldShowAudio" class="flex items-center">
                     <audio controls class="text-center">
-                        <source :src="'support/audioHomily/' + homilia.audio" type="audio/mp4" />
+                        <source :src="'/support/audioHomily/' + homilia.audio" type="audio/mp4" />
                         Tu navegador no admite el elemento de audio.
                     </audio>
                     <button class="bg-red-500 text-white px-3 py-2 rounded-full ml-2" @click="closeAudio">

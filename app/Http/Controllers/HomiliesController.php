@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Homilie;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\ContactFormNotification;
 use Illuminate\Support\Facades\Notification;
@@ -40,8 +39,10 @@ class HomiliesController extends Controller
             $fileImg = $img->getClientOriginalExtension();
             $name_audio = $request->date . '_audio.' . $fileAudio;
             $name_img = $request->date . '_img.' . $fileImg;
-            Storage::disk('audioHomily')->put($name_audio, file_get_contents($audio->getRealPath()));
-            Storage::disk('imgHomily')->put($name_img, file_get_contents($img->getRealPath()));
+            $img->move(public_path('support/imgHomily'), $name_img);
+            $audio->move(public_path('support/audioHomily'), $name_audio);
+            //Storage::disk('audioHomily')->put($name_audio, file_get_contents($audio->getRealPath()));
+            //Storage::disk('imgHomily')->put($name_img, file_get_contents($img->getRealPath()));
 
             $hom = Homilie::Create([
                 'date' => $request->date,
@@ -97,7 +98,8 @@ class HomiliesController extends Controller
                 $img = $request->file('img');
                 $fileImg = $img->getClientOriginalExtension();
                 $name_img = $request->date . '_img.' . $fileImg;
-                Storage::disk('imgHomily')->put($name_img, file_get_contents($img->getRealPath()));
+                $img->move(public_path('support/imgHomily'), $name_img);
+                //Storage::disk('imgHomily')->put($name_img, file_get_contents($img->getRealPath()));
             }
             $audHom = Homilie::where('audio', $request->audio)->exists();
             if ($audHom) {
@@ -107,7 +109,8 @@ class HomiliesController extends Controller
                 $audio = $request->file('audio');
                 $fileAudio = $audio->getClientOriginalExtension();
                 $name_audio = $request->date . '_audio.' . $fileAudio;
-                Storage::disk('audioHomily')->put($name_audio, file_get_contents($audio->getRealPath()));
+                $audio->move(public_path('support/audioHomily'), $name_audio);
+                //Storage::disk('audioHomily')->put($name_audio, file_get_contents($audio->getRealPath()));
             }
             Homilie::where('id', $request->id)->update([
                 'date' => $request->date,

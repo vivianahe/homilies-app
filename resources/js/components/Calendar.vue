@@ -2,6 +2,7 @@
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import esLocale from '@fullcalendar/core/locales/es';
 import { ref } from "vue";
 
 const emit = defineEmits(['date-calendar'])
@@ -12,7 +13,7 @@ const handleDateClick = (arg) => {
 
 const calendarOptions = ref({
   plugins: [dayGridPlugin, interactionPlugin],
-  locale: "es",
+  locale: esLocale,
   initialView: "dayGridMonth",
   dateClick: handleDateClick,
   events: [

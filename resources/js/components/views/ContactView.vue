@@ -71,8 +71,12 @@
 <script setup>
 import Header from "../Header.vue";
 import Footer from "../Footer.vue";
-import { ref } from "vue";
+import { ref,onMounted } from "vue";
 import axios from "axios";
+import { initFlowbite } from "flowbite";
+onMounted(() => {
+  initFlowbite();
+});
 const loader = ref(true);
 
 const formData = ref({

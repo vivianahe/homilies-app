@@ -18,10 +18,11 @@ use App\Http\Controllers\HomiliesController;
 
 Auth::routes(['register' => false]);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
-Route::view('/pag', 'pag')->name('pag');
-Route::view('/homilyAll', 'home')->name('homilyAll');
-Route::view('/homilyDetail', 'home')->name('homilyDetail');
-Route::view('/donateView', 'home')->name('donateView');
+Route::view('/inicio', 'pag')->name('inicio');
+Route::view('/homilyAll', 'pag')->name('homilyAll');
+Route::view('/homilyDetail/{id}', 'pag')->name('homilyDetail');
+Route::view('/donateView', 'pag')->name('donateView');
+Route::view('/contact', 'pag')->name('contact');
 
 Route::resource('/homilies', HomiliesController::class);
 Route::get('/homilies_desc', [HomiliesController::class, 'getDescHomily']);
@@ -32,8 +33,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::view('/home', 'home')->name('home');
     Route::view('/homilyAddView', 'home')->name('homilyAddView');
     Route::view('/homilyAllAdm', 'home')->name('homilyAllAdm');
-    Route::view('/detailHomily', 'home')->name('detailHomily');
-    Route::view('/editHomily', 'home')->name('editHomily');
+    Route::view('/detailHomily/{id}', 'home')->name('detailHomily');
+    Route::view('/editHomily/{id}', 'home')->name('editHomily');
     Route::view('/prayerView', 'home')->name('prayerView');
     Route::view('/userView', 'home')->name('userView');
     Route::apiResource("users", UserController::class);

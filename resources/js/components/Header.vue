@@ -14,7 +14,7 @@
         <ul
           class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-custom-blue md:flex-row md:space-x-8 md:mt-0 md:border-0">
           <li :class="{ 'border-b-2 border-white': $route.name === 'pag' }">
-            <RouterLink :to="{ name: 'pag' }"
+            <RouterLink :to="{ name: 'inicio' }"
               class="block py-2 pl-3 pr-4 text-white rounded hover:bg-cyan-500 md:hover:bg-transparent md:border-0 md:hover:text-custom-gray-me md:p-0">
               <i class="fa-solid fa-house mr-2"></i>
               Inicio
@@ -27,12 +27,12 @@
               Homilías
             </RouterLink>
           </li>
-          <li>
-            <a href="pag/#contacto"
+          <li :class="{ 'border-b-2 border-white': $route.name === 'contact' }">
+            <RouterLink :to="{ name: 'contact' }"
               class="block py-2 pl-3 pr-4 text-white rounded hover:bg-cyan-500 md:hover:bg-transparent md:border-0 md:hover:text-custom-gray-me md:p-0">
               <i class="fa-solid fa-envelope-circle-check mr-2"></i>
               Contáctanos
-            </a>
+            </RouterLink>
           </li>
           <li :class="{ ' hover:text-custom-gray-me border-b-2 border-white': $route.name === 'donateView' }">
             <RouterLink :to="{ name: 'donateView' }"

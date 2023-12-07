@@ -3,6 +3,7 @@ import IndexHome from "./components/Home.vue";
 import HomilyView from "./components/views/HomilyView.vue";
 import HomilyAll from "./components/views/HomilyAll.vue";
 import DonateView from "./components/views/DonateView.vue";
+import Contact from "./components/views/ContactView.vue";
 import HomilyDetail from "./components/views/HomilyDetail.vue";
 import HomilyAdd from "./components/views/admin/HomilyAdd.vue";
 import HomilyDetailAdm from "./components/views/admin/HomilyDetail.vue";
@@ -13,12 +14,16 @@ import UsersAll from "./components/views/admin/UsersAll.vue";
 const routes = [
     {
         path: '/',
+        component: IndexHome
+    },
+    {
+        path: '/home',
         name: 'home',
         component: IndexHome
     },
     {
-        path: '/pag',
-        name: 'pag',
+        path: '/inicio',
+        name: 'inicio',
         component: HomilyView
     },
     {
@@ -65,7 +70,12 @@ const routes = [
         path: '/userView',
         name: 'userView',
         component: UsersAll
-      },
+    },
+    {
+        path: '/contact',
+        name: 'contact',
+        component: Contact
+    },
 ];
 const router = createRouter({
     history: createWebHistory(),

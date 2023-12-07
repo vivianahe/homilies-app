@@ -59,13 +59,6 @@
               </svg>
               Enviando...
             </button>
-
-            <div v-if="showAlert" class="bg-gray-800 text-white p-4 fixed top-0 left-0 right-0">
-              <p>
-                ¡La información se ha enviado correctamente! Pronto nos
-                contactaremos
-              </p>
-            </div>
           </form>
         </div>
       </div>
@@ -76,7 +69,6 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
-const showAlert = ref(false);
 const loader = ref(true);
 
 const formData = ref({
@@ -95,14 +87,12 @@ const submitForm = () => {
       formData.value.email = "";
       formData.value.phone = "";
       formData.value.message = "";
-      showAlert.value = true;
       loader.value = true;
-
-      // Oculta automáticamente la alerta después de 5 segundos
-      setTimeout(() => {
-        showAlert.value = false;
-        loader.value = true;
-      }, 5000);
+      Swal.fire(
+        "Correcto!",
+        "¡La información se ha enviado correctamente! Pronto te contactaremos.",
+        "success"
+      );
     })
     .catch((error) => {
       console.error(error);
@@ -254,4 +244,5 @@ const submitForm = () => {
   .cuadro_azul {
     display: none;
   }
-}</style>
+}
+</style>

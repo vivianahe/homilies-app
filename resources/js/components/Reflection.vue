@@ -22,7 +22,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day1.m4a" type="audio/mp3">
+                                            <source src="/support/audioNinth/day1.mp3" type="audio/mp3">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>
@@ -58,7 +58,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day3.m4a" type="audio/mp3">
+                                            <source src="/support/audioNinth/day3.mp3" type="audio/mp3">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>
@@ -116,7 +116,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day6.mp4" type="audio/mp3">
+                                            <source src="/support/audioNinth/day6.mp3" type="audio/mp3">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>
@@ -156,7 +156,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day8.m4a" type="audio/mp3">
+                                            <source src="/support/audioNinth/day8.mp3" type="audio/mp3">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>

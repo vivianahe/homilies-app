@@ -93,7 +93,7 @@ onMounted(() => {
     <!-- Espacio vertical en pantallas pequeñas, espacio horizontal en pantallas medianas y grandes -->
     <audio controls>
       <source v-if="dataHomilyId.audio" :src="'/support/audioHomily/' + dataHomilyId.audio"
-        type="audio/mp4" />
+        type="audio/mp3" />
       Tu navegador no admite el elemento de audio.
     </audio>
   </div>

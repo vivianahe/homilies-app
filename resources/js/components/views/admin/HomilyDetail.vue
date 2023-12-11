@@ -26,7 +26,7 @@
                 <div class="py-4 flex justify-center">
                     <audio controls class="text-center">
                         <source v-if="homilia.audio" :src="homilia.audio"
-                            type="audio/mp3" />
+                            type="audio/mp3, audio/mp4" />
                         Tu navegador no admite el elemento de audio.
                     </audio>
                 </div>

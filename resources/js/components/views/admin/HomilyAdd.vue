@@ -91,7 +91,7 @@
                         </div>
                     </label>
                     <input hidden="" type="file" name="button2" id="button2" v-on:change="handleAudioChange"
-                        accept="audio/*" />
+                        accept="audio/mp3" />
                 </div>
             </div>
             <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">

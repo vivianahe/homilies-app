@@ -26,7 +26,7 @@
       </div>
       <div class="flex flex-col justify-between p-4 leading-normal">
         <audio controls>
-          <source :src="'/support/audioHomily/' + homilies.audio" type="audio/*" />
+          <source :src="'/support/audioHomily/' + homilies.audio" type="audio/mp3" />
           Tu navegador no admite el elemento de audio.
         </audio>
         <RouterLink :to="{ name: 'homilyDetail', params: { id: homilies.id } }" type="button"

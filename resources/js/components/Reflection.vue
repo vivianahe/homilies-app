@@ -22,7 +22,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day1.mp3" type="audio/mp3, audio/mp4">
+                                            <source src="/support/audioNinth/day1.mp3" type="audio/*">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>
@@ -40,7 +40,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day2.m4a" type="audio/mp3, audio/mp4">
+                                            <source src="/support/audioNinth/day2.m4a" type="audio/*">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>
@@ -58,7 +58,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day3.mp3" type="audio/mp3, audio/mp4">
+                                            <source src="/support/audioNinth/day3.mp3" type="audio/*">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>
@@ -80,7 +80,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day4.mp4" type="audio/mp3, audio/mp4">
+                                            <source src="/support/audioNinth/day4.mp4" type="audio/*">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>
@@ -98,7 +98,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day5.mp4" type="audio/mp3, audio/mp4">
+                                            <source src="/support/audioNinth/day5.mp4" type="audio/*">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>
@@ -116,7 +116,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day6.mp3" type="audio/mp3, audio/mp4">
+                                            <source src="/support/audioNinth/day6.mp3" type="audio/*">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>
@@ -138,7 +138,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day7.m4a" type="audio/mp3, audio/mp4">
+                                            <source src="/support/audioNinth/day7.m4a" type="audio/*">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>
@@ -156,7 +156,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day8.mp3" type="audio/mp3, audio/mp4">
+                                            <source src="/support/audioNinth/day8.mp3" type="audio/*">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>
@@ -174,7 +174,7 @@
                                     </p>
                                     <div class="mt-2">
                                         <audio controls class="w-full">
-                                            <source src="/support/audioNinth/day9.m4a" type="audio/mp3, audio/mp4">
+                                            <source src="/support/audioNinth/day9.m4a" type="audio/*">
                                             Tu navegador no soporta la etiqueta de audio.
                                         </audio>
                                     </div>

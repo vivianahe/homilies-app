@@ -22,7 +22,7 @@
             <figcaption class="absolute bottom-0 left-0 right-0 px-4 pb-4 text-lg text-white text-center">
               <audio controls class="mx-auto">
                 <source v-if="dataHomilyDesc.audio"
-                  :src="'/support/audioHomily/' + dataHomilyDesc.audio" type="audio/mp3, audio/mp4" />
+                  :src="'/support/audioHomily/' + dataHomilyDesc.audio" type="audio/*" />
                 Tu navegador no admite el elemento de audio.
               </audio>
             </figcaption>

@@ -19,6 +19,7 @@ module.exports = {
         'custom-icon': '#435473',
         'custom-found': '#f2f2f2',
         'custom-text-yell': '#febe16',
+        'custom-wp': '#25d366'
       },
       borderRadius: {
         'xl': '16px',

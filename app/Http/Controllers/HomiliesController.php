@@ -177,7 +177,7 @@ class HomiliesController extends Controller
     public function postFrmContact(Request $request)
     {
         $data = $request->all(); // Los datos del formulario
-        Notification::route('mail', 'vivianaherrerahe@gmail.com')->notify(new ContactFormNotification($data));
+        Notification::route('mail', 'urielalejo@gmail.com')->notify(new ContactFormNotification($data));
     }
     public function getHomeliasId(string $id)
     {

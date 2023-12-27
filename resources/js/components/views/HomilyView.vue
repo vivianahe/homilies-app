@@ -45,9 +45,18 @@ onBeforeUnmount(() => {
 
   <div>
     <!-- Contenido de tu sitio aquí -->
+    <!-- Tu código HTML existente -->
+
+    <a href="https://wa.link/11pcwe"
+      class="fixed bottom-20 right-4 w-12 h-12 bg-custom-wp text-white rounded-full shadow-lg hover:bg-green-700 transition duration-300 z-40 flex items-center justify-center">
+      <i class="fa-brands fa-whatsapp fa-2x"></i>
+    </a>
+
+
+    <!-- Más código HTML si es necesario -->
 
     <button v-show="showBackToTopButton" @click="scrollToTop" class="fixed bottom-4 right-4 w-12 h-12 bg-custom-blue text-white rounded-full shadow-lg hover:bg-blue-700 transition-all 
-      duration-300 z-50">
+    duration-300 z-40">
       <i class="fa-solid fa-arrow-up"></i>
     </button>
   </div>

@@ -27,8 +27,7 @@
         "sass": "^1.56.1",
         "tailwindcss": "^3.3.5",
         "vite": "^4.0.0",
-        "vue": "^3.2.37",
-        "fruitcake/laravel-cors": "^2.0"
+        "vue": "^3.2.37"
     },
     "dependencies": {
         "vue-router": "^4.2.5"

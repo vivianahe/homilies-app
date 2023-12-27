@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
-
+<meta name="google-site-verification" content="HMpumuD7tWmikrpJlPLxGri6Au_OBy9oF78cKJAm2xg" />
 <body>
     <div id="app">
         <div>

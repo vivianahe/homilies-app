@@ -10,7 +10,7 @@
   </div>
   <div class="flex justify-center items-center" v-for="homilies in displayedHomilies" :key="homilies.id">
     <a class="flex flex-col items-center bg-white border-gray-200 rounded-lg md:flex-row md:max-w-4xl">
-      <img class="object-cover w-full rounded h-96 md:h-auto md:w-48 md:rounded"
+      <img class="object-cover w-full rounded h-96 md:h-32 md:w-48 md:rounded"
         :src="'/support/imgHomily/' + homilies.img" alt="" />
       <div class="flex flex-col justify-between p-4 leading-normal">
         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">

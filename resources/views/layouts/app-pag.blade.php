@@ -10,7 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="google-site-verification" content="HMpumuD7tWmikrpJlPLxGri6Au_OBy9oF78cKJAm2xg" />
+    <!--<meta name="csrf-token" content="{{ csrf_token() }}">-->
     <link rel="icon" href="{{ 'favicon32.png' }}" type="image/x-icon">
     <title>{{ config('app.name', 'Homilías') }}</title>
 
@@ -18,7 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
-<meta name="google-site-verification" content="HMpumuD7tWmikrpJlPLxGri6Au_OBy9oF78cKJAm2xg" />
+
 <body>
     <div id="app">
         <div>

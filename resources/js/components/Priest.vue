@@ -26,7 +26,7 @@
           <div class="relative bg-white rounded-lg sm:p-8 md:p-6">
             <div class="absolute inset-0 bg-no-repeat bg-center bg-cover md:bg-contain"
               style="background-image: url('/img/decoration.png')"></div>
-            <img class="h-auto max-w-full rounded-full relative z-10 mx-auto" src="/img/sacerdote.jpg" alt="Sacerdote" />
+            <img class="h-auto w-auto rounded-full relative z-10 mx-auto" src="/img/padre.jpg" alt="Sacerdote" />
           </div>
         </div>
       </div>

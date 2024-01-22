@@ -151,18 +151,71 @@ const alerta = reactive({
     mensaje: "",
 });
 const handleFileChange = (event) => {
-    // Cuando se selecciona un archivo, actualiza la propiedad 'img' con el objeto File
-    homilia.value.img = event.target.files[0];
     const file = event.target.files[0];
+
     if (file) {
-        // Crear una URL temporal para la imagen seleccionada
-        selectedImage.value = URL.createObjectURL(file);
+        // Verificar si es una imagen
+        if (file.type.startsWith('image/')) {
+            // Crear una URL temporal para la imagen seleccionada
+            selectedImage.value = URL.createObjectURL(file);
+
+            // Crear un objeto de la clase FileReader para leer el archivo de imagen
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                // Crear una nueva imagen para obtener sus dimensiones
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = () => {
+                    // Verificar si la imagen es horizontal (ancho mayor que altura)
+                    if (img.width > img.height) {
+                        // Asignar el archivo solo si es una imagen horizontal
+                        homilia.value.img = file;
+                    } else {
+                        // Limpiar el campo de entrada y mostrar una alerta
+                        event.target.value = null;
+                        selectedImage.value = null;
+                        Swal.fire(
+                            "Atención!",
+                            "La imagen debe ser horizontal (ancho mayor que altura).",
+                            "warning"
+                        );
+                    }
+                };
+            };
+
+            // Leer el archivo de imagen como una URL de datos
+            reader.readAsDataURL(file);
+        } else {
+            // Limpiar el campo de entrada si no es una imagen
+            event.target.value = null;
+            Swal.fire(
+                "Atención!",
+                "Por favor, seleccione un archivo de imagen válido (SVG, PNG, JPG, JPEG, GIF).",
+                "warning"
+            );
+        }
     }
 };
 const handleAudioChange = (event) => {
-    homilia.value.audio = event.target.files[0];
-    audioFile.value = event.target.files[0];
-    playAudio();
+    const maxFileSizeMB = 15; // Tamaño máximo permitido en megabytes
+
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+        if (selectedFile.size <= maxFileSizeMB * 1024 * 1024) { // Convertir a bytes
+            homilia.value.audio = selectedFile;
+            audioFile.value = selectedFile;
+            playAudio();
+        } else {
+            // Archivo excede el tamaño máximo permitido
+            event.target.value = null; // Limpiar el campo de entrada
+            Swal.fire(
+                "Atención!",
+                `El tamaño del archivo de audio no debe superar los ${maxFileSizeMB} MB.`,
+                "warning"
+            );
+        }
+    }
 };
 
 const playAudio = () => {

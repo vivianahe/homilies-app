@@ -30,7 +30,7 @@ onBeforeUnmount(() => {
   window.removeEventListener("scroll", checkScrollPosition);
 });
 const getHomilyId = async () => {
-  const { data } = await axios.get('/homilies/'+ HomilyId);
+  const { data } = await axios.get('/homilies/' + HomilyId);
   dataHomilyId.value = data;
 };
 const convertirFecha = (fecha) => {
@@ -80,11 +80,12 @@ onMounted(() => {
 
   <div class="flex justify-center items-center relative">
     <div class="relative z-10 mt-10 mb-10">
-      <img v-if="dataHomilyId.img" class="rounded-sm w-[800px] h-[300px] object-cover"
+      <img v-if="dataHomilyId.img" class="rounded-sm w-[600px] h-[400px] object-contain"
         :src="'/support/imgHomily/' + dataHomilyId.img" alt="Imagen" />
     </div>
 
-    <div class="absolute top-0 left-0 w-1/2 h-[400px] bg-gray-200 opacity-75"></div>
+
+    <div class="absolute top-0 left-0 w-1/2 h-[500px] bg-gray-200 opacity-75"></div>
   </div>
 
   <div class="flex flex-col md:flex-row md:items-center md:justify-center mt-8 mb-4">
@@ -92,8 +93,7 @@ onMounted(() => {
     <div class="my-2 md:my-0 md:mx-2"></div>
     <!-- Espacio vertical en pantallas pequeñas, espacio horizontal en pantallas medianas y grandes -->
     <audio controls>
-      <source v-if="dataHomilyId.audio" :src="'/support/audioHomily/' + dataHomilyId.audio"
-        type="audio/mp3" />
+      <source v-if="dataHomilyId.audio" :src="'/support/audioHomily/' + dataHomilyId.audio" type="audio/mp3" />
       Tu navegador no admite el elemento de audio.
     </audio>
   </div>

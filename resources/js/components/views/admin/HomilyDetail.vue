@@ -25,15 +25,15 @@
                 <p class="mb-8 text-lg font-normal text-gray-200" v-html="homilia.gospel"></p>
                 <div class="py-4 flex justify-center">
                     <audio controls class="text-center">
-                        <source v-if="homilia.audio" :src="homilia.audio"
-                            type="audio/mp3" />
+                        <source v-if="homilia.audio" :src="homilia.audio" type="audio/mp3" />
                         Tu navegador no admite el elemento de audio.
                     </audio>
                 </div>
 
                 <div class="w-3/4 mx-auto">
-                    <img :src="homilia.img" alt="" class="w-full">
+                    <img :src="homilia.img" alt="" class="w-full h-full object-cover">
                 </div>
+
             </div>
         </section>
 
@@ -78,7 +78,7 @@ const volver = () => {
 
 const getData = () => {
     axios
-        .get('/getHomeliasId/'+HomilyId)
+        .get('/getHomeliasId/' + HomilyId)
         .then((response) => {
             homilia.value.id = response.data.id;
             homilia.value.date = response.data.date;

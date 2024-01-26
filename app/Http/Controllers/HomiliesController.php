@@ -36,8 +36,8 @@ class HomiliesController extends Controller
         $img = $request->file('img');
         $fileAudio = $audio->getClientOriginalExtension();
         $fileImg = $img->getClientOriginalExtension();
-        $name_audio = $request->date . '_audio.' . $fileAudio;
-        $name_img = $request->date . '_img.' . $fileImg;
+        $name_audio = $request->date . '_' . date('H_i_s') . 'audio.' . $fileAudio;
+        $name_img = $request->date . '_' . date('H_i_s') . 'img.' . $fileImg;
         $img->move(public_path('support/imgHomily'), $name_img);
         $audio->move(public_path('support/audioHomily'), $name_audio);
 
@@ -78,49 +78,43 @@ class HomiliesController extends Controller
      */
     public function updateHomilia(Request $request)
     {
-        $hom = Homilie::where([['id', '!=', $request->id]])->exists();
-        if (!$hom) {
-            $imgHom = Homilie::where('img', $request->img)->exists();
-            $dataHom = Homilie::where('id', $request->id)->first();
-            if ($imgHom) {
-                $name_img = $request->img;
-            } else {
-                unlink(public_path('support/imgHomily/') . $dataHom->img);
-                $img = $request->file('img');
-                $fileImg = $img->getClientOriginalExtension();
-                $name_img = $request->date . '_img.' . $fileImg;
-                Storage::disk('imgHomily')->put($name_img, file_get_contents($img->getRealPath()));
-            }
-            $audHom = Homilie::where('audio', $request->audio)->exists();
-            if ($audHom) {
-                $name_audio = $request->audio;
-            } else {
-                unlink(public_path('support/audioHomily/') . $dataHom->audio);
-                $audio = $request->file('audio');
-                $fileAudio = $audio->getClientOriginalExtension();
-                $name_audio = $request->date . '_audio.' . $fileAudio;
-                Storage::disk('audioHomily')->put($name_audio, file_get_contents($audio->getRealPath()));
-            }
-            Homilie::where('id', $request->id)->update([
-                'date' => $request->date,
-                'citation' => $request->citation,
-                'title' => $request->title,
-                'reading' => $request->reading,
-                'gospel' => $request->gospel,
-                'img' => $name_img,
-                'audio' => $name_audio,
-                'user_id' => Auth::user()->id,
-            ]);
-            return response()->json([
-                'data' => $hom,
-                'message' => "Homilía actualizada exitosamente!"
-            ]);
+
+
+        $imgHom = Homilie::where('img', $request->img)->exists();
+        $dataHom = Homilie::where('id', $request->id)->first();
+        if ($imgHom) {
+            $name_img = $request->img;
         } else {
-            return response()->json([
-                'data' => $hom,
-                'message' => "Ya existe una homilía con esa fecha."
-            ]);
+            unlink(public_path('support/imgHomily/') . $dataHom->img);
+            $img = $request->file('img');
+            $fileImg = $img->getClientOriginalExtension();
+            $name_img = $request->date . '_' . date('H_i_s') . 'img.' . $fileImg;
+            Storage::disk('imgHomily')->put($name_img, file_get_contents($img->getRealPath()));
         }
+        $audHom = Homilie::where('audio', $request->audio)->exists();
+        if ($audHom) {
+            $name_audio = $request->audio;
+        } else {
+            unlink(public_path('support/audioHomily/') . $dataHom->audio);
+            $audio = $request->file('audio');
+            $fileAudio = $audio->getClientOriginalExtension();
+            $name_audio = $request->date . '_' . date('H_i_s') .  'audio.' . $fileAudio;
+            Storage::disk('audioHomily')->put($name_audio, file_get_contents($audio->getRealPath()));
+        }
+        Homilie::where('id', $request->id)->update([
+            'date' => $request->date,
+            'citation' => $request->citation,
+            'title' => $request->title,
+            'reading' => $request->reading,
+            'gospel' => $request->gospel,
+            'img' => $name_img,
+            'audio' => $name_audio,
+            'user_id' => Auth::user()->id,
+        ]);
+        return response()->json([
+            'data' => false,
+            'message' => "Homilía actualizada exitosamente!"
+        ]);
     }
     public function update(Request $request, $id)
     {

@@ -94,6 +94,10 @@
                         accept="audio/mp3" />
                 </div>
             </div>
+            <div class="mb-6">
+                <label class="block mb-2 text-sm font-medium text-gray-900">Mensaje del día:</label>
+                <Editor @editor-data="editorDataTips" />
+            </div>
             <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
                 <button v-if="loader" type="submit"
                     class="uppercase text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center">
@@ -144,6 +148,7 @@ const homilia = ref({
     gospel: "",
     img: null,
     audio: null,
+    messag: "",
     user_id: user_id ? user_id : null,
 });
 const alerta = reactive({
@@ -233,7 +238,10 @@ const editorData = (text = "") => {
     //Texto del editor
     homilia.value.gospel = text;
 };
-
+const editorDataTips = (text = "") => {
+    //Texto del editor
+    homilia.value.messag = text;
+};
 const submit = () => {
     // Crear un objeto FormData para manejar la solicitud
     const formData = new FormData();
@@ -244,6 +252,7 @@ const submit = () => {
     formData.append("gospel", homilia.value.gospel);
     formData.append("img", homilia.value.img);
     formData.append("audio", homilia.value.audio);
+    formData.append("messag", homilia.value.messag);
     formData.append("user_id", homilia.value.user_id);
 
     // Configurar las cabeceras de la solicitud

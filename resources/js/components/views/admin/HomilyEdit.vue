@@ -97,6 +97,10 @@
                         accept="audio/mp3" />
                 </div>
             </div>
+            <div class="mb-6">
+                <label class="block mb-2 text-sm font-medium text-gray-900">Mensaje del día:</label>
+                <Editor @editor-data="editorDataMessag" :dataUpdate="homilia.messag" @activeLoader="activeLoader" />
+            </div>
             <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
                 <button v-if="loader" type="submit"
                     class="uppercase text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center">
@@ -155,6 +159,7 @@ const homilia = ref({
     gospel: "",
     img: null,
     audio: null,
+    messag: "",
     user_id: user_id ? user_id : null,
 });
 const alerta = reactive({
@@ -189,6 +194,11 @@ const editorData = (text = "") => {
     homilia.value.gospel = text;
 };
 
+const editorDataMessag = (text = "") => {
+    //Texto del editor
+    homilia.value.messag = text;
+};
+
 const activeLoader = (active) => {
     loading.value = active;
 }
@@ -202,6 +212,7 @@ const submit = () => {
     formData.append("title", homilia.value.title);
     formData.append("reading", homilia.value.reading);
     formData.append("gospel", homilia.value.gospel);
+    formData.append("messag", homilia.value.messag);
     formData.append("user_id", homilia.value.user_id);
     formData.append("img", homilia.value.img);
     formData.append("audio", homilia.value.audio);
@@ -274,11 +285,13 @@ const getData = () => {
             homilia.value.title = response.data.title;
             homilia.value.reading = response.data.reading;
             homilia.value.gospel = response.data.gospel;
+            homilia.value.messag = response.data.message;
             homilia.value.img = response.data.img;
             emit('editor-data', response.data.gospel);
             selectedImage.value = "/support/imgHomily/" + response.data.img;
             homilia.value.audio = response.data.audio;
             audioFile.value = "/support/audioHomily/" + response.data.audio;
+            emit('editor-data', response.data.message);
         })
         .catch((error) => {
             console.error(error);

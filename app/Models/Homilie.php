@@ -16,6 +16,7 @@ class Homilie extends Model
         'gospel',
         'img',
         'audio',
+        'message',
         'user_id'
     ];
 

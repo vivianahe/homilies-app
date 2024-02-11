@@ -23,6 +23,11 @@ module.exports = {
       },
       borderRadius: {
         'xl': '16px',
+      },
+      listStyleType: {
+        'disc': 'disc', // Viñetas redondas (predeterminadas)
+        'decimal': 'decimal', // Numeración decimal
+        'square': 'square', // Viñetas cuadradas
       }
     },
   },

@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ul_tet ul {
+    list-style:square !important;
+    margin: 10px 0 0 30px  !important;
+}

@@ -49,6 +49,7 @@ class HomiliesController extends Controller
             'gospel' => $request->gospel,
             'img' => $name_img,
             'audio' => $name_audio,
+            'message' => $request->messag,
             'user_id' => Auth::user()->id,
         ]);
 
@@ -109,6 +110,7 @@ class HomiliesController extends Controller
             'gospel' => $request->gospel,
             'img' => $name_img,
             'audio' => $name_audio,
+            'message' => $request->messag,
             'user_id' => Auth::user()->id,
         ]);
         return response()->json([

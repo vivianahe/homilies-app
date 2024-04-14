@@ -17,7 +17,8 @@ class Homilie extends Model
         'img',
         'audio',
         'message',
-        'user_id'
+        'user_id',
+        'solemnity_id'
     ];
 
 }

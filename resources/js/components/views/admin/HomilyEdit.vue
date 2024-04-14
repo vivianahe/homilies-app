@@ -5,7 +5,8 @@
     <div class="p-4 sm:ml-64 mt-16">
         <div class="flex justify-between">
             <div>
-                <svg @click="volver" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                <svg @click="volver" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" height="1em"
+                    viewBox="0 0 448 512">
                     <path
                         d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
                 </svg>
@@ -53,7 +54,8 @@
             <div class="mb-6">
                 <label class="block mb-2 text-sm font-medium text-gray-900">Imagen</label>
                 <div v-if="selectedImage" class="relative">
-                    <button class="absolute top-4 right-4 bg-red-500 text-white px-3 py-2 rounded-full" @click="closeImg">
+                    <button class="absolute top-4 right-4 bg-red-500 text-white px-3 py-2 rounded-full"
+                        @click="closeImg">
                         X
                     </button>
                     <img :src="selectedImage" alt="Imagen seleccionada"
@@ -100,6 +102,26 @@
             <div class="mb-6">
                 <label class="block mb-2 text-sm font-medium text-gray-900">Mensaje del día:</label>
                 <Editor @editor-data="editorDataMessag" :dataUpdate="homilia.messag" @activeLoader="activeLoader" />
+            </div>
+            <div class="mb-6">
+                <label class="block mb-2 text-sm font-medium text-gray-900">Solemnidad:</label>
+                <div id="searching_div" class="shadow p-2 rounded">
+                    <div class="input-box">
+                        <div class="row-icon">
+                            <i class="fas fa-search icon-searching"></i>
+                        </div>
+                        <div class="div-search">
+                            <input type="text" id="input_search" v-model="solemnity" @keyup="searchSolemnity">
+                        </div>
+                    </div>
+                    <div v-for="(element, index) in solemnitys" :key="index">
+                        <div class="row_searching elements">
+                            <div class="result_row" v-text="element.name"
+                                @click="getSolemnityId(element.id, element.name)"></div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
             </div>
             <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
                 <button v-if="loader" type="submit"
@@ -202,6 +224,28 @@ const editorDataMessag = (text = "") => {
 const activeLoader = (active) => {
     loading.value = active;
 }
+const solemnitys = ref([]);
+const solemnity = ref('');
+const searchSolemnity = () => {
+    if (solemnity.value.length > 0) {
+        axios
+            .get('/getSolemnity/' + solemnity.value)
+            .then((response) => {
+                if (response.data.length > 0 && solemnity.value.length > 0) {
+                    solemnitys.value = response.data;
+                } else {
+                    solemnitys.value = [];
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+}
+const getSolemnityId = (id, name) => {
+    solemnity.value = name;
+    solemnitys.value = [];
+}
 
 const submit = () => {
     // Crear un objeto FormData para manejar la solicitud
@@ -216,6 +260,7 @@ const submit = () => {
     formData.append("user_id", homilia.value.user_id);
     formData.append("img", homilia.value.img);
     formData.append("audio", homilia.value.audio);
+    formData.append("solemnity", solemnity.value);
 
     // Configurar las cabeceras de la solicitud
     const config = {
@@ -287,6 +332,7 @@ const getData = () => {
             homilia.value.gospel = response.data.gospel;
             homilia.value.messag = response.data.message;
             homilia.value.img = response.data.img;
+            solemnity.value = response.data.name;
             emit('editor-data', response.data.gospel);
             selectedImage.value = "/support/imgHomily/" + response.data.img;
             homilia.value.audio = response.data.audio;
@@ -323,5 +369,59 @@ onMounted(() => {
     to {
         transform: rotate(1turn)
     }
+}
+
+#searching_div {
+    width: 100%;
+}
+
+.input-box {
+    display: flex;
+}
+
+.row-icon {
+    width: 5%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+}
+
+.div-search {
+    width: 100%;
+}
+
+.row_searching {
+    display: inline-flex;
+    height: auto;
+    width: 100%;
+}
+
+.elements:hover {
+    background-color: #f7f4f4;
+    color: black;
+    cursor: default;
+}
+
+#input_search {
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    padding-top: 6px;
+}
+
+.icon-searching {
+    color: silver;
+}
+
+.icon_row {
+    color: silver;
+    padding-top: 5px;
+}
+
+.result_row {
+    width: 100%;
+    border: none;
+    height: auto;
+    padding-left: 1em;
 }
 </style>

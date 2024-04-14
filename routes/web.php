@@ -42,4 +42,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/addHomilies', [HomiliesController::class, 'store']);
     Route::get('/getHomeliasId/{id}', [HomiliesController::class, 'getHomeliasId']);
     Route::post('/updateHomilia', [HomiliesController::class, 'updateHomilia']);
+    Route::get('/getSolemnity/{id}', [HomiliesController::class, 'getSolemnity']);
 });

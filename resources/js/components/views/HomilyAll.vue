@@ -140,9 +140,9 @@ const getDataHomiliesAll = () => {
 };
 const getDataHomilies = async (fechaCalendar = "") => {
   const { data } = await axios.get('/homilies');
-  if (fechaCalendar != "") {
+  if (fechaCalendar !== "") {
     const homiliesWithFecha = data.filter(
-      (homily) => homily.date === fechaCalendar
+      (homily) => homily.date === fechaCalendar || homily.solemnity_id
     );
     if (homiliesWithFecha.length > 0) {
       // La fechaCalendar existe en el arreglo, asignar el valor
@@ -151,14 +151,15 @@ const getDataHomilies = async (fechaCalendar = "") => {
     } else {
       Swal.fire(
         "Atención!",
-        "No existe la homilía con fecha " + fechaCalendar,
+        "No existen homilías para la fecha " + fechaCalendar,
         "warning"
       );
-      dataHomilies.value = data;
+      dataHomilies.value = [];
       showBtnAll.value = false;
     }
   } else {
     dataHomilies.value = data;
+    showBtnAll.value = true;
   }
 };
 

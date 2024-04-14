@@ -139,14 +139,19 @@ const getDataHomiliesAll = () => {
   showBtnAll.value = false;
 };
 const getDataHomilies = async (fechaCalendar = "") => {
+  console.log(fechaCalendar, 'fecha');
   const { data } = await axios.get('/homilies');
+  
   if (fechaCalendar !== "") {
-    const homiliesWithFecha = data.filter(
-      (homily) => homily.date === fechaCalendar || homily.solemnity_id
-    );
-    if (homiliesWithFecha.length > 0) {
-      // La fechaCalendar existe en el arreglo, asignar el valor
-      dataHomilies.value = homiliesWithFecha;
+    const homilySelected = data.find(homily => homily.date === fechaCalendar);
+    
+    if (homilySelected) {
+      let homiliesToDisplay = [homilySelected];
+      if (homilySelected.solemnity_id !== null) {
+        homiliesToDisplay = data.filter(homily => homily.solemnity_id === homilySelected.solemnity_id);
+      }
+
+      dataHomilies.value = homiliesToDisplay;
       showBtnAll.value = true;
     } else {
       Swal.fire(
@@ -159,7 +164,6 @@ const getDataHomilies = async (fechaCalendar = "") => {
     }
   } else {
     dataHomilies.value = data;
-    showBtnAll.value = true;
   }
 };
 

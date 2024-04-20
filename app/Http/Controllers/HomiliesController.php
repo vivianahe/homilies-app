@@ -66,6 +66,10 @@ class HomiliesController extends Controller
             'message' => "Homilía guardada exitosamente!"
         ]);
     }
+    public function show(string $id)
+    {
+        return Homilie::find($id);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -156,7 +160,7 @@ class HomiliesController extends Controller
     }
     public function getHomeliasId(string $id)
     {
-        $data = Homilie::join('solemnity','solemnity.id','=','homilies.solemnity_id')->select('homilies.*', 'solemnity.name')->where('homilies.id',$id)->first();
+        $data = Homilie::join('solemnity', 'solemnity.id', '=', 'homilies.solemnity_id')->select('homilies.*', 'solemnity.name')->where('homilies.id', $id)->first();
         return response()->json($data);
     }
 
@@ -164,8 +168,8 @@ class HomiliesController extends Controller
     {
         $data = explode(" ", $param);
         $json = [];
-        for($i=0; $i < count($data); $i++) {
-            $conditional = ['name', 'like', '%'.$data[$i].'%'];
+        for ($i = 0; $i < count($data); $i++) {
+            $conditional = ['name', 'like', '%' . $data[$i] . '%'];
             array_push($json, $conditional);
         }
         $position = Solemnity::where($json)->limit(5)->get();

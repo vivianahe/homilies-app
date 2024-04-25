@@ -33,6 +33,14 @@ class HomiliesController extends Controller
      */
     public function store(Request $request)
     {
+        $solemnity = null;
+
+        if ($request->solemnity !== null) {
+            $solemnity = Solemnity::updateOrCreate([
+                'name' => $request->solemnity
+            ]);
+        }
+
         $audio = $request->file('audio');
         $img = $request->file('img');
         $fileAudio = $audio->getClientOriginalExtension();
@@ -41,12 +49,6 @@ class HomiliesController extends Controller
         $name_img = $request->date . '_' . date('H_i_s') . 'img.' . $fileImg;
         $img->move(public_path('support/imgHomily'), $name_img);
         $audio->move(public_path('support/audioHomily'), $name_audio);
-
-        $solemnity = Solemnity::updateOrCreate(
-            [
-                'name' => $request->solemnity
-            ]
-        );
 
         $hom = Homilie::Create([
             'date' => $request->date,
@@ -58,7 +60,7 @@ class HomiliesController extends Controller
             'audio' => $name_audio,
             'message' => $request->messag,
             'user_id' => Auth::user()->id,
-            'solemnity_id' => $solemnity->id
+            'solemnity_id' => $solemnity ? $solemnity->id : null
         ]);
 
         return response()->json([
@@ -66,6 +68,7 @@ class HomiliesController extends Controller
             'message' => "Homilía guardada exitosamente!"
         ]);
     }
+
     public function show(string $id)
     {
         return Homilie::find($id);
@@ -97,11 +100,13 @@ class HomiliesController extends Controller
             $name_audio = $request->date . '_' . date('H_i_s') .  'audio.' . $fileAudio;
             Storage::disk('audioHomily')->put($name_audio, file_get_contents($audio->getRealPath()));
         }
-        $solemnity = Solemnity::updateOrCreate(
-            [
+        $solemnity = null;
+
+        if ($request->solemnity !== null) {
+            $solemnity = Solemnity::updateOrCreate([
                 'name' => $request->solemnity
-            ]
-        );
+            ]);
+        }
         Homilie::where('id', $request->id)->update([
             'date' => $request->date,
             'citation' => $request->citation,
@@ -112,7 +117,7 @@ class HomiliesController extends Controller
             'audio' => $name_audio,
             'message' => $request->messag,
             'user_id' => Auth::user()->id,
-            'solemnity_id' => $solemnity->id
+            'solemnity_id' => $solemnity ? $solemnity->id : null
         ]);
         return response()->json([
             'data' => false,

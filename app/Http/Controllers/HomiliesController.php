@@ -165,7 +165,10 @@ class HomiliesController extends Controller
     }
     public function getHomeliasId(string $id)
     {
-        $data = Homilie::join('solemnity', 'solemnity.id', '=', 'homilies.solemnity_id')->select('homilies.*', 'solemnity.name')->where('homilies.id', $id)->first();
+        $data = Homilie::leftJoin('solemnity', 'solemnity.id', '=', 'homilies.solemnity_id')
+        ->select('homilies.*', 'solemnity.name as solemnity_name')
+        ->where('homilies.id', $id)
+        ->first();    
         return response()->json($data);
     }
 

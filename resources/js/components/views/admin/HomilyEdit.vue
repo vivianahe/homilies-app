@@ -332,7 +332,7 @@ const getData = () => {
             homilia.value.gospel = response.data.gospel;
             homilia.value.messag = response.data.message;
             homilia.value.img = response.data.img;
-            solemnity.value = response.data.name;
+            solemnity.value = response.data.solemnity_name;
             emit('editor-data', response.data.gospel);
             selectedImage.value = "/support/imgHomily/" + response.data.img;
             homilia.value.audio = response.data.audio;

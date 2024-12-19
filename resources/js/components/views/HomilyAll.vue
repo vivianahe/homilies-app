@@ -49,13 +49,14 @@
           </svg>
         </a>
       </li>
-      <li v-for="page in totalPages" :key="page">
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 
-         {{ page === currentPage ? 'bg-gray-700 text-white' : 'bg-white' }}" @click="changePage(page)">
+      <li v-for="page in visiblePages" :key="page">
+        <a href="#" 
+          class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 
+            {{ page === currentPage ? 'bg-gray-700 text-white' : 'bg-white' }}" 
+          @click.prevent="changePage(page)">
           {{ page }}
         </a>
       </li>
-
       <li>
         <a href="#"
           class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700"
@@ -83,6 +84,7 @@ import Header from "../Header.vue";
 import Footer from "../Footer.vue";
 import Calendar from "../Calendar.vue";
 import { initFlowbite } from "flowbite";
+
 const showBackToTopButton = ref(false);
 
 const scrollToTop = () => {
@@ -93,7 +95,7 @@ const scrollToTop = () => {
 };
 
 const checkScrollPosition = () => {
-  showBackToTopButton.value = window.scrollY > 100; // Cambia 100 al valor deseado para mostrar el botón
+  showBackToTopButton.value = window.scrollY > 100;
 };
 
 onMounted(() => {
@@ -103,6 +105,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", checkScrollPosition);
 });
+
 const dataHomilies = ref([]);
 const currentPage = ref(1);
 const perPage = ref(5);
@@ -116,6 +119,27 @@ const displayedHomilies = computed(() => {
   const start = (currentPage.value - 1) * perPage.value;
   const end = start + perPage.value;
   return dataHomilies.value.slice(start, end);
+});
+
+const visiblePages = computed(() => {
+  const pages = [];
+  const total = totalPages.value;
+  const current = currentPage.value;
+
+  if (total <= 3) {
+    for (let i = 1; i <= total; i++) {
+      pages.push(i);
+    }
+  } else {
+    if (current === 1) {
+      pages.push(1, 2, 3);
+    } else if (current === total) {
+      pages.push(total - 2, total - 1, total);
+    } else {
+      pages.push(current - 1, current, current + 1);
+    }
+  }
+  return pages;
 });
 
 const previousPage = () => {
@@ -138,17 +162,19 @@ const getDataHomiliesAll = () => {
   getDataHomilies();
   showBtnAll.value = false;
 };
+
 const getDataHomilies = async (fechaCalendar = "") => {
-  console.log(fechaCalendar, 'fecha');
-  const { data } = await axios.get('/homilies');
-  
+  const { data } = await axios.get("/homilies");
+
   if (fechaCalendar !== "") {
-    const homilySelected = data.find(homily => homily.date === fechaCalendar);
-    
+    const homilySelected = data.find((homily) => homily.date === fechaCalendar);
+
     if (homilySelected) {
       let homiliesToDisplay = [homilySelected];
       if (homilySelected.solemnity_id !== null) {
-        homiliesToDisplay = data.filter(homily => homily.solemnity_id === homilySelected.solemnity_id);
+        homiliesToDisplay = data.filter(
+          (homily) => homily.solemnity_id === homilySelected.solemnity_id
+        );
       }
 
       dataHomilies.value = homiliesToDisplay;

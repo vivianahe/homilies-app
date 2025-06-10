@@ -5,6 +5,7 @@ import HomilyDay from "../HomilyDay.vue";
 import Priest from "../Priest.vue";
 import Footer from "../Footer.vue";
 import Reflection from "../Reflection.vue";
+import ReflectionWork from "../ReflectionWork.vue";
 import MessageTip from "../MessageTip.vue";
 import Contact from "../Contact.vue";
 import { ref, onMounted, onBeforeUnmount } from "vue";
@@ -40,6 +41,7 @@ onBeforeUnmount(() => {
   <carousel />
   <HomilyDay />
   <MessageTip />
+  <ReflectionWork />
   <Priest />
   <Reflection />
   <Contact id="contacto" />

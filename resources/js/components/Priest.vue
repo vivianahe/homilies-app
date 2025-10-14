@@ -38,7 +38,7 @@
 import { onMounted, ref } from "vue";
 import axios from "axios";
 
-const fullText = ref('Presbítero Magister - sacerdote de la Diócesis de Neiva, Colombia. Graduado de la Licenciatura en Matemáticas, Normalista de la Escuela Normal Superior de Neiva. Licenciado en Filosofía y Educación Religiosa de la Universidad Católica de Oriente en Rionegro – Antioquia. Teólogo de la misma universidad; Realizó sus estudios eclesiales en el seminario Cristo Sacerdote de la Ceja (Antioquia) en la asociación Siervos del Espíritu Santo – Magister en Asesoría Familiar y Gestión de proyectos de la Familia de la Universidad de la Sabana en Bogotá. Músico del conservatorio departamental del Huila y delegado Diocesano de la Pastoral Familiar y actualmente sacerdote de la Parroquia Jesús Obrero de Neiva.');
+const fullText = ref('Presbítero Magister - sacerdote de la Diócesis de Neiva, Colombia. Graduado de la Licenciatura en Matemáticas, Normalista de la Escuela Normal Superior de Neiva. Licenciado en Filosofía y Educación Religiosa de la Universidad Católica de Oriente en Rionegro – Antioquia. Teólogo de la misma universidad; Realizó sus estudios eclesiales en el seminario Cristo Sacerdote de la Ceja (Antioquia) en la asociación Siervos del Espíritu Santo – Magister en Asesoría Familiar y Gestión de proyectos de la Familia de la Universidad de la Sabana en Bogotá. Músico del conservatorio departamental del Huila y delegado Diocesano de la Pastoral Familiar y actualmente sacerdote de la Parroquia Nuestra Señora del Perpetuo Socorro de Rivera.');
 
 const halfText = ref('');
 const showFullText = ref(false);

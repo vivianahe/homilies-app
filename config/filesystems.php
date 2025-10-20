@@ -67,6 +67,12 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+        'audioChant' => [
+            'driver' => 'local',
+            'root' => public_path('support/audioChant'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
     ],
 
     /*

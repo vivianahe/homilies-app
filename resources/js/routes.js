@@ -11,6 +11,8 @@ import HomilyAllAdm from "./components/views/admin/HomilyAllAdm.vue";
 import HomilyEditAdm from "./components/views/admin/HomilyEdit.vue";
 import MorningPrayer from "./components/views/admin/MorningPrayer.vue";
 import UsersAll from "./components/views/admin/UsersAll.vue";
+import ChantAll from "./components/views/admin/ChantAll.vue";
+import ChantPublic from "./components/views/ChantPublic.vue";
 const routes = [
     {
         path: '/',
@@ -67,6 +69,11 @@ const routes = [
         component: MorningPrayer
     },
     {
+        path: '/chantView',
+        name: 'chantView',
+        component: ChantAll
+    },
+    {
         path: '/userView',
         name: 'userView',
         component: UsersAll
@@ -75,6 +82,11 @@ const routes = [
         path: '/contact',
         name: 'contact',
         component: Contact
+    },
+    {
+        path: '/chantPublic',
+        name: 'chantPublic',
+        component: ChantPublic
     },
 ];
 const router = createRouter({

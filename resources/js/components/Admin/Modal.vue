@@ -34,7 +34,7 @@ const props = defineProps({
         </div>
         <!-- Modal body -->
         <div class="p-6 space-y-6">
-          <component :is="dataForm.componet" @closeMod="closeMod" :data="dataForm.data" />
+          <component :is="dataForm.componet" :key="dataForm.key" @closeMod="closeMod" :data="dataForm.data" />
         </div>
       <button
         ref="closeModal"

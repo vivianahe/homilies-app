@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PrayerController;
 use App\Http\Controllers\HomiliesController;
+use App\Http\Controllers\ChantController;
 
 /*
 |--------------------------------------------------------------------------

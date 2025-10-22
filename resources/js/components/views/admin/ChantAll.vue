@@ -74,7 +74,7 @@ const FrmAgregar = markRaw({
       </div>
       <div>
         <label class="block text-sm font-medium">Archivo de audio</label>
-        <input type="file" accept="audio/*" @change="e=> form.audio = e.target.files[0]" class="w-full border rounded p-2" />
+        <input type="file" accept="audio/mp3" @change="e=> form.audio = e.target.files[0]" class="w-full border rounded p-2" />
       </div>
       <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b justify-end">
         <button type="button" @click="$emit('closeMod')"
@@ -217,5 +217,6 @@ onMounted(() => {
   getChants();
 });
 </script>
+
 
 

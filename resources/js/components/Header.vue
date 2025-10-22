@@ -27,6 +27,13 @@
               Homilías
             </RouterLink>
           </li>
+          <li :class="{ 'border-b-2 border-white': $route.name === 'chantPublic' }">
+            <RouterLink :to="{ name: 'chantPublic' }"
+              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-cyan-500 md:hover:bg-transparent md:border-0 md:hover:text-custom-gray-me md:p-0">
+              <i class="fa-solid fa-music mr-2"></i>
+              Canta y ora
+            </RouterLink>
+          </li>
           <li :class="{ 'border-b-2 border-white': $route.name === 'contact' }">
             <RouterLink :to="{ name: 'contact' }"
               class="block py-2 pl-3 pr-4 text-white rounded hover:bg-cyan-500 md:hover:bg-transparent md:border-0 md:hover:text-custom-gray-me md:p-0">

@@ -170,10 +170,16 @@ const confirmarEliminar = (id) => {
     text: "No podrás revertirlo.",
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
     confirmButtonText: 'Sí, bórralo!',
-    cancelButtonText: 'Cancelar'
+    cancelButtonText: 'Cancelar',
+    // Forzar estilos visibles y consistentes con Tailwind
+    buttonsStyling: false,
+    customClass: {
+      actions: 'flex items-center justify-end gap-2 mt-4',
+      confirmButton: 'inline-flex items-center px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500',
+      cancelButton: 'inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300'
+    },
+    background: '#ffffff'
   }).then((result) => {
     if (result.isConfirmed) {
       emit('eliminar', id);

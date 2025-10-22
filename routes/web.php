@@ -20,6 +20,7 @@ Auth::routes(['register' => false]);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 Route::view('/inicio', 'pag')->name('inicio');
 Route::view('/homilyAll', 'pag')->name('homilyAll');
+Route::view('/chantPublic', 'pag')->name('chantPublic');
 Route::view('/homilyDetail/{id}', 'pag')->name('homilyDetail');
 Route::view('/donateView', 'pag')->name('donateView');
 Route::view('/contact', 'pag')->name('contact');
@@ -28,6 +29,7 @@ Route::resource('/homilies', HomiliesController::class);
 Route::get('/homilies_desc', [HomiliesController::class, 'getDescHomily']);
 Route::post('/contact', [HomiliesController::class, 'postFrmContact']);
 Route::apiResource("prayers", PrayerController::class);
+Route::apiResource("chants", ChantController::class);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::view('/home', 'home')->name('home');
@@ -43,4 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/getHomeliasId/{id}', [HomiliesController::class, 'getHomeliasId']);
     Route::post('/updateHomilia', [HomiliesController::class, 'updateHomilia']);
     Route::get('/getSolemnity/{id}', [HomiliesController::class, 'getSolemnity']);
+    Route::apiResource("chants", ChantController::class)->only(['store','update','destroy']);
+    Route::view('/chantView', 'home')->name('chantView');
 });

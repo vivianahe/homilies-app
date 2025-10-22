@@ -70,6 +70,12 @@
                                             Oración de la mañana
                                         </a>
                                     </li>
+                                    <li class="text-white hover:text-gray-900">
+                                        <a href="/chantView" class="flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group">
+                                            <i class="fa-solid fa-music text-gray-500 group-hover:text-white"></i>
+                                            <span class="ml-3">Canta y ora</span>
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="/userView" class="block px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-gray-700" role="menuitem">
                                             Usuarios

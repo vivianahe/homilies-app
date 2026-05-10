@@ -16,38 +16,56 @@
       </div>
     </div>
     <div class="overflow-x-auto">
-      <table class="w-full text-sm text-left text-gray-300">
+      <table class="w-full table-auto text-sm text-left text-gray-300">
         <thead class="text-sm uppercase bg-gray-700">
           <tr>
+            <th class="px-4 py-3 w-12 text-center">#</th>
             <th v-for="column in columns" :key="column.key" scope="col" class="px-6 py-3">
               {{ column.label }}
             </th>
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr v-for="dataHomi in visibleData" :key="dataHomi.id"
+          <tr v-for="(dataHomi, index) in visibleData" :key="dataHomi.id"
             class="bg-white hover-bg-gray-200 border border-b-gray-200">
+
+            <td class="px-4 py-4 text-center text-sm font-semibold text-gray-500 w-12">
+              {{ startIndex + index + 1 }}
+            </td>
+            
             <td v-for="column in columns" :key="column.key" class="px-4 py-4">
               <template v-if="column.key === 'options'">
-            <td class="py-1 flex justify-around">
-              <button type="button" @click="$emit('datelle', dataHomi.id)" data-modal-target="defaultModal"
-                data-modal-toggle="defaultModal"
-                class="flex items-center focus:outline-none text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:ring-green-800">
-                <i class="fa-solid fa-circle-info mr-2"></i>
-                Ver detalle
-              </button>
-              <button type="button" @click="$emit('editar', dataHomi.id)" data-modal-target="defaultModal"
-                data-modal-toggle="defaultModal"
-                class="flex items-center focus:outline-none text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 bg-green-600 hover:bg-green-700 focus:ring-green-800">
-                <i class="fa-solid fa-pen-to-square mr-2"></i>
-                Editar
-              </button>
-              <button type="button" @click="confirmarEliminar(dataHomi.id)"
-                class="flex items-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
-                <i class="fa-solid fa-trash-can mr-2"></i>
-                Eliminar
-              </button>
-            </td>
+                
+                <div class="py-1 flex items-center gap-2 flex-wrap">
+
+                  <button type="button"
+                    @click="$emit('datelle', dataHomi.id)"
+                    class="flex items-center text-white text-xs px-3 py-1.5 bg-blue-600 hover:bg-blue-700 rounded-md transition">
+                    <i class="fa-solid fa-circle-info mr-1"></i>
+                    Ver detalle
+                  </button>
+
+                  <button type="button"
+                    @click="$emit('editar', dataHomi.id)"
+                    class="flex items-center text-white text-xs px-3 py-1.5 bg-green-600 hover:bg-green-700 rounded-md transition">
+                    <i class="fa-solid fa-pen-to-square mr-1"></i>
+                    Editar
+                  </button>
+
+                  <button type="button"
+                    @click="confirmarDescarga(dataHomi)"
+                    class="flex items-center text-white text-xs px-3 py-1.5 bg-yellow-500 hover:bg-yellow-600 rounded-md transition">
+                    <i class="fa-solid fa-download mr-1"></i>
+                    Audio
+                  </button>
+
+                  <button type="button"
+                    @click="confirmarEliminar(dataHomi.id)"
+                    class="flex items-center text-white text-xs px-3 py-1.5 bg-red-600 hover:bg-red-700 rounded-md transition">
+                    <i class="fa-solid fa-trash-can mr-1"></i>
+                    Eliminar
+                  </button>
+                </div>
             </template>
             <template v-else>
               {{ dataHomi[column.key] }}
@@ -66,26 +84,30 @@
         de
         <span class="font-semibold text-gray-900">{{ totalItems }}</span>
       </span>
-      <ul class="inline-flex -space-x-px text-md h-8">
+      <ul class="flex items-center gap-1 text-sm">
         <li>
           <a href="#"
-            class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 border rounded-l-lg bg-gray-800 border-gray-700 hover:text-white"
-            @click="goToPreviousPage" :disabled="!canGoToPreviousPage">
-            Anterior
+            class="px-3 py-1.5 bg-gray-200 rounded-md hover:bg-gray-300"
+            :class="{ 'opacity-50 cursor-not-allowed': !canGoToPreviousPage }"
+            @click.prevent="goToPreviousPage">
+            ←
           </a>
         </li>
-        <li v-for="page in Math.ceil(totalItems / itemsPerPage)" :key="page">
-          <a href="#"
-            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 border bg-gray-800 border-gray-700 hover:text-white"
-            :class="{ 'bg-gray-700 text-white': page === currentPage }" @click="currentPage = page">
+        <li v-for="(page, index) in visiblePages" :key="index">
+          <span v-if="page === '...'" class="px-2 text-gray-400">...</span>
+          <a v-else href="#"
+            class="px-3 py-1.5 rounded-md bg-gray-800 text-gray-300 hover:text-white"
+            :class="{ 'bg-blue-600 text-white': page === currentPage }"
+            @click.prevent="currentPage = page">
             {{ page }}
           </a>
         </li>
         <li>
           <a href="#"
-            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 border rounded-r-lg bg-gray-800 border-gray-700 hover:text-white"
-            @click="goToNextPage" :disabled="!canGoToNextPage">
-            Siguiente
+            class="px-3 py-1.5 bg-gray-200 rounded-md hover:bg-gray-300"
+            :class="{ 'opacity-50 cursor-not-allowed': !canGoToNextPage }"
+            @click.prevent="goToNextPage">
+            →
           </a>
         </li>
       </ul>
@@ -101,12 +123,12 @@ const props = defineProps({
   columns: Array,
   busqueda: {
     type: Boolean,
-    default: true // Establece el valor por defecto en true
+    default: true 
   }
 });
 
 const currentPage = ref(1);
-const emit = defineEmits(["editar", "datelle", "eliminar"]);
+const emit = defineEmits(["editar", "datelle", "eliminar", "descargar"]);
 const itemsPerPage = 10;
 
 const searchTerm = ref('');
@@ -130,6 +152,39 @@ const visibleData = computed(() => {
 
 const canGoToPreviousPage = computed(() => currentPage.value > 1);
 const canGoToNextPage = computed(() => endIndex.value < totalItems.value);
+
+const totalPages = computed(() => Math.ceil(totalItems.value / itemsPerPage));
+
+const visiblePages = computed(() => {
+  const pages = [];
+  const current = currentPage.value;
+  const total = totalPages.value;
+
+  const delta = 2;
+
+  let start = Math.max(2, current - delta);
+  let end = Math.min(total - 1, current + delta);
+
+  pages.push(1);
+
+  if (start > 2) {
+    pages.push('...');
+  }
+
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+
+  if (end < total - 1) {
+    pages.push('...');
+  }
+
+  if (total > 1) {
+    pages.push(total);
+  }
+
+  return pages;
+});
 
 const goToPreviousPage = () => {
   if (canGoToPreviousPage.value) {
@@ -172,7 +227,6 @@ const confirmarEliminar = (id) => {
     showCancelButton: true,
     confirmButtonText: 'Sí, bórralo!',
     cancelButtonText: 'Cancelar',
-    // Forzar estilos visibles y consistentes con Tailwind
     buttonsStyling: false,
     customClass: {
       actions: 'flex items-center justify-end gap-2 mt-4',
@@ -186,4 +240,25 @@ const confirmarEliminar = (id) => {
     }
   })
 }
+const confirmarDescarga = (dataHomi) => {
+  Swal.fire({
+    title: '¿Descargar audio?',
+    text: `Se descargará el audio: ${dataHomi.title}`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, descargar',
+    cancelButtonText: 'Cancelar',
+    buttonsStyling: false,
+    customClass: {
+      actions: 'flex items-center justify-end gap-2 mt-4',
+      confirmButton: 'inline-flex items-center px-4 py-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500',
+      cancelButton: 'inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300'
+    },
+    background: '#ffffff'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      emit('descargar', dataHomi);
+    }
+  });
+};
 </script>

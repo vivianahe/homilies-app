@@ -12,9 +12,14 @@
         </RouterLink>
       </div>
     </div>
-
-    <Table :dataHomilies="dataHomilies" :columns="columnConfig" @editar="editar" @datelle="datelle"
-      @eliminar="eliminar" />
+      <Table 
+        :dataHomilies="dataHomilies" 
+        :columns="columnConfig" 
+        @descargar="descargarAudio"
+        @editar="editar" 
+        @datelle="datelle"
+        @eliminar="eliminar" 
+      />
   </div>
 </template>
 
@@ -61,6 +66,22 @@ const eliminar = async (id = null) => {
       Swal.fire("Atención!", response.data.message, "warning");
     }
   }
+};
+
+const descargarAudio = (homilia) => {
+  if (!homilia.audio) {
+    Swal.fire("Atención", "Esta homilía no tiene audio", "warning");
+    return;
+  }
+
+  const url = window.location.origin + '/support/audioHomily/' + homilia.audio;
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', homilia.audio);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 
 onMounted(() => {

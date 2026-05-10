@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <Table :dataHomilies="chants" @editar="editar" @datelle="datelle" @eliminar="eliminar" :columns="columnConfig"
+    <Table :dataHomilies="chants" @descargar="descargarAudio" @editar="editar" @datelle="datelle" @eliminar="eliminar" :columns="columnConfig"
       :busqueda="false" />
   </div>
   <ModalVue :dataForm="dataForm" @getData="getChants" />
@@ -36,7 +36,6 @@ const columnConfig = ref([
 ]);
 const dataForm = reactive({});
 
-// Lazy inline forms to keep single-file simplicity
 const FrmAgregar = markRaw({
   emits: ["closeMod"],
   data() {
@@ -205,6 +204,22 @@ const eliminar = async (id) => {
       Swal.fire("Atención!", data.message, "warning");
     }
   }
+};
+
+const descargarAudio = (homilia) => {
+  if (!homilia.audio) {
+    Swal.fire("Atención", "Este canto no tiene audio", "warning");
+    return;
+  }
+
+  const url = window.location.origin + '/support/audioChant/' + homilia.audio;
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', homilia.audio);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 
 const chants = ref([]);

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router"
 import IndexHome from "./components/Home.vue";
 import HomilyView from "./components/views/HomilyView.vue";
 import HomilyAll from "./components/views/HomilyAll.vue";
+import homilyAllNew from "./components/views/homilyAllNew.vue";
 import DonateView from "./components/views/DonateView.vue";
 import Contact from "./components/views/ContactView.vue";
 import HomilyDetail from "./components/views/HomilyDetail.vue";
@@ -32,6 +33,11 @@ const routes = [
         path: '/homilyAll',
         name: 'homilyAll',
         component: HomilyAll
+    },
+    {
+        path: '/homilyAllNew',
+        name: 'homilyAllNew',
+        component: homilyAllNew
     },
     {
         path: '/donateView',

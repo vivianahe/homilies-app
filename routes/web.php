@@ -21,6 +21,7 @@ Auth::routes(['register' => false]);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 Route::view('/inicio', 'pag')->name('inicio');
 Route::view('/homilyAll', 'pag')->name('homilyAll');
+Route::view('/homilyAllNew', 'pag')->name('homilyAllNew');
 Route::view('/chantPublic', 'pag')->name('chantPublic');
 Route::view('/homilyDetail/{id}', 'pag')->name('homilyDetail');
 Route::view('/donateView', 'pag')->name('donateView');

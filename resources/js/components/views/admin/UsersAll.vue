@@ -14,8 +14,15 @@
     </div>
   </div>
 
-  <Table :dataHomilies="dataUsers" @editar="editar" @datelle="datelle" @eliminar="eliminar" :columns="columnConfig"
-    :busqueda="false" />
+  <Table
+    :dataHomilies="dataUsers"
+    @editar="editar"
+    @datelle="datelle"
+    @eliminar="eliminar"
+    :columns="columnConfig"
+    :busqueda="false"
+    :mostrarDescarga="false"
+  />
   </div>
   <ModalVue :dataForm="dataForm" @getData="getUsers" />
 </template>

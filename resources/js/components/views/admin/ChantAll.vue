@@ -14,8 +14,27 @@
       </div>
     </div>
 
-    <Table :dataHomilies="chants" @descargar="descargarAudio" @editar="editar" @datelle="datelle" @eliminar="eliminar" :columns="columnConfig"
-      :busqueda="false" />
+    <Table
+      :dataHomilies="chants"
+      :columns="columnConfig"
+
+      :filterFields="['title', 'description', 'audio']"
+
+      :filterLabels="{
+        search: 'Buscar',
+        citation: 'Audio',
+        searchPlaceholder: 'Título o descripción...',
+        citationPlaceholder: 'Nombre del audio...'
+      }"
+
+      :showDateFilters="false"
+
+      @descargar="descargarAudio"
+      @editar="editar"
+      @datelle="datelle"
+      @eliminar="eliminar"
+    />
+
   </div>
   <ModalVue :dataForm="dataForm" @getData="getChants" />
 </template>

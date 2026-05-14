@@ -14,8 +14,15 @@
       </div>
     </div>
  
-  <Table :dataHomilies="dataPrayerDesc" @editar="editar" @datelle="datelle" @eliminar="eliminar" :columns="columnConfig"
-    :busqueda="false" />
+    <Table
+      :dataHomilies="dataPrayerDesc"
+      @editar="editar"
+      @datelle="datelle"
+      @eliminar="eliminar"
+      :columns="columnConfig"
+      :busqueda="false"
+      :mostrarDescarga="false"
+    />
   </div>
   <ModalVue :dataForm="dataForm" @getData="getPrayerDesc" />
 </template>

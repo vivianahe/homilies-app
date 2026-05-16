@@ -1,92 +1,164 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-gradient-to-b from-gray-600 to-gray-500 h-screen">
-    <div class="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
-        <div class="flex flex-col sm:flex-row rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/2 bg-white sm:mx-0">
-            <div class="flex flex-col w-full md:w-1/2 p-4">
-                <div class="flex flex-col flex-1 justify-center mb-8">
-                    <h1 class="text-2xl leading-tight tracking-tight text-gray-900 text-center font-thin">
-                        Acceda a su cuenta
-                    </h1>
-                    <div class="w-full mt-2">
-                        <div class="card">
 
-                            <div class="card-body">
-                                <form method="POST" action="{{ route('login') }}" class="form-horizontal w-3/4 mx-auto">
-                                    @csrf
+<div class="min-h-screen bg-gradient-to-br from-[#1e293b] via-[#334155] to-[#475569] flex items-center justify-center px-4 py-10">
+    <div
+        class="w-full max-w-5xl my-auto bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
-                                    <div class="py-4">
-                                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
-                                            Correo electrónico
-                                        </label>
-                                        <input v-model="email" type="email" name="email" id="email" aria-label="Correo electrónico" value="{{ old('email') }}" aria-describedby="email-help" class=" @error('email') is-invalid @enderror bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@company.com" required />
-                                        <div id="email-help" class="text-sm text-gray-500">
-                                            Ingresa tu correo electrónico
-                                        </div>
-                                        @error('email')
-                                        <p class="text-red-600">
-                                            <strong>{{ $message }}</strong>
-                                        </p>
-                                        @enderror
-                                    </div>
-                                    <!--<div class="row mb-3">
-                                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
-                                            Correo electrónico
-                                        </label>
-                                        <div class="col-md-6">
-                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+        <div class="p-8 md:p-14 flex flex-col justify-center">
 
-                                            @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>-->
-                                    <div class="py-4">
-                                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">
-                                            Contraseña
-                                        </label>
-                                        <input v-model="password" type="password" name="password" id="password" aria-label="Contraseña" aria-describedby="password-help" placeholder="••••••••" class="@error('password') is-invalid @enderror bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
-                                        <div id="password-help" class="text-sm text-gray-500">
-                                            Ingresa tu contraseña.
-                                        </div>
-                                        @error('password')
-                                        <p class="text-red-600">
-                                            <strong>{{ $message }}</strong>
-                                        </p>
-                                        @enderror
-                                    </div>
-                                    <!--<div class="row mb-3">
-                                        <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+            <div class="mb-8 text-center">
 
-                                        <div class="col-md-6">
-                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                <h1 class="text-4xl font-bold text-gray-800">
+                    Homilías Padre Uriel Franco
+                </h1>
 
-                                            @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>-->
+                <p class="text-gray-500 mt-2">
+                    Accede a tu cuenta administrativa
+                </p>
 
+            </div>
 
-                                    <div class="py-2">
-                                        <button type="submit" class="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                                            Iniciar sesión
-                                        </button>
-                                    </div>
+            <form method="POST"
+                action="{{ route('login') }}"
+                class="space-y-6">
 
-                                </form>
-                            </div>
+                @csrf
+
+                <div>
+
+                    <label for="email"
+                        class="block mb-2 text-sm font-semibold text-gray-700">
+
+                        Correo electrónico
+
+                    </label>
+
+                    <div class="relative">
+
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                            <i class="fa-solid fa-envelope text-gray-400"></i>
                         </div>
+
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            value="{{ old('email') }}"
+                            placeholder="correo@ejemplo.com"
+                            required
+                            autofocus
+                            class="@error('email') border-red-500 @enderror
+                            w-full pl-11 pr-4 py-3 rounded-2xl border border-gray-300
+                            bg-gray-50 text-gray-800
+                            focus:ring-2 focus:ring-sky-500
+                            focus:border-sky-500
+                            outline-none transition-all duration-200" />
+
                     </div>
+                    @error('email')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+
+                <div>
+
+                    <label for="password"
+                        class="block mb-2 text-sm font-semibold text-gray-700">
+
+                        Contraseña
+
+                    </label>
+
+                    <div class="relative">
+
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                            <i class="fa-solid fa-lock text-gray-400"></i>
+                        </div>
+
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            placeholder="••••••••"
+                            required
+                            class="@error('password') border-red-500 @enderror
+                            w-full pl-11 pr-4 py-3 rounded-2xl border border-gray-300
+                            bg-gray-50 text-gray-800
+                            focus:ring-2 focus:ring-sky-500
+                            focus:border-sky-500
+                            outline-none transition-all duration-200" />
+
+                    </div>
+                    @error('password')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                    @enderror
+
+                </div>
+
+                <div class="flex items-center justify-between text-sm">
+
+                    <label class="flex items-center text-gray-600">
+
+                        <input
+                            type="checkbox"
+                            name="remember"
+                            class="rounded border-gray-300 text-sky-500 focus:ring-sky-500">
+
+                        <span class="ml-2">
+                            Recordarme
+                        </span>
+
+                    </label>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full bg-sky-500 hover:bg-sky-600
+                    text-white font-semibold py-3 rounded-2xl
+                    shadow-lg hover:shadow-xl
+                    transition-all duration-300">
+
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i>
+
+                    Iniciar sesión
+                </button>
+
+            </form>
+        </div>
+
+        <div class="hidden md:block relative overflow-hidden">
+            <img
+                src="/img/img_login_high_quality.webp"
+                alt="Login"
+                class="w-full h-full object-cover"
+                loading="eager"
+                decoding="async">
+
+
+            <div class="absolute inset-0 bg-black/20"></div>
+
+            <div class="absolute top-10 left-10 z-10">
+
+                <div class="border-l-2 border-white/70 pl-4">
+
+                    <p class="text-white/80 text-xs tracking-[3px] uppercase font-medium">
+                        Plataforma administrativa
+                    </p>
+
+                    <h2 class="text-white text-2xl font-semibold mt-2">
+                        Homilías Uriel
+                    </h2>
+
                 </div>
             </div>
-            <div class="hidden md:block md:w-1/2 rounded-r-lg" style="background: url('/img/img_login.jpg'); background-size: cover; background-position: center center;">
-            </div>
+
         </div>
     </div>
 </div>

@@ -12,6 +12,22 @@
         </RouterLink>
       </div>
     </div>
+    <div
+      v-if="loading"
+      class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50"
+    >
+      <div class="bg-white p-6 rounded-2xl shadow-xl text-center">
+        <div
+          class="w-14 h-14 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mx-auto"
+        ></div>
+
+        <p class="mt-4 font-semibold text-gray-700">
+          Cargando información...
+        </p>
+      </div>
+    </div>
+
+    <div v-else>
       <Table 
         :dataHomilies="dataHomilies" 
         :columns="columnConfig" 
@@ -20,11 +36,12 @@
         @datelle="datelle"
         @eliminar="eliminar" 
       />
+    </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 import Table from "../../Admin/Table.vue";
 import { initFlowbite } from "flowbite";
 import axios from "axios";
@@ -33,12 +50,24 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const dataHomilies = ref([]);
+
+const loading = ref(false);
+
 const getDataHomilies = async () => {
+
+  loading.value = true;
+  await nextTick();
+
   try {
     const { data } = await axios.get('/getHomilies');
     dataHomilies.value = data;
   } catch (error) {
     console.error("Error al obtener los datos de Homilies:", error);
+
+  } finally {
+
+    loading.value = false;
+
   }
 };
 const columnConfig = [

@@ -5,25 +5,56 @@
         <p class="font-semibold text-xl">Oración de la mañana</p>
       </div>
       <div class="text-end">
-        <button class="bg-sky-500 hover:bg-sky-600 text-gray-800 py-2 px-4 rounded inline-flex items-center"
-          data-modal-target="defaultModal" data-modal-toggle="defaultModal" @click="agregar">
+        <button
+          class="bg-sky-500 hover:bg-sky-600 text-gray-800 py-2 px-4 rounded inline-flex items-center"
+          data-modal-target="defaultModal"
+          data-modal-toggle="defaultModal"
+          @click="agregar"
+        >
           <i class="fa-solid fa-circle-plus text-white"></i>
           <span class="text-white"> Agregar</span>
         </button>
-        <button ref="openModal" class="hideen" data-modal-target="defaultModal" data-modal-toggle="defaultModal"></button>
+
+        <button
+          ref="openModal"
+          class="hideen"
+          data-modal-target="defaultModal"
+          data-modal-toggle="defaultModal"
+        ></button>
       </div>
     </div>
- 
-    <Table
-      :dataHomilies="dataPrayerDesc"
-      @editar="editar"
-      @datelle="datelle"
-      @eliminar="eliminar"
-      :columns="columnConfig"
-      :busqueda="false"
-      :mostrarDescarga="false"
-    />
+
+    <div
+      v-if="loading"
+      class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50"
+    >
+      <div class="bg-white p-6 rounded-2xl shadow-xl text-center">
+        
+        <div
+          class="w-14 h-14 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mx-auto"
+        ></div>
+
+        <p class="mt-4 font-semibold text-gray-700">
+          Cargando información...
+        </p>
+
+      </div>
+    </div>
+
+    <div v-else>
+      <Table
+        :dataHomilies="dataPrayerDesc"
+        @editar="editar"
+        @datelle="datelle"
+        @eliminar="eliminar"
+        :columns="columnConfig"
+        :busqueda="false"
+        :mostrarDescarga="false"
+      />
+    </div>
+
   </div>
+
   <ModalVue :dataForm="dataForm" @getData="getPrayerDesc" />
 </template>
 
@@ -38,6 +69,9 @@ import FrmEditar from "@/components/Admin/Oracion/FrmEditar.vue";
 import FrmDetalle from "@/components/Admin/Oracion/FrmDetalle.vue";
 
 const openModal = ref(null);
+
+const loading = ref(false);
+
 const columnConfig = ref([
   { key: "date", label: "Fecha oración" },
   { key: "link", label: "Link" },
@@ -45,7 +79,7 @@ const columnConfig = ref([
 ]);
 const dataForm = reactive({});
 const agregar = () => {
-  dataForm.componet = markRaw(FrmAgregar); // Marcar el nuevo componente como no reactivo
+  dataForm.componet = markRaw(FrmAgregar);
   dataForm.nameModal = "Agregar oración del día";
 };
 const editar = async (id = null) => {
@@ -81,11 +115,25 @@ const eliminar = async (id) => {
 };
 
 
-// Componente padre
 const dataPrayerDesc = ref([]);
 const getPrayerDesc = async () => {
-  const { data } = await axios.get('/prayers');
-  dataPrayerDesc.value = data;
+
+  loading.value = true;
+
+  try {
+
+    const { data } = await axios.get('/prayers');
+    dataPrayerDesc.value = data;
+
+  } catch (error) {
+
+    console.error("Error al obtener las oraciones:", error);
+
+  } finally {
+
+    loading.value = false;
+
+  }
 };
 onMounted(() => {
   initFlowbite();

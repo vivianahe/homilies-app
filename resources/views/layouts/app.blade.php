@@ -59,39 +59,96 @@
                                         {{ auth()->user()->email }}
                                     </p>
                                 </div>
-                                <ul class="py-1" role="none">
-                                    <li>
-                                        <a href="/homilyAllAdm" class="block px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-gray-700" role="menuitem">
-                                            Homilías
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/prayerView" class="block px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-gray-700" role="menuitem">
-                                            Oración de la mañana
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/chantView" class="block px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-gray-700" role="menuitem">
-                                            Canta y ora
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/userView" class="block px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-gray-700" role="menuitem">
-                                            Usuarios
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-gray-700" role="menuitem" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Cerrar sesión
-                                        </a>
+                                    <ul class="py-2 space-y-1" role="none">
+                                        <li>
+                                            <a href="/homilyAllAdm"
+                                                class="flex items-center px-4 py-2 text-sm transition-all duration-200 rounded-lg mx-2 group
+                                                {{ request()->is('/') || request()->is('homilyAllAdm')
+                                                    ? 'bg-sky-500 text-white shadow-md'
+                                                    : 'text-white hover:bg-gray-700 hover:text-white' }}"
+                                                role="menuitem">
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
+                                                <i class="fas fa-bible w-5
+                                                {{ request()->is('/') || request()->is('homilyAllAdm')
+                                                    ? 'text-white'
+                                                    : 'text-gray-400 group-hover:text-white' }}">
+                                                </i>
+                                                <span class="ml-3">
+                                                    Homilías
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/prayerView"
+                                                class="flex items-center px-4 py-2 text-sm transition-all duration-200 rounded-lg mx-2 group
+                                                {{ request()->is('prayerView')
+                                                    ? 'bg-sky-500 text-white shadow-md'
+                                                    : 'text-white hover:bg-gray-700 hover:text-white' }}"
+                                                role="menuitem">
+                                                <i class="fas fa-praying-hands w-5
+                                                {{ request()->is('prayerView')
+                                                    ? 'text-white'
+                                                    : 'text-gray-400 group-hover:text-white' }}">
+                                                </i>
+                                                <span class="ml-3">
+                                                    Oración de la mañana
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/chantView"
+                                                class="flex items-center px-4 py-2 text-sm transition-all duration-200 rounded-lg mx-2 group
+                                                {{ request()->is('chantView')
+                                                    ? 'bg-sky-500 text-white shadow-md'
+                                                    : 'text-white hover:bg-gray-700 hover:text-white' }}"
+                                                role="menuitem">
+                                                <i class="fa-solid fa-music w-5
+                                                {{ request()->is('chantView')
+                                                    ? 'text-white'
+                                                    : 'text-gray-400 group-hover:text-white' }}">
+                                                </i>
+                                                <span class="ml-3">
+                                                    Canta y ora
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/userView"
+                                                class="flex items-center px-4 py-2 text-sm transition-all duration-200 rounded-lg mx-2 group
+                                                {{ request()->is('userView')
+                                                    ? 'bg-sky-500 text-white shadow-md'
+                                                    : 'text-white hover:bg-gray-700 hover:text-white' }}"
+                                                role="menuitem">
+                                                <i class="fas fa-user-friends w-5
+                                                {{ request()->is('userView')
+                                                    ? 'text-white'
+                                                    : 'text-gray-400 group-hover:text-white' }}">
+                                                </i>
+                                                <span class="ml-3">
+                                                    Usuarios
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="flex items-center px-4 py-2 text-sm transition-all duration-200 rounded-lg mx-2 text-white hover:bg-red-500 hover:text-white group"
+                                                role="menuitem"
+                                                href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                                <i class="fa-solid fa-arrow-right-from-bracket w-5 text-gray-400 group-hover:text-white"></i>
+                                                <span class="ml-3">
+                                                    Cerrar sesión
+                                                </span>
+                                            </a>
+                                            <form id="logout-form"
+                                                action="{{ route('logout') }}"
+                                                method="POST"
+                                                class="d-none">
+                                                @csrf
+                                            </form>
 
-                                    </li>
-                                </ul>
+                                        </li>
+                                    </ul>
                             </div>
                         </div>
                     </div>
@@ -99,41 +156,49 @@
             </div>
         </nav>
 
-        <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 
-    h-screen pt-20 transition-transform -translate-x-full 
-    border-r sm:translate-x-0 bg-gray-800 border-gray-700" aria-label="Sidebar">
+        <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full border-r sm:translate-x-0 bg-gray-800 border-gray-700" aria-label="Sidebar">
             <div class="h-full px-3 pb-4 overflow-y-auto bg-gray-800">
                 <ul class="space-y-2 font-medium">
                     <li class="hover:text-gray-900">
-                        <a href="/homilyAllAdm" class="flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group">
-                            <i class="fas fa-bible text-gray-500 group-hover:text-white"></i>
+                        <a href="/homilyAllAdm" class="flex items-center p-2 rounded-lg group transition-all duration-200 {{ request()->is('/') || request()->is('homilyAllAdm') ? 'bg-sky-500 text-white shadow-md' : 'text-white hover:bg-gray-700' }}">
+                            <i class="fas fa-bible {{ request()->is('/') || request()->is('homilyAllAdm') ? 'text-white' : 'text-gray-500 group-hover:text-white' }}"></i>
                             <span class="ml-3">Homilías</span>
                         </a>
                     </li>
                     <li class="text-white hover:text-gray-900">
-                        <a href="/prayerView" class="flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group">
-                            <i class="fas fa-praying-hands text-gray-500 group-hover:text-white"></i>
+                        <a href="/prayerView" class="flex items-center p-2 rounded-lg group transition-all duration-200 {{ request()->is('prayerView') ? 'bg-sky-500 text-white shadow-md' : 'text-white hover:bg-gray-700' }}">
+                            <i class="fas fa-praying-hands {{ request()->is('prayerView') ? 'text-white' : 'text-gray-500 group-hover:text-white' }}"> </i>
                             <span class="ml-3">Oración de la mañana</span>
                         </a>
                     </li>
                     <li class="text-white hover:text-gray-900">
-                        <a href="/chantView" class="flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group">
-                            <i class="fa-solid fa-music text-gray-500 group-hover:text-white"></i>
+                        <a href="/chantView" class="flex items-center p-2 rounded-lg group transition-all duration-200 {{ request()->is('chantView') ? 'bg-sky-500 text-white shadow-md' : 'text-white hover:bg-gray-700' }}">
+                            <i class="fa-solid fa-music {{ request()->is('chantView') ? 'text-white' : 'text-gray-500 group-hover:text-white' }}"> </i>
                             <span class="ml-3">Canta y ora</span>
                         </a>
                     </li>
                     <li class="text-white hover:text-gray-900">
-                        <a href="/userView" class="flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group">
-                            <i class="fas fa-user-friends text-gray-500 group-hover:text-white"></i>
+                        <a href="/userView" class="flex items-center p-2 rounded-lg group transition-all duration-200 {{ request()->is('userView') ? 'bg-sky-500 text-white shadow-md' : 'text-white hover:bg-gray-700' }}">
+                            <i class="fas fa-user-friends {{ request()->is('userView') ? 'text-white' : 'text-gray-500 group-hover:text-white' }}"> </i>
                             <span class="ml-3">Usuarios</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('logout') }}" class="flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="fa-solid fa-arrow-right-from-bracket text-gray-500 group-hover:text-white"></i>
-                            <span class="ml-3">Cerrar Sesión</span>
+                        <a href="{{ route('logout') }}"
+                            class="flex items-center p-2 rounded-lg text-white transition-all duration-200 hover:bg-red-500 hover:shadow-md group"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+
+                            <i class="fa-solid fa-arrow-right-from-bracket text-gray-400 group-hover:text-white"></i>
+
+                            <span class="ml-3">
+                                Cerrar Sesión
+                            </span>
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+
+                        <form id="logout-form"
+                            action="{{ route('logout') }}"
+                            method="POST"
+                            class="d-none">
                             @csrf
                         </form>
                     </li>

@@ -100,18 +100,6 @@
                             required />
                     </div>
 
-                    <div class="w-full md:w-1/2 px-3 mb-4">
-                        <label class="block mb-2 text-sm font-medium text-gray-900">
-                            Lectura
-                        </label>
-
-                        <input
-                            type="text"
-                            v-model="homilia.reading"
-                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-                            required />
-                    </div>
-
                     <div class="w-full px-3">
                         <label class="block mb-2 text-sm font-medium text-gray-900">
                             Descripción corta
@@ -467,11 +455,8 @@
                         <select
                             v-model="homilia.celebration_type"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl block w-full p-3">
-
                             <option value="">Seleccione</option>
-
                             <option value="Domingo">Domingo</option>
-                            <option value="Solemnidad">Solemnidad</option>
                             <option value="Fiesta">Fiesta</option>
                             <option value="Memoria">Memoria</option>
 
@@ -658,7 +643,6 @@ const homilia = ref({
     citation: "",
     title: "",
     description: "",
-    reading: "",
     gospel: "",
     img: null,
     audio: null,
@@ -724,49 +708,30 @@ const getSolemnityId = (id, name) => {
     solemnity.value = name;
     solemnitys.value = [];
 }
+
 const handleFileChange = (event) => {
+
     const file = event.target.files[0];
 
     if (file) {
-        // Verificar si es una imagen
+
         if (file.type.startsWith('image/')) {
-            // Crear una URL temporal para la imagen seleccionada
-            selectedImage.value = URL.createObjectURL(file);
 
-            // Crear un objeto de la clase FileReader para leer el archivo de imagen
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                // Crear una nueva imagen para obtener sus dimensiones
-                const img = new Image();
-                img.src = e.target.result;
-                img.onload = () => {
-                    // Verificar si la imagen es horizontal (ancho mayor que altura)
-                    if (img.width > img.height) {
-                        // Asignar el archivo solo si es una imagen horizontal
-                        homilia.value.img = file;
-                    } else {
-                        // Limpiar el campo de entrada y mostrar una alerta
-                        event.target.value = null;
-                        selectedImage.value = null;
-                        solemnity.value = "";
-                        solemnitys.value = [];
-                        Swal.fire(
-                            "Atención!",
-                            "La imagen debe ser horizontal (ancho mayor que altura).",
-                            "warning"
-                        );
-                    }
-                };
-            };
+            if (selectedImage.value) {
+                URL.revokeObjectURL(selectedImage.value);
+            }
 
-            // Leer el archivo de imagen como una URL de datos
-            reader.readAsDataURL(file);
+            selectedImage.value =
+                URL.createObjectURL(file);
+
+            homilia.value.img = file;
+
         } else {
-            // Limpiar el campo de entrada si no es una imagen
+
             event.target.value = null;
             Swal.fire(
                 "Atención!",
-                "Por favor, seleccione un archivo de imagen válido (SVG, PNG, JPG, JPEG, GIF).",
+                "Por favor, seleccione una imagen válida.",
                 "warning"
             );
         }
@@ -850,7 +815,6 @@ const submit = () => {
     formData.append("celebration_type", homilia.value.celebration_type);
     formData.append("liturgical_time_id", homilia.value.liturgical_time_id);
     formData.append("gospel_id", homilia.value.gospel_id);
-    formData.append("reading", homilia.value.reading);
     formData.append("gospel", homilia.value.gospel);
     formData.append("img", homilia.value.img);
     formData.append("audio", homilia.value.audio);
@@ -1054,7 +1018,6 @@ const clearFrm = () => {
     homilia.value.date = "";
     homilia.value.citation = "";
     homilia.value.title = "";
-    homilia.value.reading = "";
     homilia.value.gospel = "";
     homilia.value.description = "";
     homilia.value.cycle = "";

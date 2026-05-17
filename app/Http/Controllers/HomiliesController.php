@@ -29,7 +29,6 @@ class HomiliesController extends Controller
             'date',
             'citation',
             'title',
-            'reading',
             'audio',
             'img',
             'solemnity_id'
@@ -73,7 +72,6 @@ class HomiliesController extends Controller
             'date' => $request->date,
             'citation' => $request->citation,
             'title' => $request->title,
-            'reading' => $request->reading,
             'gospel' => $request->gospel,
             'img' => $name_img,
             'audio' => $name_audio,
@@ -146,9 +144,7 @@ class HomiliesController extends Controller
             'date' => $request->date,
             'citation' => $request->citation,
             'title' => $request->title,
-            'reading' => $request->reading,
             'gospel' => $request->gospel,
-
             'message' => $request->messag,
             'user_id' => Auth::user()->id,
             'solemnity_id' => $solemnity ? $solemnity->id : null
@@ -440,7 +436,6 @@ class HomiliesController extends Controller
                 'h.date',
                 'h.citation',
                 'h.title',
-                'h.reading',
                 'h.gospel',
                 'h.message',
                 'h.audio',

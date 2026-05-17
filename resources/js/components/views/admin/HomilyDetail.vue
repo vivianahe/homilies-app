@@ -92,9 +92,6 @@
                 <h1 class="text-4xl font-bold text-gray-900 mb-3 leading-tight">
                     {{ homilia.title }}
                 </h1>
-                <p class="text-lg text-gray-500 mb-8">
-                    {{ homilia.reading }}
-                </p>
                 <div
                     v-if="homilia.description && homilia.description !== 'null'"
                     class="mb-8">
@@ -343,20 +340,16 @@ const homilia = ref({
     citation: "",
     title: "",
     description: "",
-    reading: "",
     gospel: "",
     img: null,
     audio: null,
     messag: "",
-
     cycle: "",
     week_number: "",
     celebration_type: "",
-
     gospel_name: "",
     liturgical_time_name: "",
     solemnity_name: "",
-
     user_id: user_id ? user_id : null,
 });
 
@@ -415,7 +408,6 @@ const getData = () => {
             homilia.value.date = response.data.date;
             homilia.value.citation = response.data.citation;
             homilia.value.title = response.data.title;
-            homilia.value.reading = response.data.reading;
             homilia.value.gospel = response.data.gospel;
             homilia.value.img =
                 response.data.img &&

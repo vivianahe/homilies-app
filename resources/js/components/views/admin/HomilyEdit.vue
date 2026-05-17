@@ -102,18 +102,6 @@
                             required />
                     </div>
 
-                    <div class="w-full md:w-1/2 px-3 mb-4">
-                        <label class="block mb-2 text-sm font-medium text-gray-900">
-                            Lectura
-                        </label>
-
-                        <input
-                            type="text"
-                            v-model="homilia.reading"
-                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-                            required />
-                    </div>
-
                     <div class="w-full px-3">
                         <label class="block mb-2 text-sm font-medium text-gray-900">
                             Descripción corta
@@ -469,11 +457,8 @@
                         <select
                             v-model="homilia.celebration_type"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl block w-full p-3">
-
                             <option value="">Seleccione</option>
-
                             <option value="Domingo">Domingo</option>
-                            <option value="Solemnidad">Solemnidad</option>
                             <option value="Fiesta">Fiesta</option>
                             <option value="Memoria">Memoria</option>
 
@@ -669,7 +654,6 @@ const homilia = ref({
     citation: "",
     title: "",
     description: "",
-    reading: "",
     gospel: "",
     img: null,
     audio: null,
@@ -768,7 +752,6 @@ const submit = () => {
     formData.append("celebration_type", homilia.value.celebration_type);
     formData.append("liturgical_time_id", homilia.value.liturgical_time_id);
     formData.append("gospel_id", homilia.value.gospel_id);
-    formData.append("reading", homilia.value.reading);
     formData.append("gospel", homilia.value.gospel);
     formData.append("messag", homilia.value.messag);
     formData.append("user_id", homilia.value.user_id);
@@ -996,7 +979,6 @@ const getData = () => {
             homilia.value.date = response.data.date;
             homilia.value.citation = response.data.citation;
             homilia.value.title = response.data.title;
-            homilia.value.reading = response.data.reading;
             homilia.value.gospel = response.data.gospel;
             homilia.value.messag = response.data.message;
             homilia.value.img = response.data.img;

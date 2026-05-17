@@ -82,28 +82,39 @@ const displayedHomilies = computed(() => {
   if (activeFilter.value === "audio") {
 
     return homilies.value.filter(
-      item => item.audio_url
+      item => item.audio
     );
-
   }
 
-  if (activeFilter.value === "video") {
+  if (activeFilter.value === "popular") {
+
+    return [...homilies.value]
+      .sort((a, b) => b.id - a.id)
+      .slice(0, 10);
+  }
+
+  if (activeFilter.value === "recent") {
+
+    return [...homilies.value]
+      .sort(
+        (a, b) =>
+          new Date(b.date) -
+          new Date(a.date)
+      );
+  }
+
+  if (activeFilter.value === "domingo") {
 
     return homilies.value.filter(
-      item => item.video_url
+      item =>
+        item.celebration_type === "Domingo"
     );
-
   }
 
   return homilies.value;
 
 });
 
-/*
-|--------------------------------------------------------------------------
-| METHODS
-|--------------------------------------------------------------------------
-*/
 
 const getHomilies = async (date = "") => {
 
@@ -111,7 +122,7 @@ const getHomilies = async (date = "") => {
 
     loading.value = true;
 
-    const { data } = await axios.get("/homilies");
+    const { data } = await axios.get("/homiliesNew");
 
     if (date) {
 
@@ -172,11 +183,6 @@ const handleSelectDate = (date) => {
 
 };
 
-/*
-|--------------------------------------------------------------------------
-| LIFECYCLE
-|--------------------------------------------------------------------------
-*/
 
 onMounted(() => {
 
@@ -191,38 +197,22 @@ onMounted(() => {
 
 .homily-page{
   width: 100%;
-
   max-width: 100%;
-
   margin: 0 auto;
-
   padding: 32px 42px;
-
   display: grid;
-
-  grid-template-columns: 280px minmax(0, 1fr);
-
-  gap: 36px;
-
+  grid-template-columns: 270px minmax(0, 1fr);
+  gap: 26px;
   align-items: start;
 }
 
 .homily-content{
   width: 100%;
-
   min-width: 0;
-
   display: flex;
   flex-direction: column;
-
   gap: 36px;
 }
-
-/*
-|--------------------------------------------------------------------------
-| RESPONSIVE
-|--------------------------------------------------------------------------
-*/
 
 @media (max-width: 1600px){
 

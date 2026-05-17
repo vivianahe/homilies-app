@@ -463,14 +463,14 @@ const confirmarEliminar = (id) => {
   Swal.fire({
     title: '¿Seguro?',
     text: "No podrás revertirlo.",
-    icon: 'warning',
+    icon: 'question',
     showCancelButton: true,
     confirmButtonText: 'Sí, bórralo!',
     cancelButtonText: 'Cancelar',
     buttonsStyling: false,
     customClass: {
       actions: 'flex items-center justify-end gap-2 mt-4',
-      confirmButton: 'inline-flex items-center px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700',
+      confirmButton: 'inline-flex items-center px-4 py-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600',
       cancelButton: 'inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 hover:bg-gray-200'
     },
     background: '#ffffff'

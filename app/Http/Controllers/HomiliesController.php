@@ -23,7 +23,20 @@ class HomiliesController extends Controller
      */
     public function index()
     {
-        return Homilie::orderBy('homilies.date', 'DESC')->get();
+        return Homilie::select(
+
+            'id',
+            'date',
+            'citation',
+            'title',
+            'reading',
+            'audio',
+            'img',
+            'solemnity_id'
+
+        )
+        ->orderBy('date', 'DESC')
+        ->get();
     }
 
     /**
@@ -254,8 +267,29 @@ class HomiliesController extends Controller
     {
         $homilia = Homilie::find($id);
         if ($homilia) {
-            unlink(public_path('/support/imgHomily/') . $homilia->img);
-            unlink(public_path('/support/audioHomily/') . $homilia->audio);
+            $imgPath = public_path('/support/imgHomily/') . $homilia->img;
+
+            if (
+                $homilia->img &&
+                file_exists($imgPath)
+            ) {
+                unlink($imgPath);
+            }
+
+            $audioPath = public_path('/support/audioHomily/') . $homilia->audio;
+
+            if (
+                $homilia->audio &&
+                file_exists($audioPath)
+            ) {
+                unlink($audioPath);
+            }
+
+            HomilyLiturgicalDay::where(
+                'homily_id',
+                $homilia->id
+            )->delete();
+
             $homilia->delete();
             return response()->json([
                 'data' => "ok",
@@ -360,5 +394,72 @@ class HomiliesController extends Controller
         return response()->json(
             Gospel::orderBy('name')->get()
         );
+    }
+    
+    public function getHomiliesNew()
+    {
+        $data = Homilie::from('homilies as h')
+
+            ->leftJoin(
+                'solemnity as s',
+                's.id',
+                '=',
+                'h.solemnity_id'
+            )
+
+            ->leftJoin(
+                'homily_liturgical_day as hld',
+                'hld.homily_id',
+                '=',
+                'h.id'
+            )
+
+            ->leftJoin(
+                'liturgical_days as ld',
+                'ld.id',
+                '=',
+                'hld.liturgical_day_id'
+            )
+
+            ->leftJoin(
+                'liturgical_times as lt',
+                'lt.id',
+                '=',
+                'ld.liturgical_time_id'
+            )
+
+            ->leftJoin(
+                'gospels as g',
+                'g.id',
+                '=',
+                'ld.gospel_id'
+            )
+
+            ->select(
+                'h.id',
+                'h.date',
+                'h.citation',
+                'h.title',
+                'h.reading',
+                'h.gospel',
+                'h.message',
+                'h.audio',
+                'h.img',
+                'h.solemnity_id',
+                'ld.description',
+                'ld.cycle',
+                'ld.week_number',
+                'ld.celebration_type',
+                'ld.day_name',
+                'lt.name as liturgical_time',
+                'g.name as gospel_name',
+                's.name as solemnity_name'
+            )
+
+            ->orderBy('h.date', 'DESC')
+
+            ->get();
+
+        return response()->json($data);
     }
 }

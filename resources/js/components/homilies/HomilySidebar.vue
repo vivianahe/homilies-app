@@ -185,11 +185,6 @@ const liturgicalSeasons = ref([
   },
 ]);
 
-/*
-|--------------------------------------------------------------------------
-| METHODS
-|--------------------------------------------------------------------------
-*/
 
 const emitSelectDate = (date) => {
 
@@ -197,93 +192,73 @@ const emitSelectDate = (date) => {
 
 };
 </script>
-
 <style scoped>
 
 .homily-sidebar{
   display: flex;
   flex-direction: column;
 
-  gap: 24px;
+  gap: 14px;
 
   position: sticky;
 
-  top: 20px;
+  top: 18px;
 }
-
-/*
-|--------------------------------------------------------------------------
-| CARD
-|--------------------------------------------------------------------------
-*/
 
 .sidebar-card{
   background: #ffffff;
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid #e9edf5;
 
-  border-radius: 24px;
+  border-radius: 20px;
 
-  padding: 24px;
+  padding: 18px;
+
+  box-shadow:
+    0 2px 10px rgba(15, 23, 42, 0.02);
 }
 
-/*
-|--------------------------------------------------------------------------
-| TITLE
-|--------------------------------------------------------------------------
-*/
-
 .sidebar-title{
-  font-size: 20px;
+  font-size: 16px;
 
   font-weight: 800;
 
   color: #0f172a;
 
-  margin-bottom: 22px;
-}
+  line-height: 1.3;
 
-/*
-|--------------------------------------------------------------------------
-| MENU
-|--------------------------------------------------------------------------
-*/
+  margin-bottom: 16px;
+}
 
 .sidebar-menu{
   display: flex;
   flex-direction: column;
 
-  gap: 10px;
+  gap: 4px;
 }
 
 .sidebar-item{
   list-style: none;
 }
 
-/*
-|--------------------------------------------------------------------------
-| LINK
-|--------------------------------------------------------------------------
-*/
-
 .sidebar-link{
   width: 100%;
 
   display: flex;
 
-  align-items: flex-start;
+  align-items: center;
 
-  gap: 14px;
+  gap: 10px;
 
-  padding: 14px 16px;
+  padding: 10px 12px;
 
-  border-radius: 14px;
+  border-radius: 12px;
 
-  transition: all 0.2s ease;
+  transition: all 0.18s ease;
 
   color: #334155;
 
-  font-size: 15px;
+  font-size: 14px;
 
   font-weight: 500;
 
@@ -292,89 +267,116 @@ const emitSelectDate = (date) => {
 
 .sidebar-link:hover{
   background: #f8fafc;
-
-  transform: translateX(2px);
 }
-
-/*
-|--------------------------------------------------------------------------
-| ICON
-|--------------------------------------------------------------------------
-*/
 
 .sidebar-link i{
-  width: 18px;
+  width: 14px;
 
-  min-width: 18px;
+  min-width: 14px;
 
-  margin-top: 3px;
+  font-size: 12px;
 
-  font-size: 14px;
+  color: #475569;
 }
-
-/*
-|--------------------------------------------------------------------------
-| TEXT
-|--------------------------------------------------------------------------
-*/
 
 .sidebar-link span{
   flex: 1;
 
-  line-height: 1.45;
-
-  word-break: break-word;
+  line-height: 1.3;
 }
 
-/*
-|--------------------------------------------------------------------------
-| ACTIVE
-|--------------------------------------------------------------------------
-*/
-
 .sidebar-link.active{
-  background: #eef2ff;
+  background: #f3f0ff;
 
-  color: #4f46e5;
+  color: #5b21b6;
 
   font-weight: 700;
 }
 
-/*
-|--------------------------------------------------------------------------
-| BUTTON
-|--------------------------------------------------------------------------
-*/
+.sidebar-link.active i{
+  color: #7c3aed;
+}
 
 .calendar-button{
   width: 100%;
 
-  margin-top: 20px;
+  margin-top: 16px;
 
   background: #1d4ed8;
 
   color: white;
 
-  padding: 15px 18px;
+  height: 46px;
 
-  border-radius: 16px;
+  border-radius: 14px;
+
+  font-size: 14px;
 
   font-weight: 700;
 
   transition: all 0.2s ease;
+
+  box-shadow:
+    0 8px 18px rgba(37, 99, 235, 0.15);
 }
 
 .calendar-button:hover{
-  opacity: 0.92;
-
   transform: translateY(-1px);
+
+  background: #1e40af;
 }
 
-/*
-|--------------------------------------------------------------------------
-| RESPONSIVE
-|--------------------------------------------------------------------------
-*/
+:deep(.calendar-container){
+  border: none !important;
+
+  padding: 0 !important;
+
+  box-shadow: none !important;
+}
+
+:deep(.vc-container){
+  width: 100% !important;
+
+  border: none !important;
+
+  background: transparent !important;
+
+  font-family: inherit !important;
+}
+
+:deep(.vc-header){
+  margin-bottom: 8px;
+}
+
+:deep(.vc-title){
+  font-size: 15px !important;
+
+  font-weight: 700 !important;
+
+  color: #0f172a !important;
+}
+
+:deep(.vc-weekday){
+  font-size: 11px !important;
+
+  color: #64748b !important;
+
+  font-weight: 600 !important;
+}
+
+:deep(.vc-day-content){
+  width: 34px !important;
+
+  height: 34px !important;
+
+  font-size: 13px !important;
+
+  border-radius: 10px !important;
+}
+
+:deep(.vc-highlight){
+  background: #4f46e5 !important;
+}
 
 @media (max-width: 1200px){
 

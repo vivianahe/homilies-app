@@ -1,146 +1,110 @@
 <template>
-
   <section
     v-if="homilyData"
     class="homily-hero"
   >
-    <!-- HERO PRINCIPAL -->
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+
+      <span>
+        Homilías
+      </span>
+
+      <i class="fa-solid fa-chevron-right"></i>
+
+      <span>
+        {{ homilyData.liturgical_time }}
+      </span>
+
+      <i class="fa-solid fa-chevron-right"></i>
+
+      <span class="breadcrumb-current">
+        {{ homilyData.solemnity_name }}
+      </span>
+
+    </div>
+
     <div class="hero-main">
 
-      <!-- CONTENIDO -->
       <div class="hero-content">
 
-        <span class="hero-subtitle">
-          {{ homilyData.cycle || "Ciclo A" }},
-          {{ homilyData.liturgical_time || "Tiempo de Pascua" }}
-        </span>
+        <div class="hero-tags">
+
+          <span class="hero-tag">
+            Ciclo {{ homilyData.cycle }}
+          </span>
+
+          <span class="hero-tag">
+            {{ homilyData.liturgical_time }}
+          </span>
+
+          <span class="hero-tag">
+            Semana {{ homilyData.week_number }}
+          </span>
+
+        </div>
 
         <h1 class="hero-title">
           {{ homilyData.title }}
         </h1>
 
         <p class="hero-description">
-          {{
-            homilyData.description ||
-            "Este domingo se celebra dentro del tiempo litúrgico correspondiente. Las lecturas y reflexiones ayudan a profundizar en el mensaje del Evangelio."
-          }}
+          {{ homilyData.description }}
         </p>
 
+        <div class="hero-info">
+
+          <div class="hero-info-item">
+
+            <i class="fa-regular fa-calendar"></i>
+
+            <span>
+              {{ homilyData.date }}
+            </span>
+
+          </div>
+
+          <div class="hero-info-item">
+
+            <i class="fa-solid fa-book-bible"></i>
+
+            <span>
+              {{ homilyData.citation }}
+            </span>
+
+          </div>
+
+          <div class="hero-info-item">
+
+            <i class="fa-solid fa-church"></i>
+
+            <span>
+              {{ homilyData.celebration_type }}
+            </span>
+
+          </div>
+
+        </div>
+
       </div>
 
-      <!-- IMAGEN -->
       <div class="hero-image-container">
 
-      <img
-        :src="'/support/imgHomily/' + homilyData.img"
-        alt="Homilía"
-        class="hero-image"
-      />
-
-      </div>
-
-    </div>
-
-    <!-- LECTURAS -->
-    <div class="readings-grid">
-
-      <!-- PRIMERA LECTURA -->
-      <div class="reading-card">
-
-        <div class="reading-icon">
-          <i class="fa-solid fa-book-open"></i>
-        </div>
-
-        <div class="reading-content">
-
-          <h3 class="reading-title">
-            Primera lectura
-          </h3>
-
-          <p class="reading-reference">
-            {{ homilyData.first_reading || "Hechos 8, 5-8. 14-17" }}
-          </p>
-
-          <p class="reading-text">
-            {{
-              homilyData.first_reading_text ||
-              "La gente acogía con alegría la palabra de Dios."
-            }}
-          </p>
-
-        </div>
-
-      </div>
-
-      <!-- SALMO -->
-      <div class="reading-card">
-
-        <div class="reading-icon">
-          <i class="fa-solid fa-book-bible"></i>
-        </div>
-
-        <div class="reading-content">
-
-          <h3 class="reading-title">
-            Salmo responsorial
-          </h3>
-
-          <p class="reading-reference">
-            {{ homilyData.psalm || "Salmo 65(66)" }}
-          </p>
-
-          <p class="reading-text">
-            {{
-              homilyData.psalm_text ||
-              "Aclama al Señor, tierra entera."
-            }}
-          </p>
-
-        </div>
-
-      </div>
-
-      <!-- EVANGELIO -->
-      <div class="reading-card">
-
-        <div class="reading-icon">
-          <i class="fa-solid fa-cross"></i>
-        </div>
-
-        <div class="reading-content">
-
-          <h3 class="reading-title">
-            Evangelio
-          </h3>
-
-          <p class="reading-reference">
-            {{ homilyData.gospel || "Juan 14, 15-21" }}
-          </p>
-
-          <p class="reading-text">
-            {{
-              homilyData.gospel_text ||
-              "El Espíritu Santo les enseñará todas las cosas."
-            }}
-          </p>
-
-        </div>
+        <img
+          :src="'/support/imgHomily/' + homilyData.img"
+          alt="Homilía"
+          class="hero-image"
+        />
 
       </div>
 
     </div>
 
   </section>
-
 </template>
 
 <script setup>
-
-/*
-|--------------------------------------------------------------------------
-| PROPS
-|--------------------------------------------------------------------------
-*/
 
 defineProps({
   homilyData: {
@@ -150,189 +114,192 @@ defineProps({
 });
 
 </script>
-
 <style scoped>
 
 .homily-hero{
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
 
-/*
-|--------------------------------------------------------------------------
-| BREADCRUMB
-|--------------------------------------------------------------------------
-*/
+  gap: 26px;
+}
 
 .breadcrumb{
   display: flex;
+
   align-items: center;
+
+  gap: 12px;
+
   flex-wrap: wrap;
-  gap: 10px;
 
   font-size: 14px;
 
   color: #64748b;
+
+  font-weight: 500;
+}
+
+.breadcrumb i{
+  font-size: 11px;
+
+  color: #94a3b8;
 }
 
 .breadcrumb-current{
   color: #0f172a;
-  font-weight: 600;
-}
 
-/*
-|--------------------------------------------------------------------------
-| HERO
-|--------------------------------------------------------------------------
-*/
+  font-weight: 700;
+}
 
 .hero-main{
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 24px;
+
+  grid-template-columns: minmax(0, 1fr) 610px;
+
+  gap: 44px;
 
   align-items: center;
 }
 
 .hero-content{
   display: flex;
+
   flex-direction: column;
-  padding: 0;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding-top: 0px;
-  padding-bottom: 0px;
+
+  justify-content: center;
 }
 
-.hero-subtitle{
-  font-size: 25px;
-  font-weight: 600;
-
-  color: #475569;
-}
-
-.hero-title{
-  font-size: 52px;
-  line-height: 1.1;
-  font-weight: 800;
-
-  color: #0f172a;
-}
-
-.hero-description{
-  font-size: 18px;
-  line-height: 1.8;
-
-  color: #475569;
-}
-
-.hero-image-container{
-  width: 100%;
-  height: 100%;
-}
-
-.hero-image{
-  width: 100%;
-  height: 100%;
-  min-height: 320px;
-  object-fit: cover;
-  border-radius: 24px;
-}
-
-/*
-|--------------------------------------------------------------------------
-| LECTURAS
-|--------------------------------------------------------------------------
-*/
-
-.readings-grid{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.reading-card{
-  background: white;
-
-  border: 1px solid #e2e8f0;
-
-  border-radius: 20px;
-
-  padding: 24px;
-
+.hero-tags{
   display: flex;
-  gap: 18px;
 
-  transition: 0.2s ease;
+  align-items: center;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+  margin-bottom: 22px;
 }
 
-.reading-card:hover{
-  transform: translateY(-2px);
+.hero-tag{
+  height: 38px;
 
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
+  padding: 0 18px;
 
-.reading-icon{
-  width: 52px;
-  height: 52px;
-
-  min-width: 52px;
-
-  border-radius: 14px;
+  border-radius: 999px;
 
   background: #eef2ff;
 
   color: #1d4ed8;
 
-  display: flex;
+  display: inline-flex;
+
   align-items: center;
+
   justify-content: center;
 
-  font-size: 22px;
-}
+  font-size: 14px;
 
-.reading-content{
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.reading-title{
-  font-size: 16px;
   font-weight: 700;
 
+  border: 1px solid #dbeafe;
+}
+
+.hero-title{
+  font-size: 62px;
+
+  line-height: 1;
+
+  letter-spacing: -2px;
+
+  font-weight: 800;
+
   color: #0f172a;
+
+  margin-bottom: 24px;
 }
 
-.reading-reference{
-  font-size: 15px;
-  font-weight: 600;
+.hero-description{
+  font-size: 20px;
 
-  color: #1d4ed8;
-}
-
-.reading-text{
-  font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.9;
 
   color: #475569;
+
+  max-width: 760px;
+
+  margin-bottom: 30px;
 }
 
-/*
-|--------------------------------------------------------------------------
-| RESPONSIVE
-|--------------------------------------------------------------------------
-*/
+.hero-info{
+  display: flex;
+
+  align-items: center;
+
+  gap: 28px;
+
+  flex-wrap: wrap;
+}
+
+.hero-info-item{
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: #334155;
+
+  font-size: 15px;
+
+  font-weight: 600;
+}
+
+.hero-info-item i{
+  color: #2563eb;
+}
+
+.hero-image-container{
+  width: 100%;
+}
+
+.hero-image{
+  width: 100%;
+
+  height: 430px;
+
+  object-fit: cover;
+
+  border-radius: 32px;
+
+  box-shadow:
+    0 20px 45px rgba(15, 23, 42, 0.12);
+
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+@media (max-width: 1400px){
+
+  .hero-main{
+    grid-template-columns: 1fr 520px;
+  }
+
+  .hero-title{
+    font-size: 54px;
+  }
+
+}
 
 @media (max-width: 1200px){
 
   .hero-main{
     grid-template-columns: 1fr;
+
+    gap: 28px;
   }
 
-  .readings-grid{
-    grid-template-columns: 1fr;
+  .hero-image{
+    height: auto;
   }
 
 }
@@ -340,11 +307,19 @@ defineProps({
 @media (max-width: 768px){
 
   .hero-title{
-    font-size: 38px;
+    font-size: 40px;
+
+    line-height: 1.08;
   }
 
   .hero-description{
     font-size: 16px;
+
+    line-height: 1.7;
+  }
+
+  .hero-info{
+    gap: 16px;
   }
 
 }

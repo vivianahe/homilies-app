@@ -784,6 +784,8 @@ const submit = () => {
     };
     if (
         homilia.value.gospel !== "" &&
+        homilia.value.img !== null &&
+        homilia.value.audio !== null &&
         homilia.value.liturgical_time_id !== "" &&
         homilia.value.gospel_id !== "" &&
         homilia.value.cycle !== ""
@@ -844,37 +846,136 @@ const submit = () => {
             })
             .catch((error) => {
                 loader.value = true;
-                console.error(error);
+
+                let mensaje =
+                    'No fue posible actualizar la homilía.';
+
+                const backendMessage =
+                    error.response?.data?.message || '';
+                if (
+                    backendMessage.includes(
+                        'liturgical_days_slug_unique'
+                    )
+                ) {
+
+                    mensaje =
+                        'Ya existe una homilía con ese título y fecha.';
+
+                }
+                else if (
+                    backendMessage.includes('audio')
+                ) {
+
+                    mensaje =
+                        'El archivo de audio no es válido.';
+
+                }
+                else if (
+                    backendMessage.includes('image') ||
+                    backendMessage.includes('img')
+                ) {
+
+                    mensaje =
+                        'La imagen seleccionada no es válida.';
+                }
 
                 Swal.fire({
                     title: 'Ocurrió un error',
-                    text: 'No fue posible actualizar la homilía.',
+
+                    text: mensaje,
+
                     icon: 'error',
                     background: '#ffffff',
                     color: '#1f2937',
+
+                    confirmButtonText: 'Entendido',
+
                     confirmButtonColor: '#ef4444',
 
+                    buttonsStyling: false,
+
                     customClass: {
-                        popup: 'rounded-3xl shadow-2xl border border-gray-100',
-                        title: 'text-xl font-bold text-gray-800',
-                        htmlContainer: 'text-gray-500 text-sm'
+
+                        popup:
+                            'rounded-[32px] shadow-2xl border border-gray-100 px-8 py-7',
+
+                        title:
+                            'text-2xl font-bold text-gray-800 mt-3',
+
+                        htmlContainer:
+                            'text-gray-500 text-sm leading-6',
+
+                        confirmButton:
+                            '!bg-red-500 hover:!bg-red-600 !text-white rounded-2xl px-6 py-3 font-semibold shadow-sm transition-all duration-200'
                     }
                 });
             });
     } else {
         loader.value = true;
-        Swal.fire(
-            "Atención!",
-            "Todos los campos deben se diligenciados!",
-            "warning"
-        );
+        Swal.fire({
+            title: 'Campos incompletos',
+            html: `
+                <div class="mt-2">
+
+                    <p class="text-gray-500 text-sm leading-6">
+                        Debes completar los campos requeridos para actualizar la homilía.
+                    </p>
+
+                    <div class="mt-5 bg-amber-50 border border-amber-100 rounded-2xl p-4 text-left">
+
+                        <div class="flex items-start gap-3">
+
+                            <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+
+                                <i class="fa-solid fa-circle-exclamation text-amber-500"></i>
+
+                            </div>
+
+                            <div>
+
+                                <p class="font-semibold text-gray-800 text-sm">
+                                    Campos obligatorios
+                                </p>
+
+                                <p class="text-xs text-gray-500 mt-1 leading-5">
+                                    Verifica evangelio, imagen, audio y configuración litúrgica.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            `,
+
+            icon: 'warning',
+            background: '#ffffff',
+            color: '#1f2937',
+            confirmButtonText: 'Entendido',
+            confirmButtonColor: '#f59e0b',
+            buttonsStyling: false,
+            customClass: {
+                popup:
+                    'rounded-[32px] shadow-2xl border border-gray-100 px-8 py-7',
+
+                title:
+                    'text-3xl font-bold text-gray-800 mt-3',
+
+                htmlContainer:
+                    'text-gray-500 text-sm',
+
+                confirmButton:
+                    '!bg-amber-500 hover:!bg-amber-600 !text-white rounded-2xl px-6 py-3 font-semibold shadow-sm border-0 focus:outline-none'
+            }
+        });
     }
 };
 const volver = () => {
     router.push({ name: 'homilyAllAdm' });
 }
 const closeAudio = () => {
-    // Actualiza audioFile.value para que shouldShowAudio sea false
     audioFile.value = false;
     homilia.value.audio = null;
 };

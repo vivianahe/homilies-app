@@ -56,7 +56,6 @@ const loading = ref(false);
 const getDataHomilies = async () => {
 
   loading.value = true;
-  await nextTick();
 
   try {
     const { data } = await axios.get('/getHomilies');
@@ -89,10 +88,57 @@ const eliminar = async (id = null) => {
   const { data } = await axios.delete('/getHomilies/' + id);
   if (data) {
     if (data.data === "ok") {
-      Swal.fire("Correcto!", data.message, "success");
+
+      Swal.fire({
+
+        title: 'Homilía eliminada',
+        text: data.message,
+        icon: 'success',
+
+        background: '#ffffff',
+        color: '#1f2937',
+
+        timer: 2200,
+        timerProgressBar: true,
+        showConfirmButton: false,
+
+        customClass: {
+
+          popup:
+            'rounded-[32px] shadow-2xl border border-gray-100 px-8 py-7',
+
+          title:
+            'text-3xl font-bold text-gray-800 mt-3',
+
+          htmlContainer:
+            'text-gray-500 text-sm',
+
+          icon:
+            'border-emerald-200'
+        }
+      });
+
       getDataHomilies();
+
     } else {
-      Swal.fire("Atención!", response.data.message, "warning");
+
+      Swal.fire({
+
+        title: 'Atención',
+        text: data.message,
+        icon: 'warning',
+        background: '#ffffff',
+        color: '#1f2937',
+        confirmButtonColor: '#f59e0b',
+        customClass: {
+          popup:
+            'rounded-[32px] shadow-2xl border border-gray-100 px-8 py-7',
+          title:
+            'text-2xl font-bold text-gray-800',
+          htmlContainer:
+            'text-gray-500 text-sm'
+        }
+      });
     }
   }
 };
@@ -114,7 +160,14 @@ const descargarAudio = (homilia) => {
 };
 
 onMounted(() => {
-  initFlowbite();
+
   getDataHomilies();
+
+  setTimeout(() => {
+
+    initFlowbite();
+
+  }, 100);
+
 });
 </script>

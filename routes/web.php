@@ -28,6 +28,7 @@ Route::view('/donateView', 'pag')->name('donateView');
 Route::view('/contact', 'pag')->name('contact');
 
 Route::resource('/homilies', HomiliesController::class);
+    Route::get('/homiliesNew',[HomiliesController::class, 'getHomiliesNew']);
 Route::get('/homilies_desc', [HomiliesController::class, 'getDescHomily']);
 Route::post('/contact', [HomiliesController::class, 'postFrmContact']);
 Route::apiResource("prayers", PrayerController::class);

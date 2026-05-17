@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Homilie;
 use App\Models\Solemnity;
+use App\Models\LiturgicalTime;
+use App\Models\Gospel;
+use App\Models\LiturgicalDay;
+use App\Models\HomilyLiturgicalDay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\ContactFormNotification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class HomiliesController extends Controller
 {
@@ -50,7 +56,7 @@ class HomiliesController extends Controller
         $img->move(public_path('support/imgHomily'), $name_img);
         $audio->move(public_path('support/audioHomily'), $name_audio);
 
-        $hom = Homilie::Create([
+        $hom = Homilie::create([
             'date' => $request->date,
             'citation' => $request->citation,
             'title' => $request->title,
@@ -61,6 +67,37 @@ class HomiliesController extends Controller
             'message' => $request->messag,
             'user_id' => Auth::user()->id,
             'solemnity_id' => $solemnity ? $solemnity->id : null
+        ]);
+
+
+        $liturgicalDay = LiturgicalDay::create([
+
+            'title' => $request->title,
+
+            'slug' => Str::slug(
+                $request->title . '-' . $request->date
+            ),
+
+            'liturgical_time_id' => $request->liturgical_time_id,
+
+            'gospel_id' => $request->gospel_id,
+
+            'cycle' => $request->cycle,
+
+            'week_number' => $request->week_number ?: 0,
+
+            'day_name' => Carbon::parse($request->date)
+                ->locale('es')
+                ->translatedFormat('l'),
+
+            'celebration_type' => $request->celebration_type,
+
+            'description' => $request->description ?? '',
+        ]);
+
+        HomilyLiturgicalDay::create([
+            'homily_id' => $hom->id,
+            'liturgical_day_id' => $liturgicalDay->id
         ]);
 
         return response()->json([
@@ -79,27 +116,7 @@ class HomiliesController extends Controller
      */
     public function updateHomilia(Request $request)
     {
-        $imgHom = Homilie::where('img', $request->img)->exists();
-        $dataHom = Homilie::where('id', $request->id)->first();
-        if ($imgHom) {
-            $name_img = $request->img;
-        } else {
-            unlink(public_path('support/imgHomily/') . $dataHom->img);
-            $img = $request->file('img');
-            $fileImg = $img->getClientOriginalExtension();
-            $name_img = $request->date . '_' . date('H_i_s') . 'img.' . $fileImg;
-            Storage::disk('imgHomily')->put($name_img, file_get_contents($img->getRealPath()));
-        }
-        $audHom = Homilie::where('audio', $request->audio)->exists();
-        if ($audHom) {
-            $name_audio = $request->audio;
-        } else {
-            unlink(public_path('support/audioHomily/') . $dataHom->audio);
-            $audio = $request->file('audio');
-            $fileAudio = $audio->getClientOriginalExtension();
-            $name_audio = $request->date . '_' . date('H_i_s') .  'audio.' . $fileAudio;
-            Storage::disk('audioHomily')->put($name_audio, file_get_contents($audio->getRealPath()));
-        }
+
         $solemnity = null;
 
         if ($request->solemnity !== null) {
@@ -107,20 +124,125 @@ class HomiliesController extends Controller
                 'name' => $request->solemnity
             ]);
         }
-        Homilie::where('id', $request->id)->update([
+
+
+        $homily = Homilie::where('id', $request->id)->first();
+
+        $updateData = [
+
             'date' => $request->date,
             'citation' => $request->citation,
             'title' => $request->title,
             'reading' => $request->reading,
             'gospel' => $request->gospel,
-            'img' => $name_img,
-            'audio' => $name_audio,
+
             'message' => $request->messag,
             'user_id' => Auth::user()->id,
             'solemnity_id' => $solemnity ? $solemnity->id : null
-        ]);
+        ];
+
+        if ($request->hasFile('img')) {
+
+            $img = $request->file('img');
+
+            $fileImg = $img->getClientOriginalExtension();
+
+            $name_img = $request->date . '_' . date('H_i_s') . 'img.' . $fileImg;
+
+            $img->move(public_path('support/imgHomily'), $name_img);
+
+            $updateData['img'] = $name_img;
+        }
+
+        if ($request->hasFile('audio')) {
+
+            $audio = $request->file('audio');
+
+            $fileAudio = $audio->getClientOriginalExtension();
+
+            $name_audio = $request->date . '_' . date('H_i_s') . 'audio.' . $fileAudio;
+
+            $audio->move(public_path('support/audioHomily'), $name_audio);
+
+            $updateData['audio'] = $name_audio;
+        }
+
+        $homily->update($updateData);
+
+
+        $relation = HomilyLiturgicalDay::where(
+            'homily_id',
+            $request->id
+        )->first();
+
+
+        if ($relation) {
+
+            LiturgicalDay::where(
+                'id',
+                $relation->liturgical_day_id
+            )->update([
+
+                'title' => $request->title,
+
+                'slug' => Str::slug(
+                    $request->title . '-' . $request->date
+                ),
+
+                'liturgical_time_id' => $request->liturgical_time_id,
+
+                'gospel_id' => $request->gospel_id,
+
+                'cycle' => $request->cycle,
+
+                'week_number' => $request->week_number ?: 0,
+
+                'celebration_type' => $request->celebration_type,
+
+                'description' => $request->description ?? '',
+
+                'day_name' => Carbon::parse($request->date)
+                    ->locale('es')
+                    ->translatedFormat('l'),
+            ]);
+
+        } else {
+
+            $liturgicalDay = LiturgicalDay::create([
+
+                'title' => $request->title,
+
+                'slug' => Str::slug(
+                    $request->title . '-' . $request->date
+                ),
+
+                'liturgical_time_id' => $request->liturgical_time_id,
+
+                'gospel_id' => $request->gospel_id,
+
+                'cycle' => $request->cycle,
+
+                'week_number' => $request->week_number ?: 0,
+
+                'celebration_type' => $request->celebration_type,
+
+                'description' => $request->description ?? '',
+
+                'day_name' => Carbon::parse($request->date)
+                    ->locale('es')
+                    ->translatedFormat('l'),
+            ]);
+
+            HomilyLiturgicalDay::create([
+
+                'homily_id' => $request->id,
+
+                'liturgical_day_id' => $liturgicalDay->id
+            ]);
+        }
+
         return response()->json([
-            'data' => false,
+            'data' => true,
             'message' => "Homilía actualizada exitosamente!"
         ]);
     }
@@ -165,10 +287,52 @@ class HomiliesController extends Controller
     }
     public function getHomeliasId(string $id)
     {
-        $data = Homilie::leftJoin('solemnity', 'solemnity.id', '=', 'homilies.solemnity_id')
-        ->select('homilies.*', 'solemnity.name as solemnity_name')
-        ->where('homilies.id', $id)
-        ->first();    
+        $data = Homilie::from('homilies as h')
+
+            ->leftJoin(
+                'solemnity as s',
+                's.id',
+                '=',
+                'h.solemnity_id'
+            )
+
+            ->leftJoin(
+                'homily_liturgical_day as hld',
+                'hld.homily_id',
+                '=',
+                'h.id'
+            )
+
+            ->leftJoin(
+                'liturgical_days as ld',
+                'ld.id',
+                '=',
+                'hld.liturgical_day_id'
+            )
+
+            ->select(
+
+                'h.*',
+
+                's.name as solemnity_name',
+
+                'ld.description',
+
+                'ld.cycle',
+
+                'ld.week_number',
+
+                'ld.celebration_type',
+
+                'ld.liturgical_time_id',
+
+                'ld.gospel_id'
+
+            )
+
+            ->where('h.id', $id)
+
+            ->first();
         return response()->json($data);
     }
 
@@ -182,5 +346,19 @@ class HomiliesController extends Controller
         }
         $position = Solemnity::where($json)->limit(5)->get();
         return response()->json($position);
+    }
+
+    public function getLiturgicalTimes()
+    {
+        return response()->json(
+            LiturgicalTime::orderBy('name')->get()
+        );
+    }
+
+    public function getGospels()
+    {
+        return response()->json(
+            Gospel::orderBy('name')->get()
+        );
     }
 }

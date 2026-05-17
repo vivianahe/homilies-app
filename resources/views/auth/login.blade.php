@@ -153,7 +153,7 @@
                     </p>
 
                     <h2 class="text-white text-2xl font-semibold mt-2">
-                        Homilías Uriel
+                        Homilías Padre Uriel Franco   
                     </h2>
 
                 </div>

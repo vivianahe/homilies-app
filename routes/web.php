@@ -49,4 +49,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/getSolemnity/{id}', [HomiliesController::class, 'getSolemnity']);
     Route::apiResource("chants", ChantController::class)->only(['store','update','destroy']);
     Route::view('/chantView', 'home')->name('chantView');
+    Route::get('/getLiturgicalTimes', [HomiliesController::class, 'getLiturgicalTimes']);
+    Route::get('/getGospels', [HomiliesController::class, 'getGospels']);
 });

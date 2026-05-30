@@ -110,7 +110,7 @@
 
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 mb-10">
                     <div
                         v-if="homilia.cycle"
                         class="bg-gray-50 border border-gray-200 rounded-2xl p-5">
@@ -125,6 +125,19 @@
 
                     </div>
                     <div
+                        v-if="homilia.liturgical_time_name"
+                        class="bg-gray-50 border border-gray-200 rounded-2xl p-5">
+
+                        <p class="text-xs uppercase tracking-wide text-gray-400 mb-2">
+                            Tiempo litúrgico
+                        </p>
+
+                        <p class="text-lg font-bold text-gray-800">
+                            {{ homilia.liturgical_time_name }}
+                        </p>
+
+                    </div>
+                    <div
                         v-if="homilia.week_number"
                         class="bg-gray-50 border border-gray-200 rounded-2xl p-5">
 
@@ -133,7 +146,7 @@
                         </p>
 
                         <p class="text-lg font-bold text-gray-800">
-                            {{ homilia.week_number }}
+                            Semana {{ homilia.week_number }}
                         </p>
 
                     </div>
@@ -424,7 +437,17 @@ const getData = () => {
             homilia.value.week_number = response.data.week_number;
             homilia.value.celebration_type = response.data.celebration_type;
             homilia.value.gospel_name = response.data.gospel_name;
-            homilia.value.liturgical_time_name = response.data.liturgical_time_name;
+
+            const liturgicalTimes = {
+                1: 'Adviento',
+                2: 'Navidad',
+                3: 'Cuaresma',
+                4: 'Pascua',
+                5: 'Tiempo Ordinario'
+            };
+
+            homilia.value.liturgical_time_name =
+                liturgicalTimes[response.data.liturgical_time_id] || '';
 
             homilia.value.description =
                 response.data.description &&

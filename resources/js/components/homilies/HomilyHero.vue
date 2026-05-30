@@ -91,27 +91,106 @@
 
       <div class="hero-image-container">
 
-        <img
-          :src="'/support/imgHomily/' + homilyData.img"
-          alt="Homilía"
-          class="hero-image"
-        />
+        <div class="hero-image-wrapper">
+
+          <img
+            :src="'/support/imgHomily/' + homilyData.img"
+            alt="Homilía"
+            class="hero-image"
+          />
+
+          <div class="hero-image-actions">
+
+            <button
+              type="button"
+              class="hero-action-btn"
+              @click="viewFullImage">
+
+              <i class="fa-solid fa-expand"></i>
+
+              <span>Ver completa</span>
+
+            </button>
+
+            <button
+              type="button"
+              class="hero-action-btn primary"
+              @click="downloadImage">
+
+              <i class="fa-solid fa-download"></i>
+
+              <span>Descargar</span>
+
+            </button>
+
+          </div>
+
+        </div>
 
       </div>
 
     </div>
 
   </section>
+  
+  <div
+    v-if="showImageModal"
+    class="image-modal"
+    @click="showImageModal = false">
+
+    <button
+      type="button"
+      class="image-modal-close"
+      @click.stop="showImageModal = false">
+
+      <i class="fa-solid fa-xmark"></i>
+
+    </button>
+
+    <img
+      :src="'/support/imgHomily/' + homilyData.img"
+      class="image-modal-content"
+      @click.stop
+    />
+
+  </div>
+
 </template>
 
 <script setup>
 
-defineProps({
+import { ref } from "vue";
+
+const showImageModal = ref(false);
+
+const props = defineProps({
   homilyData: {
     type: Object,
     required: true,
   },
 });
+
+const viewFullImage = () => {
+  showImageModal.value = true;
+};
+
+const downloadImage = () => {
+
+  const link = document.createElement('a');
+
+  link.href =
+    '/support/imgHomily/' +
+    props.homilyData.img;
+
+  link.download =
+    props.homilyData.title + '.jpg';
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+};
 
 </script>
 <style scoped>
@@ -261,6 +340,110 @@ defineProps({
 
 .hero-image-container{
   width: 100%;
+}
+
+.hero-image-wrapper{
+  position: relative;
+}
+
+.hero-image-actions{
+  position: absolute;
+
+  top: 18px;
+  right: 18px;
+
+  display: flex;
+
+  gap: 12px;
+}
+
+.hero-action-btn{
+  height: 48px;
+
+  padding: 0 18px;
+
+  border: none;
+
+  border-radius: 16px;
+
+  background: rgba(255,255,255,.92);
+
+  backdrop-filter: blur(10px);
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  cursor: pointer;
+
+  font-weight: 700;
+
+  color: #0f172a;
+
+  box-shadow:
+    0 10px 25px rgba(15,23,42,.12);
+
+  transition: .25s;
+}
+
+.hero-action-btn:hover{
+  transform: translateY(-2px);
+}
+
+.hero-action-btn.primary{
+  background: #4f46e5;
+
+  color: white;
+}
+
+.image-modal{
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0,0,0,.88);
+
+  z-index: 9999;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 40px;
+}
+
+.image-modal-content{
+  max-width: 95vw;
+
+  max-height: 90vh;
+
+  border-radius: 24px;
+}
+
+.image-modal-close{
+  position: absolute;
+
+  top: 30px;
+  right: 30px;
+
+  width: 54px;
+  height: 54px;
+
+  border: none;
+
+  border-radius: 18px;
+
+  background: rgba(255,255,255,.15);
+
+  color: white;
+
+  cursor: pointer;
+
+  font-size: 22px;
 }
 
 .hero-image{

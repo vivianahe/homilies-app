@@ -438,11 +438,24 @@
                             Semana
                         </label>
 
-                        <input
-                            type="number"
-                            v-model.number="homilia.week_number"
-                            placeholder="Ej: 6"
-                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl block w-full p-3" />
+                        <select
+                            v-model="homilia.week_number"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl block w-full p-3">
+
+                            <option value="">
+                                Seleccione
+                            </option>
+
+                            <option
+                                v-for="week in availableWeeks"
+                                :key="week"
+                                :value="week">
+
+                                Semana {{ week }}
+
+                            </option>
+
+                        </select>
 
                     </div>
 
@@ -624,7 +637,7 @@
 
 <script setup>
 import Editor from "../../Admin/Editor.vue";
-import { ref, reactive, computed, onMounted, nextTick } from "vue";
+import { ref, reactive, computed, onMounted, nextTick, watch } from "vue";
 import Alerta from "../../Admin/Alerta.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
@@ -663,6 +676,40 @@ const solemnity = ref('');
 
 const liturgicalTimes = ref([]);
 const gospels = ref([]);
+
+const availableWeeks = computed(() => {
+
+    const selected = liturgicalTimes.value.find(
+        item => item.id == homilia.value.liturgical_time_id
+    );
+
+    if (!selected) return [];
+
+    const name = selected.name.toLowerCase();
+
+    let totalWeeks = 0;
+
+    if (name.includes('adviento')) {
+        totalWeeks = 4;
+    }
+    else if (name.includes('navidad')) {
+        totalWeeks = 2;
+    }
+    else if (name.includes('cuaresma')) {
+        totalWeeks = 6;
+    }
+    else if (name.includes('pascua')) {
+        totalWeeks = 7;
+    }
+    else if (name.includes('ordinario')) {
+        totalWeeks = 34;
+    }
+
+    return Array.from(
+        { length: totalWeeks },
+        (_, i) => i + 1
+    );
+});
 
 const searchSolemnity = () => {
     if (solemnity.value.length > 0) {
@@ -794,6 +841,13 @@ const audioDownloadUrl = computed(() => {
 
     return URL.createObjectURL(audioFile.value);
 });
+
+watch(
+    () => homilia.value.liturgical_time_id,
+    () => {
+        homilia.value.week_number = "";
+    }
+);
 
 const editorData = (text = "") => {
     //Texto del editor

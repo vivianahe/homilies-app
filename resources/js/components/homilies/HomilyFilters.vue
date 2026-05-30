@@ -83,21 +83,6 @@ const filters = ref([
     icon: "fa-solid fa-layer-group",
   },
   {
-    label: "Audio",
-    value: "audio",
-    icon: "fa-solid fa-headphones",
-  },
-  {
-    label: "Video",
-    value: "video",
-    icon: "fa-solid fa-circle-play",
-  },
-  {
-    label: "Populares",
-    value: "popular",
-    icon: "fa-solid fa-fire",
-  },
-  {
     label: "Recientes",
     value: "recent",
     icon: "fa-solid fa-clock",

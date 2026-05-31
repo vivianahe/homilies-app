@@ -356,16 +356,18 @@
                         </h2>
 
                         <p class="text-sm text-gray-500">
-                            Clasificación litúrgica del domingo
+                            Clasificación litúrgica de la celebración
                         </p>
                     </div>
 
                 </div>
 
-                <div class="flex flex-wrap -mx-3">
+                <!-- CONFIGURACIÓN LITÚRGICA -->
 
-                    <div class="w-full md:w-1/5 px-3 mb-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-5">
 
+                    <!-- TIEMPO LITÚRGICO -->
+                    <div>
                         <label class="block mb-2 text-sm font-medium text-gray-900">
                             Tiempo litúrgico
                         </label>
@@ -389,8 +391,8 @@
 
                     </div>
 
-                    <div class="w-full md:w-1/5 px-3 mb-4">
-
+                    <!-- EVANGELISTA -->
+                    <div>
                         <label class="block mb-2 text-sm font-medium text-gray-900">
                             Evangelista
                         </label>
@@ -414,8 +416,8 @@
 
                     </div>
 
-                    <div class="w-full md:w-1/5 px-3 mb-4">
-
+                    <!-- CICLO -->
+                    <div>
                         <label class="block mb-2 text-sm font-medium text-gray-900">
                             Ciclo
                         </label>
@@ -430,12 +432,12 @@
                             <option value="C">Ciclo C</option>
                             <option value="P">Par</option>
                             <option value="I">Impar</option>
-                        </select>
 
+                        </select>
                     </div>
 
-                    <div class="w-full md:w-1/5 px-3 mb-4">
-
+                    <!-- SEMANA -->
+                    <div>
                         <label class="block mb-2 text-sm font-medium text-gray-900">
                             Semana
                         </label>
@@ -444,9 +446,7 @@
                             v-model="homilia.week_number"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl block w-full p-3">
 
-                            <option value="">
-                                Seleccione
-                            </option>
+                            <option value="">Seleccione</option>
 
                             <option
                                 v-for="week in availableWeeks"
@@ -458,45 +458,47 @@
                             </option>
 
                         </select>
-
                     </div>
 
-                    <div class="w-full md:w-1/5 px-3 mb-4">
+                </div>
+
+                <!-- SEGUNDA FILA -->
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+
+                    <div>
 
                         <label class="block mb-2 text-sm font-medium text-gray-900">
-                            Tipo celebración
+                            Celebración
                         </label>
 
                         <select
                             v-model="homilia.celebration_type"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl block w-full p-3">
+
                             <option value="">Seleccione</option>
+                            <option value="Feria">Feria</option>
                             <option value="Domingo">Domingo</option>
-                            <option value="Fiesta">Fiesta</option>
                             <option value="Memoria">Memoria</option>
+                            <option value="Fiesta">Fiesta</option>
 
                         </select>
 
                     </div>
 
-                </div>
+                    <div class="lg:col-span-2">
 
-                <div class="mt-2">
+                        <label class="block mb-2 text-sm font-medium text-gray-900">
+                            Solemnidad o celebración especial
+                        </label>
 
-                    <label class="block mb-2 text-sm font-medium text-gray-900">
-                        Solemnidad / Celebración especial
-                    </label>
+                        <div
+                            id="searching_div"
+                            class="relative bg-gray-50 border border-gray-300 rounded-xl">
 
-                    <div
-                        id="searching_div"
-                        class="bg-gray-50 border border-gray-300 rounded-2xl p-3">
+                            <div class="flex items-center px-3">
 
-                        <div class="input-box">
-                            <div class="row-icon">
-                                <i class="fas fa-search icon-searching"></i>
-                            </div>
-
-                            <div class="div-search">
+                                <i class="fas fa-search text-gray-400"></i>
 
                                 <input
                                     type="text"
@@ -504,25 +506,22 @@
                                     v-model="solemnity"
                                     @keyup="searchSolemnity"
                                     placeholder="Buscar solemnidad..."
-                                    class="bg-transparent" />
+                                    class="w-full bg-transparent px-3 py-3 outline-none" />
 
                             </div>
 
-                        </div>
-
-                        <div
-                            v-if="solemnitys.length > 0"
-                            class="mt-3 border-t border-gray-200 pt-2">
-
                             <div
-                                v-for="(element, index) in solemnitys"
-                                :key="index"
-                                class="row_searching elements rounded-xl">
+                                v-if="solemnitys.length > 0"
+                                class="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-50 max-h-56 overflow-y-auto">
 
                                 <div
-                                    class="result_row py-2"
-                                    v-text="element.name"
-                                    @click="getSolemnityId(element.id, element.name)">
+                                    v-for="(element, index) in solemnitys"
+                                    :key="index"
+                                    @click="getSolemnityId(element.id, element.name)"
+                                    class="px-4 py-3 hover:bg-purple-50 cursor-pointer transition">
+
+                                    {{ element.name }}
+
                                 </div>
 
                             </div>
@@ -531,13 +530,29 @@
 
                     </div>
 
+                </div>
+
+                <div
+                    v-if="solemnity && solemnity !== 'null'"
+                    class="mt-2">
+
                     <div
-                        v-if="solemnity && solemnity !== 'null'"
-                        class="mt-3 inline-flex items-center gap-2 bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">
+                        class="inline-flex items-center gap-3 bg-purple-50 border border-purple-200 text-purple-700 px-4 py-2 rounded-full">
 
                         <i class="fa-solid fa-church"></i>
 
-                        {{ solemnity }}
+                        <span>
+                            {{ solemnity }}
+                        </span>
+
+                        <button
+                            type="button"
+                            @click="solemnity = ''"
+                            class="hover:text-red-500">
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
 
                     </div>
 
@@ -1134,28 +1149,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.loader {
-    width: 50px;
-    padding: 8px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: #25b09b;
-    --_m:
-        conic-gradient(#0000 10%, #000),
-        linear-gradient(#000 0 0) content-box;
-    -webkit-mask: var(--_m);
-    mask: var(--_m);
-    -webkit-mask-composite: source-out;
-    mask-composite: subtract;
-    animation: l3 1s infinite linear;
-}
-
-@keyframes l3 {
-    to {
-        transform: rotate(1turn)
-    }
-}
-
 #searching_div {
     width: 100%;
 }

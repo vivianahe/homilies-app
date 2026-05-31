@@ -20,8 +20,8 @@
               Inicio
             </RouterLink>
           </li>
-          <li :class="{ 'border-b-2 border-white': $route.name === 'homilyAll' }">
-            <RouterLink :to="{ name: 'homilyAll' }"
+          <li :class="{ 'border-b-2 border-white': $route.name === 'homilyAllNew' }">
+            <RouterLink :to="{ name: 'homilyAllNew' }"
               class="block py-2 pl-3 pr-4 text-white rounded hover:bg-cyan-500 md:hover:bg-transparent md:border-0 md:hover:text-custom-gray-me md:p-0">
               <i class="fa-solid fa-book-bible mr-2"></i>
               Homilías

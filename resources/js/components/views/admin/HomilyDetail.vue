@@ -110,17 +110,23 @@
 
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 mb-10">
+                <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 mb-10">
                     <div
                         v-if="homilia.cycle"
                         class="bg-gray-50 border border-gray-200 rounded-2xl p-5">
 
-                        <p class="text-xs uppercase tracking-wide text-gray-400 mb-2">
-                            Ciclo
-                        </p>
+                        <div class="flex items-center gap-3 mb-3">
+
+                            <i class="fa-solid fa-repeat text-blue-500"></i>
+
+                            <p class="text-xs uppercase tracking-wide text-gray-400">
+                                Ciclo
+                            </p>
+
+                        </div>
 
                         <p class="text-lg font-bold text-gray-800">
-                            {{ homilia.cycle }}
+                            {{ cycleLabel(homilia.cycle) }}
                         </p>
 
                     </div>
@@ -128,9 +134,15 @@
                         v-if="homilia.liturgical_time_name"
                         class="bg-gray-50 border border-gray-200 rounded-2xl p-5">
 
-                        <p class="text-xs uppercase tracking-wide text-gray-400 mb-2">
-                            Tiempo litúrgico
-                        </p>
+                        <div class="flex items-center gap-3 mb-3">
+
+                            <i class="fa-solid fa-calendar-days text-green-500"></i>
+
+                            <p class="text-xs uppercase tracking-wide text-gray-400">
+                                Tiempo litúrgico
+                            </p>
+
+                        </div>
 
                         <p class="text-lg font-bold text-gray-800">
                             {{ homilia.liturgical_time_name }}
@@ -141,9 +153,15 @@
                         v-if="homilia.week_number"
                         class="bg-gray-50 border border-gray-200 rounded-2xl p-5">
 
-                        <p class="text-xs uppercase tracking-wide text-gray-400 mb-2">
-                            Semana
-                        </p>
+                        <div class="flex items-center gap-3 mb-3">
+
+                            <i class="fa-solid fa-calendar-week text-orange-500"></i>
+
+                            <p class="text-xs uppercase tracking-wide text-gray-400">
+                                Semana
+                            </p>
+
+                        </div>
 
                         <p class="text-lg font-bold text-gray-800">
                             Semana {{ homilia.week_number }}
@@ -151,12 +169,21 @@
 
                     </div>
                     <div
-                        v-if="homilia.celebration_type"
+                        v-if="
+                            homilia.celebration_type &&
+                            homilia.celebration_type !== 'null'
+                        "
                         class="bg-gray-50 border border-gray-200 rounded-2xl p-5">
 
-                        <p class="text-xs uppercase tracking-wide text-gray-400 mb-2">
-                            Tipo celebración
-                        </p>
+                        <div class="flex items-center gap-3 mb-3">
+
+                            <i class="fa-solid fa-church text-purple-500"></i>
+
+                            <p class="text-xs uppercase tracking-wide text-gray-400">
+                                Celebración
+                            </p>
+
+                        </div>
 
                         <p class="text-lg font-bold text-gray-800">
                             {{ homilia.celebration_type }}
@@ -167,9 +194,15 @@
                         v-if="homilia.gospel_name"
                         class="bg-gray-50 border border-gray-200 rounded-2xl p-5">
 
-                        <p class="text-xs uppercase tracking-wide text-gray-400 mb-2">
-                            Evangelista
-                        </p>
+                        <div class="flex items-center gap-3 mb-3">
+
+                            <i class="fa-solid fa-book-bible text-red-500"></i>
+
+                            <p class="text-xs uppercase tracking-wide text-gray-400">
+                                Evangelista
+                            </p>
+
+                        </div>
 
                         <p class="text-lg font-bold text-gray-800">
                             {{ homilia.gospel_name }}
@@ -178,19 +211,29 @@
                     </div>
 
                 </div>
+
                 <div
-                     v-if="homilia.solemnity_name && homilia.solemnity_name !== 'null'"
+                    v-if="homilia.solemnity_name && homilia.solemnity_name !== 'null'"
                     class="mb-10">
 
-                    <div class="inline-flex items-center gap-3 bg-purple-100 text-purple-800 px-5 py-3 rounded-2xl font-semibold">
+                    <div class="bg-purple-50 border border-purple-200 rounded-2xl p-5">
 
-                        <i class="fa-solid fa-church"></i>
+                        <p class="text-xs uppercase tracking-wide text-purple-500 mb-3">
+                            Solemnidad o celebración especial
+                        </p>
 
-                        {{ homilia.solemnity_name }}
+                        <div class="inline-flex items-center gap-3 bg-purple-100 border border-purple-300 text-purple-800 px-4 py-3 rounded-xl font-semibold">
+
+                            <i class="fa-solid fa-church"></i>
+
+                            {{ homilia.solemnity_name }}
+
+                        </div>
 
                     </div>
 
                 </div>
+
                 <div class="mb-10">
 
                     <div class="flex items-center gap-3 mb-4">
@@ -366,6 +409,20 @@ const homilia = ref({
     user_id: user_id ? user_id : null,
 });
 
+const cycleLabel = (cycle) => {
+
+    const cycles = {
+        A: 'Ciclo A',
+        B: 'Ciclo B',
+        C: 'Ciclo C',
+        P: 'Par',
+        I: 'Impar'
+    };
+
+    return cycles[cycle] || cycle;
+};
+
+
 const showImageModal = ref(false);
 
 const descargarImagen = () => {
@@ -435,7 +492,7 @@ const getData = () => {
                     : null;
             homilia.value.cycle = response.data.cycle;
             homilia.value.week_number = response.data.week_number;
-            homilia.value.celebration_type = response.data.celebration_type;
+            homilia.value.celebration_type = response.data.celebration_type && response.data.celebration_type !== 'null' ? response.data.celebration_type : '';
             homilia.value.gospel_name = response.data.gospel_name;
 
             const liturgicalTimes = {

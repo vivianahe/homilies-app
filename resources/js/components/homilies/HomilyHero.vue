@@ -4,46 +4,41 @@
     class="homily-hero"
   >
 
-    <!-- BREADCRUMB -->
-    <div class="breadcrumb">
-
-      <span>
-        Homilías
-      </span>
-
-      <i class="fa-solid fa-chevron-right"></i>
-
-      <span>
-        {{ homilyData.liturgical_time }}
-      </span>
-
-      <i class="fa-solid fa-chevron-right"></i>
-
-      <span class="breadcrumb-current">
-        {{ homilyData.solemnity_name }}
-      </span>
-
-    </div>
-
     <div class="hero-main">
 
       <div class="hero-content">
 
-        <div class="hero-tags">
+      <div class="hero-liturgical">
 
-          <span class="hero-tag">
-            Ciclo {{ homilyData.cycle }}
-          </span>
+      <div class="hero-liturgical-top">
 
-          <span class="hero-tag">
-            {{ homilyData.liturgical_time }}
-          </span>
+        {{ getCycleLabel(homilyData.cycle) }}
 
-          <span class="hero-tag">
-            Semana {{ homilyData.week_number }}
-          </span>
+        <span v-if="homilyData.liturgical_time">
+          , {{ homilyData.liturgical_time }}
+        </span>
+
+        <span
+          v-if="
+            homilyData.celebration_type &&
+            homilyData.celebration_type !== 'null'
+          ">
+
+          , {{ homilyData.celebration_type }}
+
+        </span>
+
+      </div>
+
+        <div
+          v-if="homilyData.week_number"
+          class="hero-liturgical-bottom">
+
+          Semana {{ homilyData.week_number }}
 
         </div>
+
+      </div>
 
         <h1 class="hero-title">
           {{ homilyData.title }}
@@ -57,30 +52,10 @@
 
           <div class="hero-info-item">
 
-            <i class="fa-regular fa-calendar"></i>
-
-            <span>
-              {{ homilyData.date }}
-            </span>
-
-          </div>
-
-          <div class="hero-info-item">
-
             <i class="fa-solid fa-book-bible"></i>
 
             <span>
               {{ homilyData.citation }}
-            </span>
-
-          </div>
-
-          <div class="hero-info-item">
-
-            <i class="fa-solid fa-church"></i>
-
-            <span>
-              {{ homilyData.celebration_type }}
             </span>
 
           </div>
@@ -170,6 +145,20 @@ const props = defineProps({
   },
 });
 
+const getCycleLabel = (cycle) => {
+
+  const labels = {
+    A: 'Ciclo A',
+    B: 'Ciclo B',
+    C: 'Ciclo C',
+    P: 'Ciclo Par',
+    I: 'Ciclo Impar'
+  };
+
+  return labels[cycle] || cycle;
+
+};
+
 const viewFullImage = () => {
   showImageModal.value = true;
 };
@@ -233,11 +222,11 @@ const downloadImage = () => {
 .hero-main{
   display: grid;
 
-  grid-template-columns: minmax(0, 1fr) 610px;
+  grid-template-columns: minmax(0,1fr) 680px;
 
-  gap: 44px;
+  gap: 40px;
 
-  align-items: center;
+  align-items: start;
 }
 
 .hero-content{
@@ -257,7 +246,7 @@ const downloadImage = () => {
 
   flex-wrap: wrap;
 
-  margin-bottom: 22px;
+  margin-bottom: 32px;
 }
 
 .hero-tag{
@@ -295,7 +284,7 @@ const downloadImage = () => {
 
   color: #0f172a;
 
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .hero-description{
@@ -349,18 +338,18 @@ const downloadImage = () => {
 .hero-image-actions{
   position: absolute;
 
-  top: 18px;
-  right: 18px;
+  top: 12px;
+  right: 12px;
 
   display: flex;
 
-  gap: 12px;
+  gap: 10px;
 }
 
 .hero-action-btn{
-  height: 48px;
+  height: 42px;
 
-  padding: 0 18px;
+  padding: 0 16px;
 
   border: none;
 
@@ -448,17 +437,9 @@ const downloadImage = () => {
 
 .hero-image{
   width: 100%;
-
-  height: 430px;
-
+  height: 280px;
   object-fit: cover;
-
-  border-radius: 32px;
-
-  box-shadow:
-    0 20px 45px rgba(15, 23, 42, 0.12);
-
-  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 24px;
 }
 
 @media (max-width: 1400px){
@@ -468,7 +449,9 @@ const downloadImage = () => {
   }
 
   .hero-title{
-    font-size: 54px;
+    font-size: 58px;
+
+    line-height: .95;
   }
 
 }
@@ -496,15 +479,37 @@ const downloadImage = () => {
   }
 
   .hero-description{
-    font-size: 16px;
+    font-size: 18px;
 
-    line-height: 1.7;
+    line-height: 1.8;
+
+    max-width: 700px;
   }
 
   .hero-info{
     gap: 16px;
   }
 
+}
+
+.hero-liturgical{
+  margin-bottom: 22px;
+}
+
+.hero-liturgical-top{
+  font-size: 18px;
+  font-weight: 700;
+  color: #7c83f7;
+}
+
+.hero-liturgical-bottom{
+  margin-top: 6px;
+
+  font-size: 24px;
+
+  font-weight: 800;
+
+  color: #1e1b4b;
 }
 
 </style>

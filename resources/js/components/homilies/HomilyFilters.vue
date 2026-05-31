@@ -28,15 +28,33 @@
     <!-- RIGHT -->
     <div class="filters-right">
 
-      <button class="sort-button">
+      <select
+        :value="sortBy"
+        class="sort-button"
+        @change="changeSort($event.target.value)"
+      >
 
-        <span>
+        <option value="recent">
           Más recientes primero
-        </span>
+        </option>
 
-        <i class="fa-solid fa-chevron-down"></i>
+        <option value="oldest">
+          Más antiguos primero
+        </option>
 
-      </button>
+        <option value="title_asc">
+          Título A → Z
+        </option>
+
+        <option value="title_desc">
+          Título Z → A
+        </option>
+
+        <option value="domingo">
+          Solo domingos
+        </option>
+
+      </select>
 
     </div>
 
@@ -58,6 +76,11 @@ defineProps({
     type: String,
     default: "all",
   },
+
+  sortBy: {
+    type: String,
+    default: "recent",
+  },
 });
 
 /*
@@ -68,7 +91,14 @@ defineProps({
 
 const emit = defineEmits([
   "change-filter",
+  "change-sort",
 ]);
+
+const changeSort = (sort) => {
+
+  emit("change-sort", sort);
+
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -78,7 +108,7 @@ const emit = defineEmits([
 
 const filters = ref([
   {
-    label: "Todas",
+    label: "Todas las homilías",
     value: "all",
     icon: "fa-solid fa-layer-group",
   },

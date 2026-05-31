@@ -5,81 +5,167 @@
     <!-- EVANGELIOS -->
     <div class="sidebar-card">
 
-      <h3 class="sidebar-title">
-        Explorar por Evangelio
-      </h3>
+      <button
+        class="accordion-header"
+        @click="showGospels = !showGospels"
+      >
 
-      <ul class="sidebar-menu">
+        <span>
+          Explorar por Evangelio
+        </span>
 
-        <li
-          v-for="gospel in gospels"
-          :key="gospel.id"
-          class="sidebar-item"
-        >
-          <button class="sidebar-link">
+        <i
+          class="fa-solid"
+          :class="
+            showGospels
+              ? 'fa-chevron-up'
+              : 'fa-chevron-down'
+          "
+        />
 
-            <i class="fa-solid fa-book-open"></i>
+      </button>
 
-            <span>
-              {{ gospel.name }}
-            </span>
+      <div
+        class="accordion-content"
+        :class="{
+          open: showGospels
+        }"
+      >
 
-          </button>
-        </li>
+        <ul class="sidebar-menu">
 
-      </ul>
+          <li
+            v-for="gospel in gospels"
+            :key="gospel.id"
+            class="sidebar-item"
+          >
+
+            <button
+              class="sidebar-link"
+              :class="{
+                active: selectedGospel === gospel.name
+              }"
+              @click="selectGospel(gospel.name)"
+            >
+
+              <i class="fa-solid fa-book-open"></i>
+
+              <span>
+                {{ gospel.name }}
+              </span>
+
+            </button>
+          </li>
+
+        </ul>
+
+      </div>
 
     </div>
 
     <!-- TIEMPO LITÚRGICO -->
     <div class="sidebar-card">
 
-      <h3 class="sidebar-title">
-        Tiempo Litúrgico
-      </h3>
+      <button
+        class="accordion-header"
+        @click="showSeasons = !showSeasons"
+      >
 
-      <ul class="sidebar-menu">
+        <span>
+          Tiempo Litúrgico
+        </span>
 
-        <li
-          v-for="season in liturgicalSeasons"
-          :key="season.id"
-          class="sidebar-item"
-        >
-          <button
-            class="sidebar-link"
-            :class="{
-              active: season.active
-            }"
+        <i
+          class="fa-solid"
+          :class="
+            showSeasons
+              ? 'fa-chevron-up'
+              : 'fa-chevron-down'
+          "
+        />
+
+      </button>
+
+      <div
+        class="accordion-content"
+        :class="{
+          open: showSeasons
+        }"
+      >
+
+        <ul class="sidebar-menu">
+
+          <li
+            v-for="season in liturgicalSeasons"
+            :key="season.id"
+            class="sidebar-item"
           >
+            <button
+              class="sidebar-link"
+              :class="{
+                active: selectedSeason === season.name
+              }"
+              @click="selectSeason(season.name)"
+            >
 
-            <i :class="season.icon"></i>
+              <i :class="season.icon"></i>
 
-            <span>
-              {{ season.name }}
-            </span>
+              <span>
+                {{ season.name }}
+              </span>
 
-          </button>
-        </li>
+            </button>
+          </li>
 
-      </ul>
+        </ul>
+
+      </div>
 
     </div>
 
     <!-- CALENDARIO -->
     <div class="sidebar-card">
 
-      <h3 class="sidebar-title">
-        Ir a una fecha específica
-      </h3>
+      <button
+        class="accordion-header"
+        @click="showCalendar = !showCalendar"
+      >
 
-      <Calendar
-        :selectedDate="selectedDate"
-        @select-date="emitSelectDate"
-      />
+        <span>
 
-      <button class="calendar-button">
-        Ver homilías de esta fecha
+          {{
+            selectedDate
+              ? "Fecha seleccionada"
+              : "Ir a una fecha específica"
+          }}
+
+        </span>
+
+        <i
+          class="fa-solid"
+          :class="
+            showCalendar
+              ? 'fa-chevron-up'
+              : 'fa-chevron-down'
+          "
+        />
+
       </button>
+
+      <div
+        class="accordion-content"
+        :class="{
+          open: showCalendar
+        }"
+      >
+
+        <Calendar
+          class="homily-calendar"
+          :selectedDate="selectedDate"
+          @select-date="emitSelectDate"
+        />
+
+      </div>
 
     </div>
 
@@ -88,9 +174,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import axios from "axios";
+import { ref, onMounted } from "vue";
 
-import Calendar from "../Calendar.vue";
+import Calendar from "../CalendarNew.vue";
 
 /*
 |--------------------------------------------------------------------------
@@ -103,6 +190,16 @@ defineProps({
     type: String,
     default: "",
   },
+
+  selectedSeason: {
+    type: String,
+    default: "",
+  },
+
+  selectedGospel: {
+    type: String,
+    default: "",
+  }
 });
 
 /*
@@ -113,6 +210,8 @@ defineProps({
 
 const emit = defineEmits([
   "select-date",
+  "select-season",
+  "select-gospel"
 ]);
 
 /*
@@ -121,36 +220,40 @@ const emit = defineEmits([
 |--------------------------------------------------------------------------
 */
 
-const gospels = ref([
-  {
-    id: 1,
-    name: "Mateo",
-  },
-  {
-    id: 2,
-    name: "Marcos",
-  },
-  {
-    id: 3,
-    name: "Lucas",
-  },
-  {
-    id: 4,
-    name: "Juan",
-  },
-  {
-    id: 5,
-    name: "Hechos de los Apóstoles",
-  },
-  {
-    id: 6,
-    name: "Cartas de San Pablo",
-  },
-  {
-    id: 7,
-    name: "Apocalipsis",
-  },
-]);
+const gospels = ref([]);
+
+const showGospels = ref(false);
+
+const showSeasons = ref(false);
+
+const showCalendar = ref(false);
+
+const selectGospel = (gospel) => {
+
+  emit(
+    "select-gospel",
+    gospel
+  );
+
+};
+
+const getGospels = async () => {
+
+  try {
+
+    const { data } = await axios.get(
+      "/gospels"
+    );
+
+    gospels.value = data;
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+};
 
 const liturgicalSeasons = ref([
   {
@@ -191,6 +294,19 @@ const emitSelectDate = (date) => {
   emit("select-date", date);
 
 };
+
+const selectSeason = (season) => {
+
+  emit("select-season", season);
+
+};
+
+onMounted(() => {
+
+  getGospels();
+
+});
+
 </script>
 <style scoped>
 
@@ -212,14 +328,13 @@ const emitSelectDate = (date) => {
 
   border-radius: 20px;
 
-  padding: 18px;
+  padding: 20px;
 
-  box-shadow:
-    0 2px 10px rgba(15, 23, 42, 0.02);
+  overflow: hidden;
 }
 
 .sidebar-title{
-  font-size: 16px;
+  font-size: 17px;
 
   font-weight: 800;
 
@@ -227,7 +342,11 @@ const emitSelectDate = (date) => {
 
   line-height: 1.3;
 
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #eef2f7;
 }
 
 .sidebar-menu{
@@ -300,82 +419,42 @@ const emitSelectDate = (date) => {
 .calendar-button{
   width: 100%;
 
-  margin-top: 16px;
+  margin-top: 14px;
 
-  background: #1d4ed8;
+  height: 42px;
+
+  border-radius: 12px;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
 
   color: white;
-
-  height: 46px;
-
-  border-radius: 14px;
 
   font-size: 14px;
 
   font-weight: 700;
 
-  transition: all 0.2s ease;
-
-  box-shadow:
-    0 8px 18px rgba(37, 99, 235, 0.15);
+  transition: all .2s ease;
 }
 
 .calendar-button:hover{
   transform: translateY(-1px);
 
+  box-shadow:
+    0 8px 20px rgba(
+      37,
+      99,
+      235,
+      .25
+    );
+}
+.calendar-button:hover{
+  transform: translateY(-1px);
+
   background: #1e40af;
-}
-
-:deep(.calendar-container){
-  border: none !important;
-
-  padding: 0 !important;
-
-  box-shadow: none !important;
-}
-
-:deep(.vc-container){
-  width: 100% !important;
-
-  border: none !important;
-
-  background: transparent !important;
-
-  font-family: inherit !important;
-}
-
-:deep(.vc-header){
-  margin-bottom: 8px;
-}
-
-:deep(.vc-title){
-  font-size: 15px !important;
-
-  font-weight: 700 !important;
-
-  color: #0f172a !important;
-}
-
-:deep(.vc-weekday){
-  font-size: 11px !important;
-
-  color: #64748b !important;
-
-  font-weight: 600 !important;
-}
-
-:deep(.vc-day-content){
-  width: 34px !important;
-
-  height: 34px !important;
-
-  font-size: 13px !important;
-
-  border-radius: 10px !important;
-}
-
-:deep(.vc-highlight){
-  background: #4f46e5 !important;
 }
 
 @media (max-width: 1200px){
@@ -384,6 +463,95 @@ const emitSelectDate = (date) => {
     position: relative;
 
     top: 0;
+  }
+
+}
+
+.homily-calendar{
+  margin-top: 4px;
+}
+
+:deep(.fc-toolbar){
+  margin-bottom: 18px !important;
+}
+
+:deep(.fc-toolbar-title){
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}
+
+:deep(.fc-daygrid-day-number){
+  width: 34px;
+  height: 34px;
+}
+
+:deep(.fc-daygrid-day-frame){
+  min-height: 42px !important;
+}
+.sidebar-card:last-child{
+  background: linear-gradient(
+    to bottom,
+    #ffffff,
+    #fafbff
+  );
+}
+
+.accordion-header{
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  background: transparent;
+
+  font-size: 16px;
+
+  font-weight: 800;
+
+  color: #0f172a;
+
+  padding: 0;
+
+  margin-bottom: 12px;
+}
+
+.accordion-content{
+  overflow: hidden;
+
+  transition: all .3s ease;
+}
+
+@media (max-width: 1200px){
+
+  .accordion-content{
+    max-height: 0;
+
+    opacity: 0;
+  }
+
+  .accordion-content.open{
+    max-height: 1000px;
+
+    opacity: 1;
+
+    margin-top: 12px;
+  }
+
+}
+
+@media (min-width: 1201px){
+
+  .accordion-content{
+    max-height: none !important;
+
+    opacity: 1 !important;
+  }
+
+  .accordion-header i{
+    display: none;
   }
 
 }

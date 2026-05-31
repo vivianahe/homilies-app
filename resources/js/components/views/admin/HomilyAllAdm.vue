@@ -73,7 +73,6 @@ const columnConfig = [
   { key: "date", label: "Fecha de evangelio" },
   { key: "citation", label: "Cita Bíblica" },
   { key: "title", label: "Título" },
-  { key: "reading", label: "Lectura" },
   { key: "options", label: "Opciones" },
 ];
 

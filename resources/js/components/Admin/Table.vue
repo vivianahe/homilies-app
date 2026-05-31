@@ -5,7 +5,7 @@
       class="bg-gradient-to-r from-gray-900 to-gray-800 p-5 rounded-t-lg"
     >
 
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
 
         <label class="block text-sm text-white font-semibold mb-2">
@@ -26,27 +26,16 @@
 
         <div v-if="props.showDateFilters">
           <label class="block text-sm text-white font-semibold mb-2">
-            Fecha Inicial
+            Fecha Evangelio
           </label>
 
           <input
             type="date"
-            v-model="startDate"
+            v-model="filterDate"
             class="w-full px-4 py-2 rounded-xl border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
           />
         </div>
 
-        <div v-if="props.showDateFilters">
-          <label class="block text-sm text-white font-semibold mb-2">
-            Fecha Final
-          </label>
-
-          <input
-            type="date"
-            v-model="endDate"
-            class="w-full px-4 py-2 rounded-xl border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
-          />
-        </div>
         <div>
           <label class="block text-sm text-white font-semibold mb-2">
             {{ props.filterLabels.citation }}
@@ -306,8 +295,7 @@ const emit = defineEmits([
 
 
 const searchTerm = ref('');
-const startDate = ref('');
-const endDate = ref('');
+const filterDate = ref('');
 const citationFilter = ref('');
 
 const filteredData = computed(() => {
@@ -332,35 +320,19 @@ const filteredData = computed(() => {
           .toLowerCase()
           .includes(citationFilter.value.toLowerCase());
 
-      let matchesStartDate = true;
-      let matchesEndDate = true;
+        let matchesDate = true;
 
-      if (props.showDateFilters) {
+        if (props.showDateFilters) {
 
-        const itemDate = item.date
-          ? new Date(item.date)
-          : null;
-
-        matchesStartDate =
-          !startDate.value ||
-          (
-            itemDate &&
-            itemDate >= new Date(startDate.value)
-          );
-
-        matchesEndDate =
-          !endDate.value ||
-          (
-            itemDate &&
-            itemDate <= new Date(endDate.value)
-          );
-      }
+          matchesDate =
+            !filterDate.value ||
+            item.date === filterDate.value;
+        }
 
     return (
       matchesSearch &&
       matchesCitation &&
-      matchesStartDate &&
-      matchesEndDate
+      matchesDate
     );
 
   });
@@ -443,13 +415,12 @@ const goToNextPage = () => {
 
 const limpiarFiltros = () => {
   searchTerm.value = '';
-  startDate.value = '';
-  endDate.value = '';
+  filterDate.value = '';
   citationFilter.value = '';
 };
 
 watch(
-  [searchTerm, startDate, endDate, citationFilter],
+  [searchTerm, filterDate, citationFilter],
   () => {
     currentPage.value = 1;
   }

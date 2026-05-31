@@ -391,10 +391,17 @@ class HomiliesController extends Controller
             Gospel::orderBy('name')->get()
         );
     }
-    
-    public function getHomiliesNew()
+
+    public function gospels()
     {
-        $data = Homilie::from('homilies as h')
+        return response()->json(
+            Gospel::orderBy('name')->get()
+        );
+    }
+    
+    public function getHomiliesNew(Request $request)
+    {
+        $query = Homilie::from('homilies as h')
 
             ->leftJoin(
                 'solemnity as s',
@@ -449,11 +456,99 @@ class HomiliesController extends Controller
                 'lt.name as liturgical_time',
                 'g.name as gospel_name',
                 's.name as solemnity_name'
-            )
+            );
 
-            ->orderBy('h.date', 'DESC')
+        if ($request->season) {
 
-            ->get();
+            $query->where(
+                'lt.name',
+                $request->season
+            );
+
+        }
+
+        if ($request->gospel) {
+
+            $query->where(
+                'g.name',
+                $request->gospel
+            );
+
+        }
+
+        if ($request->date) {
+
+            $query->whereDate(
+                'h.date',
+                $request->date
+            );
+
+        }
+
+        switch ($request->sort) {
+
+            case 'oldest':
+
+                $query->orderBy('h.date', 'ASC');
+
+                break;
+
+            case 'title_asc':
+
+                $query->orderByRaw("
+                    TRIM(
+                        REPLACE(
+                            REPLACE(
+                                REPLACE(
+                                    REPLACE(
+                                        REPLACE(h.title,'¿',''),
+                                    '¡',''),
+                                '\"',''),
+                            '“',''),
+                        '”','')
+                    ) ASC
+                ");
+
+            break;
+
+            case 'title_desc':
+
+                $query->orderByRaw("
+                    TRIM(
+                        REPLACE(
+                            REPLACE(
+                                REPLACE(
+                                    REPLACE(
+                                        REPLACE(h.title,'¿',''),
+                                    '¡',''),
+                                '\"',''),
+                            '“',''),
+                        '”','')
+                    ) DESC
+                ");
+
+            break;
+
+            case 'domingo':
+
+                $query->where(
+                    'ld.celebration_type',
+                    'Domingo'
+                );
+
+                $query->orderBy('h.date', 'DESC');
+
+                break;
+
+            default:
+
+                $query->orderBy('h.date', 'DESC');
+
+                break;
+        }
+
+        $perPage = $request->per_page ?? 10;
+        $data = $query->paginate($perPage);
 
         return response()->json($data);
     }

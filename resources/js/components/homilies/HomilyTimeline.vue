@@ -19,8 +19,15 @@
 
       <div class="timeline-counter">
 
-        {{ homilies.length }}
-        homilías
+        {{
+          homilies.length === 0
+            ? 'Sin homilías'
+            : `${homilies.length} ${
+                homilies.length === 1
+                  ? 'homilía'
+                  : 'homilías'
+              }`
+        }}
 
       </div>
 
@@ -59,6 +66,18 @@
         <!-- LINE -->
         <div class="timeline-line">
 
+          <div
+            v-if="
+              index === 0 ||
+              getYear(homily.date) !==
+              getYear(homilies[index - 1].date)
+            "
+            class="timeline-year">
+
+            {{ getYear(homily.date) }}
+
+          </div>
+
           <div class="timeline-dot"></div>
 
         </div>
@@ -82,6 +101,10 @@
 
             <!-- META -->
             <div class="card-meta">
+
+              <span class="card-year-mobile">
+              {{ getYear(homily.date) }}
+              </span>
 
               <span class="card-date">
 
@@ -157,13 +180,16 @@
             <!-- ACTIONS -->
             <div class="card-actions">
 
-              <button class="primary-button">
+              <a
+                :href="`/homilyDetail/${homily.id}`"
+                class="primary-button"
+              >
 
                 <i class="fa-solid fa-book-open"></i>
 
                 Leer homilía
 
-              </button>
+              </a>
 
               <button class="secondary-button">
 
@@ -232,6 +258,15 @@ const formatDate = (date) => {
   return `${parseInt(day)} de ${months[parseInt(month) - 1]} de ${year}`;
 
 };
+
+const getYear = (date) => {
+
+  if (!date) return "";
+
+  return date.split("-")[0];
+
+};
+
 </script>
 
 <style scoped>
@@ -341,15 +376,24 @@ const formatDate = (date) => {
 
 .timeline-card{
   display: grid;
-  grid-template-columns: 60px 1fr;
+  grid-template-columns: 150px 1fr;
   gap: 20px;
 }
 
-.timeline-line{
-  display: flex;
-  justify-content: center;
+/*
+|--------------------------------------------------------------------------
+| TIMELINE
+|--------------------------------------------------------------------------
+*/
 
+.timeline-line{
   position: relative;
+
+  width: 120px;
+  min-height: 100%;
+
+  display: flex;
+  justify-content: flex-start;
 }
 
 .timeline-line::before{
@@ -360,22 +404,47 @@ const formatDate = (date) => {
   top: 0;
   bottom: 0;
 
+  left: 93px;
+
   width: 2px;
 
   background: #dbeafe;
 }
 
+.timeline-year{
+  position: absolute;
+
+  top: 18px;
+  left: 0;
+
+  width: 70px;
+
+  text-align: right;
+
+  font-size: 26px;
+  font-weight: 800;
+
+  color: #2563eb;
+
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
 .timeline-dot{
-  width: 18px;
-  height: 18px;
+  position: absolute;
+
+  top: 20px;
+  left: 86px;
+
+  width: 16px;
+  height: 16px;
 
   border-radius: 999px;
 
-  background: #1d4ed8;
+  background: #2563eb;
 
-  border: 4px solid white;
-
-  margin-top: 28px;
+  border: 3px solid white;
 
   z-index: 2;
 }
@@ -587,11 +656,35 @@ const formatDate = (date) => {
   gap: 10px;
 }
 
+.primary-button{
+  background: #1d4ed8;
+
+  color: white;
+
+  padding: 14px 20px;
+
+  border-radius: 14px;
+
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  text-decoration: none;
+
+  width: fit-content;
+}
+
 /*
 |--------------------------------------------------------------------------
 | RESPONSIVE
 |--------------------------------------------------------------------------
 */
+
+.card-year-mobile{
+  display: none;
+}
 
 @media (max-width: 1200px){
 
@@ -607,25 +700,103 @@ const formatDate = (date) => {
 
 @media (max-width: 768px){
 
-  .timeline-card{
-    grid-template-columns: 30px 1fr;
+  .timeline-header{
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .timeline-title{
     font-size: 28px;
   }
 
+  .timeline-description{
+    font-size: 14px;
+  }
+
+  .timeline-counter{
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .timeline-card{
+    grid-template-columns: 32px 1fr;
+    gap: 12px;
+  }
+
+  .timeline-line{
+    width: 32px;
+  }
+
+  .timeline-line::before{
+    left: 16px;
+  }
+
+  .timeline-dot{
+    left: 9px;
+
+    width: 14px;
+    height: 14px;
+  }
+
+  /* ocultar año lateral en móvil */
+  .timeline-year{
+    display: none;
+  }
+
+  /* mostrar año dentro de la tarjeta */
+  .card-year-mobile{
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .card-content{
+    grid-template-columns: 1fr;
+  }
+
+  .card-image{
+    min-height: 180px;
+  }
+
+  .card-body{
+    padding: 18px;
+    gap: 16px;
+  }
+
+  .card-meta{
+    gap: 10px;
+  }
+
   .card-title{
     font-size: 24px;
   }
 
-  .card-body{
-    padding: 20px;
+  .card-description{
+    font-size: 15px;
+    line-height: 1.7;
   }
 
-  .timeline-header{
+  .card-actions{
     flex-direction: column;
-    align-items: flex-start;
+  }
+
+  .primary-button,
+  .secondary-button{
+    width: 100%;
+    justify-content: center;
   }
 
 }

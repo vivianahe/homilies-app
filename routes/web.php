@@ -24,6 +24,7 @@ Route::view('/homilyAll', 'pag')->name('homilyAll');
 Route::view('/homilyAllNew', 'pag')->name('homilyAllNew');
 Route::view('/chantPublic', 'pag')->name('chantPublic');
 Route::view('/homilyDetail/{id}', 'pag')->name('homilyDetail');
+Route::view('/HomilyDetailNew/{id}', 'pag')->name('HomilyDetailNew');
 Route::view('/donateView', 'pag')->name('donateView');
 Route::view('/contact', 'pag')->name('contact');
 
@@ -34,6 +35,7 @@ Route::get('/homilies_desc', [HomiliesController::class, 'getDescHomily']);
 Route::post('/contact', [HomiliesController::class, 'postFrmContact']);
 Route::apiResource("prayers", PrayerController::class);
 Route::apiResource("chants", ChantController::class);
+Route::get('/share/homily/{id}',[HomiliesController::class, 'shareHomily']);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::view('/home', 'home')->name('home');

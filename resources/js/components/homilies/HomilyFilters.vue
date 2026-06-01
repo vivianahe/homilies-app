@@ -26,7 +26,11 @@
     </div>
 
     <!-- RIGHT -->
-    <div class="filters-right">
+  <div class="filters-right">
+
+    <div class="sort-wrapper">
+
+      <i class="fa-solid fa-arrow-down-wide-short sort-icon"></i>
 
       <select
         :value="sortBy"
@@ -56,7 +60,11 @@
 
       </select>
 
+      <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+
     </div>
+
+  </div>
 
   </div>
 
@@ -276,6 +284,85 @@ const changeFilter = (filter) => {
     justify-content: center;
   }
 
+}
+
+.filters-right{
+  display: flex;
+  align-items: center;
+}
+
+.sort-wrapper{
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sort-icon{
+  position: absolute;
+  left: 16px;
+
+  color: #64748b;
+
+  pointer-events: none;
+
+  z-index: 2;
+}
+
+.dropdown-arrow{
+  position: absolute;
+  right: 16px;
+
+  color: #64748b;
+
+  pointer-events: none;
+
+  z-index: 2;
+}
+
+.sort-button{
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  min-width: 260px;
+
+  height: 48px;
+
+  padding-left: 46px;
+  padding-right: 42px;
+
+  border-radius: 14px;
+
+  border: 1px solid #dbe2ea;
+
+  background: white;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  color: #334155;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.sort-button:hover{
+
+  background: #f8fafc;
+
+  border-color: #cbd5e1;
+}
+
+.sort-button:focus{
+
+  outline: none;
+
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 4px rgba(37,99,235,.12);
 }
 
 </style>

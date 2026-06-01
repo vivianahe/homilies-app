@@ -191,8 +191,10 @@
 
               </a>
 
-              <button class="secondary-button">
-
+              <button
+                class="secondary-button"
+                @click="shareHomily(homily)"
+              >
                 <i class="fa-solid fa-share-nodes"></i>
 
                 Compartir
@@ -209,11 +211,38 @@
 
     </div>
 
+    <transition name="toast">
+
+      <div
+        v-if="showShareToast"
+        class="share-toast"
+      >
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        <div>
+
+          <strong>Enlace copiado</strong>
+
+          <p>
+            Ya puedes compartir la homilía.
+          </p>
+
+        </div>
+
+      </div>
+
+    </transition>
+
   </section>
 
 </template>
 
 <script setup>
+
+import { ref } from "vue";
+
+const showShareToast = ref(false);
 
 /*
 |--------------------------------------------------------------------------
@@ -264,6 +293,39 @@ const getYear = (date) => {
   if (!date) return "";
 
   return date.split("-")[0];
+
+};
+
+const shareHomily = async (homily) => {
+
+  const url =
+    `${window.location.origin}/share/homily/${homily.id}`;
+
+  try {
+
+    if (navigator.share) {
+
+      await navigator.share({
+        url
+      });
+
+    } else {
+
+      await navigator.clipboard.writeText(url);
+
+      showShareToast.value = true;
+
+      setTimeout(() => {
+        showShareToast.value = false;
+      }, 3000);
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
 
 };
 
@@ -799,6 +861,88 @@ const getYear = (date) => {
     justify-content: center;
   }
 
+}
+
+.share-toast{
+
+  position: fixed;
+
+  bottom: 24px;
+  right: 24px;
+
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  background: white;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  padding: 16px 20px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.12);
+
+  min-width: 280px;
+}
+
+.share-toast i{
+
+  color: #22c55e;
+
+  font-size: 24px;
+}
+
+.share-toast strong{
+
+  display: block;
+
+  color: #0f172a;
+
+  margin-bottom: 4px;
+}
+
+.share-toast p{
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  margin: 0;
+}
+
+/* ANIMACIÓN */
+
+.toast-enter-active,
+.toast-leave-active{
+
+  transition: all .25s ease;
+}
+
+.toast-enter-from,
+.toast-leave-to{
+
+  opacity: 0;
+
+  transform:
+    translateY(20px);
+}
+
+@media (max-width:768px){
+
+  .share-toast{
+
+    left: 16px;
+    right: 16px;
+
+    bottom: 16px;
+
+    min-width: auto;
+  }
 }
 
 </style>

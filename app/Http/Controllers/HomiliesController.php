@@ -552,4 +552,15 @@ class HomiliesController extends Controller
 
         return response()->json($data);
     }
+
+    public function shareHomily($id)
+    {
+        $homily = Homilie::findOrFail($id);
+
+        return view(
+            'shareHomily',
+            compact('homily')
+        );
+    }
+
 }

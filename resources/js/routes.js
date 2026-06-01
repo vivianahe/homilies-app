@@ -6,6 +6,7 @@ import homilyAllNew from "./components/views/homilyAllNew.vue";
 import DonateView from "./components/views/DonateView.vue";
 import Contact from "./components/views/ContactView.vue";
 import HomilyDetail from "./components/views/HomilyDetail.vue";
+import HomilyDetailNew from "./components/views/HomilyDetailNew.vue";
 import HomilyAdd from "./components/views/admin/HomilyAdd.vue";
 import HomilyDetailAdm from "./components/views/admin/HomilyDetail.vue";
 import HomilyAllAdm from "./components/views/admin/HomilyAllAdm.vue";
@@ -48,6 +49,11 @@ const routes = [
         path: '/homilyDetail/:id',
         name: 'homilyDetail',
         component: HomilyDetail
+    },
+    {
+        path: '/HomilyDetailNew/:id',
+        name: 'HomilyDetailNew',
+        component: HomilyDetailNew
     },
     {
         path: '/homilyAddView',

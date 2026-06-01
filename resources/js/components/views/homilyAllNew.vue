@@ -2,7 +2,12 @@
 
   <Header />
 
-  <div class="homily-page">
+  <div
+    class="homily-page"
+    :class="{
+      expanded: !showDesktopSidebar
+    }"
+  >
 
     <div
       v-if="loading"
@@ -32,8 +37,22 @@
 
     </button>
 
-    <!-- SIDEBAR -->
-    <div class="desktop-sidebar">
+    <!-- SIDEBAR DESKTOP -->
+    <div
+      v-if="showDesktopSidebar"
+      class="desktop-sidebar"
+    >
+
+      <div class="sidebar-header">
+
+        <button
+          class="desktop-filter-toggle"
+          @click="showDesktopSidebar = false"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+      </div>
 
       <HomilySidebar
         :selectedDate="selectedDate"
@@ -88,6 +107,18 @@
     <!-- CONTENIDO -->
     <div class="homily-content">
 
+      <div
+        v-if="!showDesktopSidebar"
+        class="content-toolbar"
+      >
+        <button
+          class="desktop-filter-toggle"
+          @click="showDesktopSidebar = true"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+
       <!-- HERO -->
       <HomilyHero
         :homilyData="featuredHomily"
@@ -113,22 +144,54 @@
           activeFilter !== 'recent' &&
           pagination.last_page > 1
         "
-        class="flex justify-center items-center gap-4 py-8">
+        class="pagination-wrapper"
+      >
 
         <button
           @click="changePage(currentPage - 1)"
           :disabled="currentPage === 1"
-          class="px-4 py-2 border rounded-xl disabled:opacity-50">
-
-          Anterior
-
+          class="pagination-button secondary"
+        >
+          <i class="fa-solid fa-chevron-left"></i>
+          <span>Anterior</span>
         </button>
 
-        <div class="font-semibold text-gray-700">
+        <div class="pagination-status">
 
-          Página {{ currentPage }}
-          de
-          {{ pagination.last_page }}
+          <span class="pagination-label">
+            Página
+          </span>
+
+          <!-- AQUÍ VA -->
+          <div class="pagination-select-wrapper">
+
+            <select
+              v-model="selectedPage"
+              class="pagination-select"
+              @change="changePage(Number(selectedPage))"
+            >
+
+              <option
+                v-for="page in pagination.last_page"
+                :key="page"
+                :value="page"
+              >
+                {{ page }}
+              </option>
+
+            </select>
+
+            <i class="fa-solid fa-chevron-down"></i>
+
+          </div>
+
+          <span class="pagination-separator">
+            de
+          </span>
+
+          <span class="pagination-total">
+            {{ pagination.last_page }}
+          </span>
 
         </div>
 
@@ -137,17 +200,18 @@
           :disabled="
             currentPage === pagination.last_page
           "
-          class="px-4 py-2 border rounded-xl disabled:opacity-50">
-
-          Siguiente
-
+          class="pagination-button primary"
+        >
+          <span>Siguiente</span>
+          <i class="fa-solid fa-chevron-right"></i>
         </button>
 
       </div>
 
     </div>
 
-  </div>
+    </div>
+
 </template>
 
 <script setup>
@@ -174,6 +238,8 @@ import HomilyTimeline from "../homilies/HomilyTimeline.vue";
 */
 const showFiltersMobile = ref(false);
 
+const showDesktopSidebar = ref(true);
+
 const homilies = ref([]);
 
 const loading = ref(false);
@@ -189,6 +255,8 @@ const selectedGospel = ref("");
 const sortBy = ref("recent");
 
 const currentPage = ref(1);
+
+const selectedPage = ref(1);
 
 const isDateFilter = ref(false);
 
@@ -239,18 +307,6 @@ const getHomilies = async (
       per_page: perPage
     };
 
-    console.log("URL:", "/homiliesNew");
-    console.log("PARAMS:", params);
-    console.log("sort:", `[${sort}]`);
-    console.log(
-      "season:",
-      `[${selectedSeason.value}]`
-    );
-    console.log(
-      "gospel:",
-      `[${selectedGospel.value}]`
-    );
-
     const { data } = await axios.get(
       "/homiliesNew",
       {
@@ -275,8 +331,6 @@ const getHomilies = async (
       }
     );
 
-    console.log("RESPONSE:", data);
-
     const records = data.data || [];
 
     pagination.value = {
@@ -286,6 +340,7 @@ const getHomilies = async (
     };
 
     currentPage.value = page;
+    selectedPage.value = page;
 
     homilies.value = records;
 
@@ -376,8 +431,6 @@ const handleFilter = (filter) => {
 
 const handleSort = (sort) => {
 
-  console.log("ORDEN:", sort);
-
   sortBy.value = sort;
 
   currentPage.value = 1;
@@ -434,6 +487,9 @@ const changePage = (page) => {
     return;
   }
 
+  currentPage.value = page;
+  selectedPage.value = page;
+
   getHomilies(
     "",
     page,
@@ -458,11 +514,24 @@ onMounted(() => {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
+
   padding: 32px 42px;
+
   display: grid;
-  grid-template-columns: 270px minmax(0, 1fr);
+
+  grid-template-columns:
+    270px minmax(0,1fr);
+
   gap: 26px;
+
   align-items: start;
+
+  transition: all .3s ease;
+}
+
+.homily-page.expanded{
+  grid-template-columns:
+    minmax(0,1fr);
 }
 
 .homily-content{
@@ -491,9 +560,6 @@ onMounted(() => {
   border: none;
 
   z-index: 50;
-
-  box-shadow:
-    0 12px 30px rgba(37,99,235,.35);
 }
 
 .mobile-filters-overlay{
@@ -578,6 +644,251 @@ onMounted(() => {
   transition: transform .25s ease;
 }
 
+.desktop-sidebar{
+  width: 270px;
+}
+
+.sidebar-header{
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+}
+
+.content-toolbar{
+  display: flex;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.desktop-filter-toggle{
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  cursor: pointer;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #475569;
+
+  border: 1px solid #e2e8f0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all .25s ease;
+}
+
+.desktop-filter-toggle:hover{
+  transform: translateY(-2px);
+}
+
+.desktop-filter-toggle:hover{
+  transform: translateY(-2px);
+}
+
+.pagination-wrapper{
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 20px;
+
+  margin-top: 10px;
+  padding: 24px 0;
+}
+
+.pagination-status{
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px 18px;
+
+  border-radius: 16px;
+
+  background: white;
+
+  border: 1px solid #e2e8f0;
+
+  box-shadow:
+    0 8px 20px rgba(15,23,42,.04);
+}
+
+.pagination-label{
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+.pagination-current{
+  width: 34px;
+  height: 34px;
+
+  border-radius: 10px;
+
+  background: #2563eb;
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+}
+
+.pagination-select{
+
+  height: 34px;
+
+  min-width: 70px;
+
+  padding: 0 12px;
+
+  border: 1px solid #dbe2ea;
+
+  border-radius: 10px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  outline: none;
+
+  appearance: none;
+
+  text-align: center;
+}
+
+.pagination-select:hover{
+
+  background: #1d4ed8;
+}
+
+.pagination-select:focus{
+
+  box-shadow:
+    0 0 0 4px rgba(37,99,235,.15);
+}
+
+.pagination-separator{
+  color: #94a3b8;
+}
+
+.pagination-total{
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+.pagination-button{
+  height: 48px;
+
+  padding: 0 20px;
+
+  border-radius: 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  font-weight: 600;
+
+  transition: all .25s ease;
+}
+
+.pagination-button:disabled{
+  opacity: .45;
+
+  cursor: not-allowed;
+}
+
+.pagination-button.primary{
+  background: #2563eb;
+
+  color: white;
+
+  box-shadow:
+    0 10px 25px rgba(37,99,235,.25);
+}
+
+.pagination-button.primary:hover:not(:disabled){
+  transform: translateY(-2px);
+}
+
+.pagination-button.secondary{
+  background: white;
+
+  color: #334155;
+
+  border: 1px solid #e2e8f0;
+}
+
+.pagination-button.secondary:hover:not(:disabled){
+  background: #f8fafc;
+}
+
+.pagination-select-wrapper{
+  position: relative;
+}
+
+.pagination-select{
+
+  height: 34px;
+
+  min-width: 70px;
+
+  padding: 0 30px 0 12px;
+
+  border: 1px solid #dbe2ea;
+
+  border-radius: 10px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  appearance: none;
+
+  outline: none;
+
+  text-align: center;
+}
+
+.pagination-select-wrapper i{
+
+  position: absolute;
+
+  right: 10px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: white;
+
+  font-size: 10px;
+
+  pointer-events: none;
+}
+
 @media (max-width: 1600px){
 
   .homily-page{
@@ -600,6 +911,10 @@ onMounted(() => {
 
 @media (max-width: 1200px){
 
+  .desktop-filter-toggle{
+    display: none;
+  }
+
   .homily-page{
     grid-template-columns: 1fr;
   }
@@ -618,12 +933,79 @@ onMounted(() => {
 
 @media (max-width: 768px){
 
-  .homily-page{
-    padding: 16px;
+  .pagination-wrapper{
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    width: 100%;
+
+    padding: 8px 0;
   }
 
-  .homily-content{
-    gap: 24px;
+  .pagination-status{
+    padding: 8px 10px;
+
+    gap: 4px;
+
+    border-radius: 10px;
+
+    min-width: auto;
+
+    flex: 0 0 auto;
+  }
+
+  .pagination-label{
+    font-size: 12px;
+  }
+
+  .pagination-current{
+    width: 24px;
+    height: 24px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+  }
+
+  .pagination-separator,
+  .pagination-total{
+    font-size: 12px;
+  }
+
+  .pagination-button{
+    height: 36px;
+
+    padding: 0 12px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+
+    gap: 6px;
+
+    flex-shrink: 0;
+  }
+
+  .pagination-button i{
+    font-size: 10px;
+  }
+
+}
+
+/* MÓVIL */
+@media (max-width: 768px) {
+
+  .pagination-wrapper {
+    margin-bottom: 90px;
+  }
+
+  .floating-filter-button {
+    bottom: 100px;
+    right: 16px;
   }
 
 }

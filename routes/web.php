@@ -27,6 +27,7 @@ Route::view('/homilyDetail/{id}', 'pag')->name('homilyDetail');
 Route::view('/HomilyDetailNew/{id}', 'pag')->name('HomilyDetailNew');
 Route::view('/donateView', 'pag')->name('donateView');
 Route::view('/contact', 'pag')->name('contact');
+Route::get('/homilies/detail/{id}',[HomiliesController::class, 'getHomilyDetail']);
 
 Route::resource('/homilies', HomiliesController::class);
 Route::get('/homiliesNew',[HomiliesController::class, 'getHomiliesNew']);

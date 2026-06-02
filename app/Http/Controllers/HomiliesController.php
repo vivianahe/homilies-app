@@ -563,4 +563,75 @@ class HomiliesController extends Controller
         );
     }
 
+    public function getHomilyDetail($id)
+    {
+        $data = Homilie::from('homilies as h')
+
+            ->leftJoin(
+                'solemnity as s',
+                's.id',
+                '=',
+                'h.solemnity_id'
+            )
+
+            ->leftJoin(
+                'homily_liturgical_day as hld',
+                'hld.homily_id',
+                '=',
+                'h.id'
+            )
+
+            ->leftJoin(
+                'liturgical_days as ld',
+                'ld.id',
+                '=',
+                'hld.liturgical_day_id'
+            )
+
+            ->leftJoin(
+                'liturgical_times as lt',
+                'lt.id',
+                '=',
+                'ld.liturgical_time_id'
+            )
+
+            ->leftJoin(
+                'gospels as g',
+                'g.id',
+                '=',
+                'ld.gospel_id'
+            )
+
+            ->select(
+
+                'h.*',
+
+                's.name as solemnity_name',
+
+                'ld.description',
+
+                'ld.cycle',
+
+                'ld.week_number',
+
+                'ld.celebration_type',
+
+                'ld.day_name',
+
+                'ld.liturgical_time_id',
+
+                'ld.gospel_id',
+
+                'lt.name as liturgical_time',
+
+                'g.name as gospel_name'
+            )
+
+            ->where('h.id', $id)
+
+            ->first();
+
+        return response()->json($data);
+    }
+
 }

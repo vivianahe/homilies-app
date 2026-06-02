@@ -6,10 +6,6 @@
     v-if="dataHomilyId"
     class="homily-page">
 
-    <pre>
-{{ dataHomilyId }}
-</pre>
-
     <div class="detail-layout">
 
       <div>
@@ -21,6 +17,7 @@
         <HomilyAudio
           :homily="dataHomilyId"
         />
+        <br>
 
         <HomilyMessage
           :message="dataHomilyId.message"
@@ -86,7 +83,7 @@ onBeforeUnmount(() => {
   window.removeEventListener("scroll", checkScrollPosition);
 });
 const getHomilyId = async () => {
-  const { data } = await axios.get('/homilies/' + HomilyId);
+  const { data } = await axios.get('/homilies/detail/' + HomilyId);
   dataHomilyId.value = data;
 };
 const convertirFecha = (fecha) => {
@@ -121,15 +118,19 @@ onMounted(() => {
 <style scoped>
 
 .homily-page{
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 30px;
+  width:100%;
+  max-width:none;
+
+  padding:20px 24px;
 }
 
 .detail-layout{
   display:grid;
-  grid-template-columns: minmax(0, 1fr) 420px;
-  gap:30px;
+
+  grid-template-columns:minmax(0,1fr) 480px;
+
+  gap:32px;
+
   align-items:start;
 }
 
@@ -141,4 +142,11 @@ onMounted(() => {
 
 }
 
+@media(max-width:768px){
+
+  .homily-page{
+    padding:12px;
+  }
+
+}
 </style>

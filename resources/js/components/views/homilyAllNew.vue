@@ -205,13 +205,10 @@
           <span>Siguiente</span>
           <i class="fa-solid fa-chevron-right"></i>
         </button>
-
       </div>
-
     </div>
-
+      <BackToTop />
     </div>
-
 </template>
 
 <script setup>
@@ -230,6 +227,7 @@ import HomilySidebar from "../homilies/HomilySidebar.vue";
 import HomilyHero from "../homilies/HomilyHero.vue";
 import HomilyFilters from "../homilies/HomilyFilters.vue";
 import HomilyTimeline from "../homilies/HomilyTimeline.vue";
+import BackToTop from "../homilies/BackToTop.vue";
 
 /*
 |--------------------------------------------------------------------------

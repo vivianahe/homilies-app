@@ -42,31 +42,74 @@
   </div>
 
 </section>
+
+<transition name="toast">
+
+  <div
+    v-if="showShareToast"
+    class="share-toast"
+  >
+
+    <i class="fa-solid fa-circle-check"></i>
+
+    <div>
+
+      <strong>Enlace copiado</strong>
+
+      <p>
+        Ya puedes compartir la homilía.
+      </p>
+
+    </div>
+
+  </div>
+
+</transition>
+
 </template>
 
 <script setup>
 
+import { ref } from "vue";
+
+const showShareToast = ref(false);
+
 const props = defineProps({
   homily: Object
-})
+});
 
 const shareHomily = async () => {
 
-  const url = window.location.href;
+  const url =
+    `${window.location.origin}/share/homily/${props.homily.id}`;
 
-  if (navigator.share) {
+  try {
 
-    await navigator.share({
-      title: props.homily.title,
-      text: props.homily.description,
-      url
-    });
+    if (navigator.share) {
 
-  } else {
+      await navigator.share({
+        title: props.homily.title,
+        text: props.homily.description,
+        url
+      });
 
-    await navigator.clipboard.writeText(url);
+    } else {
 
-    alert('Enlace copiado al portapapeles');
+      await navigator.clipboard.writeText(url);
+
+      showShareToast.value = true;
+
+      setTimeout(() => {
+
+        showShareToast.value = false;
+
+      }, 3000);
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
 
   }
 };
@@ -215,6 +258,75 @@ const shareHomily = async () => {
   background:#1d4ed8;
 }
 
+.share-toast{
+
+  position:fixed;
+
+  bottom:24px;
+  right:24px;
+
+  z-index:9999;
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  background:#fff;
+
+  border:1px solid #e2e8f0;
+
+  border-radius:16px;
+
+  padding:16px 20px;
+
+  min-width:280px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.12);
+}
+
+.share-toast i{
+
+  color:#22c55e;
+
+  font-size:24px;
+}
+
+.share-toast strong{
+
+  display:block;
+
+  color:#0f172a;
+
+  margin-bottom:4px;
+}
+
+.share-toast p{
+
+  margin:0;
+
+  color:#64748b;
+
+  font-size:14px;
+}
+
+/* Animación */
+
+.toast-enter-active,
+.toast-leave-active{
+
+  transition:all .25s ease;
+}
+
+.toast-enter-from,
+.toast-leave-to{
+
+  opacity:0;
+
+  transform:
+    translateY(20px);
+}
+
 @media(max-width:768px){
 
   .audio-row{
@@ -223,8 +335,18 @@ const shareHomily = async () => {
   }
 
   .audio-left{
+    display:flex;
     flex-direction:column;
     align-items:stretch;
+    width:100%;
+  }
+
+  .audio-player{
+    display:block;
+    width:100%;
+    min-width:100%;
+    max-width:100%;
+    height:54px;
   }
 
   .btn-share{

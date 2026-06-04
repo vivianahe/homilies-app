@@ -181,7 +181,7 @@
             <div class="card-actions">
 
               <a
-                :href="`/homilyDetail/${homily.id}`"
+                :href="`/HomilyDetailNew/${homily.id}`"
                 class="primary-button"
               >
 

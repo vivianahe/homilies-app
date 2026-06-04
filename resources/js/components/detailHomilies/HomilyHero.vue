@@ -75,13 +75,6 @@
       {{ homily.title }}
     </h1>
 
-    <p
-      v-if="homily.description"
-      class="hero-description"
-    >
-      {{ homily.description }}
-    </p>
-
     <div
       v-if="homily.citation"
       class="hero-citation"
@@ -171,9 +164,7 @@ const downloadImage = () => {
 
 .hero-card{
   background:#fff;
-  border-radius:24px;
   overflow:hidden;
-  border:1px solid #edf2f7;
 }
 
 .hero-image{

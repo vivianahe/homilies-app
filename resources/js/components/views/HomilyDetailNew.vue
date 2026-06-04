@@ -6,6 +6,18 @@
     v-if="dataHomilyId"
     class="homily-page">
 
+    <div class="page-nav">
+
+      <button
+        class="back-button"
+        @click="goToHomilies"
+      >
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Volver a homilías</span>
+      </button>
+
+    </div>
+
     <div class="detail-layout">
 
       <div>
@@ -18,14 +30,22 @@
           :homily="dataHomilyId"
         />
         <br>
-
-        <HomilyMessage
-          :message="dataHomilyId.message"
-        />
-
+    
         <HomilyGospel
           :homily="dataHomilyId"
         />
+
+        <div class="content-grid">
+
+          <HomilyDescription
+            :description="dataHomilyId.description"
+          />
+
+          <HomilyMessage
+            :message="dataHomilyId.message"
+          />
+
+        </div>
 
       </div>
 
@@ -42,6 +62,9 @@
 </template>
 
 <script setup>
+
+import { useRouter } from 'vue-router';
+
 import Header from "../Header.vue";
 import Footer from "../Footer.vue";
 
@@ -51,7 +74,7 @@ import HomilyMessage from "../detailHomilies/HomilyMessage.vue";
 import HomilyGospel from "../detailHomilies/HomilyGospel.vue";
 import HomilySidebar from "../detailHomilies/HomilySidebar.vue";
 import BackToTop from "../detailHomilies/BackToTop.vue";
-
+import HomilyDescription from "../detailHomilies/HomilyDescription.vue";
 
 
 import { useRoute } from "vue-router";
@@ -63,6 +86,12 @@ const route = useRoute();
 const HomilyId = route.params.id;
 const dataHomilyId = ref(null);
 const showBackToTopButton = ref(false);
+
+const router = useRouter();
+
+const goToHomilies = () => {
+  router.push({ name: 'homilyAllNew' });
+}
 
 const scrollToTop = () => {
   window.scrollTo({
@@ -126,12 +155,67 @@ onMounted(() => {
 
 .detail-layout{
   display:grid;
+  grid-template-columns:minmax(0,1fr) 360px;
+  gap:24px;
+}
 
-  grid-template-columns:minmax(0,1fr) 480px;
+.content-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:24px;
+  margin:24px 0;
+}
 
-  gap:32px;
+.content-grid > *{
+  min-width:0;
+}
+.page-nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 
-  align-items:start;
+  margin-bottom:22px;
+}
+
+.back-button{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding:12px 18px;
+
+  background:#fff;
+  color:#2563eb;
+
+  font-size:.95rem;
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:all .25s ease;
+}
+
+.back-button i{
+  font-size:.9rem;
+}
+
+
+@media(max-width:768px){
+
+  .page-nav{
+    flex-direction:column;
+    align-items:stretch;
+    gap:12px;
+  }
+
+}
+
+@media(max-width:992px){
+
+  .content-grid{
+    grid-template-columns:1fr;
+  }
+
 }
 
 @media(max-width:1200px){

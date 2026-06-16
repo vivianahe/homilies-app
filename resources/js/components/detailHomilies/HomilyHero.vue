@@ -36,33 +36,43 @@
 
   <div class="hero-content">
 
-    <div
-      v-if="homily.cycle || homily.liturgical_time"
-      class="hero-meta"
+  <div
+    v-if="
+      homily.cycle ||
+      homily.liturgical_time ||
+      (
+        homily.celebration_type &&
+        homily.celebration_type !== 'null'
+      )
+    "
+    class="hero-meta"
+  >
+
+    <span
+      v-if="homily.cycle"
+      class="hero-badge"
     >
+      {{ getCycleLabel(homily.cycle) }}
+    </span>
 
-      <span
-        v-if="homily.cycle"
-        class="hero-badge"
-      >
-        {{ getCycleLabel(homily.cycle) }}
-      </span>
+    <span
+      v-if="homily.liturgical_time"
+      class="hero-badge"
+    >
+      {{ homily.liturgical_time }}
+    </span>
 
-      <span
-        v-if="homily.liturgical_time"
-        class="hero-badge"
-      >
-        {{ homily.liturgical_time }}
-      </span>
+    <span
+      v-if="
+        homily.celebration_type &&
+        homily.celebration_type !== 'null'
+      "
+      class="hero-badge"
+    >
+      {{ homily.celebration_type }}
+    </span>
 
-      <span
-        v-if="homily.celebration_type"
-        class="hero-badge"
-      >
-        {{ homily.celebration_type }}
-      </span>
-
-    </div>
+  </div>
 
     <div
       v-if="homily.week_number"

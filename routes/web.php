@@ -37,6 +37,7 @@ Route::post('/contact', [HomiliesController::class, 'postFrmContact']);
 Route::apiResource("prayers", PrayerController::class);
 Route::apiResource("chants", ChantController::class);
 Route::get('/share/homily/{id}',[HomiliesController::class, 'shareHomily']);
+Route::get('/homilies/related/{id}',[HomiliesController::class, 'getRelatedHomilies']);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::view('/home', 'home')->name('home');

@@ -35,7 +35,7 @@
       content="630">
 
 <meta property="og:url"
-      content="{{ url('/homilyDetail/'.$homily->id) }}">
+      content="{{ url('/HomilyDetailNew/'.$homily->id) }}">
 
 <meta property="og:site_name"
       content="Homilías Padre Uriel Franco">
@@ -68,7 +68,7 @@
 
 <script>
 window.location.replace(
-    "/homilyDetail/{{ $homily->id }}"
+    "/HomilyDetailNew/{{ $homily->id }}"
 );
 </script>
 

@@ -2,6 +2,21 @@
 
   <Header />
 
+  <div
+    v-if="loading"
+    class="loading-overlay"
+  >
+    <div class="loading-content">
+
+      <div class="spinner"></div>
+
+      <p>
+        Cargando homilía...
+      </p>
+
+    </div>
+  </div>
+
   <main
     v-if="dataHomilyId"
     class="homily-page">
@@ -49,8 +64,9 @@
 
       </div>
 
-      <HomilySidebar />
-
+      <HomilySidebar
+        :homilies="relatedHomilies"
+      />
     </div>
 
   </main>
@@ -78,14 +94,17 @@ import HomilyDescription from "../detailHomilies/HomilyDescription.vue";
 
 
 import { useRoute } from "vue-router";
-import { onMounted, ref, onBeforeUnmount } from "vue";
+import { onMounted, ref, onBeforeUnmount, watch } from "vue";
+
 import axios from "axios";
 import { initFlowbite } from "flowbite";
 
 const route = useRoute();
 const HomilyId = route.params.id;
 const dataHomilyId = ref(null);
+const relatedHomilies = ref([]);
 const showBackToTopButton = ref(false);
+const loading = ref(true);
 
 const router = useRouter();
 
@@ -111,9 +130,48 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", checkScrollPosition);
 });
-const getHomilyId = async () => {
-  const { data } = await axios.get('/homilies/detail/' + HomilyId);
+
+const getHomilyId = async (id) => {
+
+  const { data } = await axios.get(
+    '/homilies/detail/' + id
+  );
+
   dataHomilyId.value = data;
+
+};
+
+const getRelatedHomilies = async (id) => {
+
+  const { data } = await axios.get(
+    `/homilies/related/${id}`
+  );
+
+  relatedHomilies.value = data;
+
+};
+
+const loadPage = async (id) => {
+
+  loading.value = true;
+
+  try {
+
+    await Promise.all([
+      getHomilyId(id),
+      getRelatedHomilies(id)
+    ]);
+
+  } catch (error) {
+
+    console.error(error);
+
+  } finally {
+
+    loading.value = false;
+
+  }
+
 };
 const convertirFecha = (fecha) => {
   const fechaParts = fecha.split("-");
@@ -139,10 +197,28 @@ const convertirFecha = (fecha) => {
   return `${day} ${meses[month - 1]}`;
 };
 
-onMounted(() => {
-  getHomilyId();
+onMounted(async () => {
+
+  await loadPage(route.params.id);
+
   initFlowbite();
+
 });
+
+watch(
+  () => route.params.id,
+  async (newId) => {
+
+    await loadPage(newId);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+);
+
 </script>
 <style scoped>
 
@@ -155,8 +231,8 @@ onMounted(() => {
 
 .detail-layout{
   display:grid;
-  grid-template-columns:minmax(0,1fr) 360px;
-  gap:24px;
+  grid-template-columns:minmax(0,1fr) 460px;
+  gap:32px;
 }
 
 .content-grid{
@@ -199,6 +275,51 @@ onMounted(() => {
   font-size:.9rem;
 }
 
+.loading-overlay{
+  position:fixed;
+  inset:0;
+
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(4px);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  z-index:9999;
+}
+
+.loading-content{
+  text-align:center;
+}
+
+.spinner{
+  width:56px;
+  height:56px;
+
+  border:4px solid #3b82f6;
+  border-top-color:transparent;
+
+  border-radius:50%;
+
+  animation:spin .8s linear infinite;
+
+  margin:0 auto;
+}
+
+.loading-content p{
+  margin-top:16px;
+
+  color:#64748b;
+
+  font-weight:600;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
 
 @media(max-width:768px){
 

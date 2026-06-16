@@ -36,7 +36,7 @@
           <source :src="'/support/audioHomily/' + homilies.audio" type="audio/mp3" />
           Tu navegador no admite el elemento de audio.
         </audio>
-        <RouterLink :to="{ name: 'homilyDetail', params: { id: homilies.id } }" type="button"
+        <RouterLink :to="{ name: 'HomilyDetailNew', params: { id: homilies.id } }" type="button"
           class="mt-3 text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
           Ver
         </RouterLink>

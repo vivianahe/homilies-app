@@ -209,6 +209,7 @@
     </div>
       <BackToTop />
     </div>
+    <Footer />
 </template>
 
 <script setup>
@@ -216,6 +217,7 @@ import { ref, computed, onMounted } from "vue";
 import axios from "axios";
 import { initFlowbite } from "flowbite";
 import Header from "../Header.vue";
+import Footer from "../Footer.vue";
 
 /*
 |--------------------------------------------------------------------------

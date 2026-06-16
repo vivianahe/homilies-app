@@ -312,9 +312,35 @@ class HomiliesController extends Controller
 
     public function postFrmContact(Request $request)
     {
-        $data = $request->all(); // Los datos del formulario
-        Notification::route('mail', 'urielalejo@gmail.com')->notify(new ContactFormNotification($data));
+        try {
+
+            Notification::route(
+                'mail',
+                'urielalejo@gmail.com'
+            )->notify(
+                new ContactFormNotification(
+                    $request->all()
+                )
+            );
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Correo enviado'
+            ]);
+
+        } catch (\Exception $e) {
+
+            \Log::error(
+                'ERROR CONTACTO: '.$e->getMessage()
+            );
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ],500);
+        }
     }
+
     public function getHomeliasId(string $id)
     {
         $data = Homilie::from('homilies as h')
@@ -630,6 +656,51 @@ class HomiliesController extends Controller
             ->where('h.id', $id)
 
             ->first();
+
+        return response()->json($data);
+    }
+
+    public function getRelatedHomilies($id)
+    {
+        $data = Homilie::from('homilies as h')
+
+            ->leftJoin(
+                'homily_liturgical_day as hld',
+                'hld.homily_id',
+                '=',
+                'h.id'
+            )
+
+            ->leftJoin(
+                'liturgical_days as ld',
+                'ld.id',
+                '=',
+                'hld.liturgical_day_id'
+            )
+
+            ->leftJoin(
+                'liturgical_times as lt',
+                'lt.id',
+                '=',
+                'ld.liturgical_time_id'
+            )
+
+            ->select(
+                'h.id',
+                'h.title',
+                'h.date',
+                'h.img',
+                'ld.description',
+                'lt.name as liturgical_time'
+            )
+
+            ->where('h.id', '!=', $id)
+
+            ->orderBy('h.date', 'DESC')
+
+            ->limit(6)
+
+            ->get();
 
         return response()->json($data);
     }

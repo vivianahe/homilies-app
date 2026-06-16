@@ -1,58 +1,237 @@
 <template>
+  <aside class="sidebar-card">
 
-<aside class="sidebar-card">
+    <div class="sidebar-header">
+      <h2>Homilías relacionadas</h2>
+    </div>
 
-  <h2>
+    <div class="related-list">
 
-    Homilías relacionadas
+      <router-link
+        v-for="homily in homilies"
+        :key="homily.id"
+        :to="`/HomilyDetailNew/${homily.id}`"
+        class="related-item"
+      >
+        <img
+          :src="`/support/imgHomily/${homily.img}`"
+          :alt="homily.title"
+          class="related-image"
+        />
 
-  </h2>
+        <div class="related-content">
 
-  <p>
+          <div class="related-meta">
 
-    Próximamente
+            <span>
+              {{ formatDate(homily.date) }}
+            </span>
 
-  </p>
+            <span class="badge">
+              {{ homily.liturgical_time }}
+            </span>
 
-</aside>
+          </div>
+
+          <h3>
+            {{ homily.title }}
+          </h3>
+
+          <p>
+            {{ homily.description }}
+          </p>
+
+        </div>
+
+      </router-link>
+
+    </div>
+
+    <button
+      class="btn-more"
+      @click="goToAllHomilies"
+    >
+      Ver más homilías
+    </button>
+
+  </aside>
 
 </template>
 
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+defineProps({
+  homilies: {
+    type: Array,
+    default: () => []
+  }
+});
+
+const goToAllHomilies = () => {
+  router.push({
+    name: 'homilyAllNew'
+  });
+};
+
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString(
+    "es-ES",
+    {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    }
+  );
+};
+</script>
+
+
 <style scoped>
 
+.related-content{
+  flex:1;
+  min-width:0;
+}
+
+.related-content p{
+  color:#64748b;
+  line-height:1.5;
+
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+
+  overflow:hidden;
+}
+
 .sidebar-card{
-  background:white;
-  border-radius:24px;
-  padding:24px;
-  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  background:#fff;
 
-  position:sticky;
-  top:100px;
-} 
+  border:1px solid #edf1f7;
 
-.sidebar-card{
-  width:100%;
-
-  background:white;
   border-radius:24px;
   padding:28px;
 
-  box-shadow:0 8px 30px rgba(0,0,0,.08);
-
   position:sticky;
   top:100px;
+
+  min-height:900px;
 }
 
-.sidebar-card h2{
-  font-size:1.8rem;
+.sidebar-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+}
+
+.sidebar-header h2{
+  font-size:2.3rem;
+  font-weight:800;
+  line-height:1.1;
+  color:#0f172a;
+}
+
+.btn-all{
+  padding:10px 16px;
+  border:1px solid #dbeafe;
+  border-radius:12px;
+  background:white;
+  color:#2563eb;
+}
+
+.related-list{
+  display:flex;
+  flex-direction:column;
+}
+
+.related-item{
+  display:flex;
+  gap:18px;
+
+  padding:24px 0;
+
+  border-bottom:1px solid #e5e7eb;
+
+  cursor:pointer;
+
+  text-decoration:none;
+  color:inherit;
+
+  transition:all .2s ease;
+}
+
+.related-item:hover{
+  transform:translateY(-2px);
+}
+
+.related-image{
+  width:150px;
+  height:150px;
+  object-fit:cover;
+  border-radius:18px;
+  flex-shrink:0;
+}
+
+.related-content h3{
+  font-size:1.7rem;
   font-weight:800;
   color:#0f172a;
-  margin-bottom:12px;
+
+  margin:10px 0;
+
+  line-height:1.2;
+
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
 }
 
-.sidebar-card p{
-  font-size:1.05rem;
+.related-content p{
   color:#64748b;
+  line-height:1.6;
+  font-size:.95rem;
+
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.related-meta{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.related-meta span:first-child{
+  color:#64748b;
+  font-size:.85rem;
+}
+
+.badge{
+  background:#eff6ff;
+  color:#2563eb;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:.75rem;
+  font-weight:600;
+}
+
+.btn-more{
+  width:100%;
+  margin-top:24px;
+  padding:14px;
+  border:1px solid #c7d2fe;
+  border-radius:14px;
+  background:white;
+  color:#2563eb;
+  font-weight:600;
 }
 
 </style>

@@ -66,26 +66,70 @@
 
         </div>
 
-        <div class="bank-grid">
+        <div class="donation-methods">
 
-          <div class="bank-item">
-            <span>Banco</span>
-            <strong>Bancolombia</strong>
+          <div class="donation-card-info">
+
+            <div class="donation-card-header">
+
+              <i class="fa-solid fa-building-columns"></i>
+
+              <h3>Bancolombia</h3>
+
+            </div>
+
+            <div class="donation-card-body">
+
+              <div class="info-row">
+                <span>Titular</span>
+                <strong>Uriel Alejandro Franco Sánchez</strong>
+              </div>
+
+              <div class="info-row">
+                <span>Cédula</span>
+                <strong>1.075.221.526</strong>
+              </div>
+
+              <div class="info-row">
+                <span>Tipo de cuenta</span>
+                <strong>Cuenta de ahorros</strong>
+              </div>
+
+              <div class="info-row highlight">
+                <span>Número de cuenta</span>
+                <strong>28458168344</strong>
+              </div>
+
+            </div>
+
           </div>
 
-          <div class="bank-item">
-            <span>Tipo de cuenta</span>
-            <strong>Ahorros</strong>
-          </div>
+          <div class="donation-card-info donation-card-alt">
 
-          <div class="bank-item">
-            <span>Titular</span>
-            <strong>Padre Uriel Franco</strong>
-          </div>
+            <div class="donation-card-header">
 
-          <div class="bank-item">
-            <span>Ministerio</span>
-            <strong>Ministerio Evangelizador</strong>
+              <i class="fa-solid fa-mobile-screen"></i>
+
+              <h3>Nequi · Daviplata · Llave</h3>
+
+            </div>
+
+            <div class="donation-card-body">
+
+              <p class="card-description">
+
+                También puedes realizar tu aporte utilizando:
+
+              </p>
+
+              <div class="phone-number">
+
+                312 575 4229
+
+              </div>
+
+            </div>
+
           </div>
 
         </div>
@@ -334,38 +378,181 @@ onMounted(() => {
   margin-bottom:55px;
 }
 
-.bank-grid{
+.donation-methods{
+
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:20px;
+
+  grid-template-columns:1fr;
+
+  gap:24px;
+
+  max-width:1000px;
+
+  margin:0 auto;
 }
 
-.bank-item{
+.donation-card-info{
+
   background:#fff;
 
   border:1px solid #e2e8f0;
 
-  border-radius:22px;
+  border-radius:28px;
 
-  padding:24px;
+  overflow:hidden;
+
+  transition:.25s ease;
 }
 
-.bank-item span{
-  display:block;
+.donation-card-info:hover{
+
+  transform:translateY(-4px);
+
+  box-shadow:
+    0 20px 40px rgba(15,23,42,.08);
+}
+
+.donation-card-header{
+
+  padding:24px;
+
+  background:#eff6ff;
+
+  border-bottom:1px solid #dbeafe;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+}
+
+.donation-card-header i{
+
+  width:54px;
+  height:54px;
+
+  border-radius:16px;
+
+  background:#2563eb;
+
+  color:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:22px;
+}
+
+.donation-card-header h3{
+
+  margin:0;
+
+  font-size:1.4rem;
+
+  font-weight:800;
+
+  color:#0f172a;
+}
+
+.donation-card-body{
+
+  padding:26px;
+}
+
+.info-row{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:16px;
+
+  padding:14px 0;
+
+  border-bottom:1px solid #f1f5f9;
+}
+
+.info-row:last-child{
+
+  border-bottom:none;
+}
+
+.info-row span{
 
   color:#64748b;
 
-  font-size:.9rem;
-
-  margin-bottom:6px;
+  font-size:.95rem;
 }
 
-.bank-item strong{
+.info-row strong{
+
   color:#0f172a;
 
   font-weight:800;
 
-  font-size:1rem;
+  text-align:right;
+}
+
+.highlight strong{
+
+  color:#2563eb;
+
+  font-size:1.2rem;
+}
+
+.donation-card-alt{
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  color:white;
+}
+
+.donation-card-alt .donation-card-header{
+
+  background:transparent;
+
+  border-bottom:1px solid rgba(255,255,255,.15);
+}
+
+.donation-card-alt .donation-card-header h3{
+
+  color:white;
+}
+
+.donation-card-alt .donation-card-header i{
+
+  background:white;
+
+  color:#2563eb;
+}
+
+.card-description{
+
+  color:rgba(255,255,255,.85);
+
+  margin-bottom:22px;
+
+  line-height:1.7;
+}
+
+.phone-number{
+
+  font-size:2rem;
+
+  font-weight:800;
+
+  text-align:center;
+
+  letter-spacing:2px;
 }
 
 .impact-section{

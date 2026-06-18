@@ -8,31 +8,81 @@
 
       <div class="hero-content">
 
-      <div class="hero-liturgical">
-
-      <div class="hero-liturgical-top">
-
-        {{ getCycleLabel(homilyData.cycle) }}
-
-        <span v-if="homilyData.liturgical_time">
-          , {{ homilyData.liturgical_time }}
-        </span>
-
-        <span
-          v-if="
+      <div
+        v-if="
+          homilyData.cycle ||
+          homilyData.liturgical_time ||
+          (
             homilyData.celebration_type &&
             homilyData.celebration_type !== 'null'
-          ">
-
-          , {{ homilyData.celebration_type }}
-
-        </span>
-
-      </div>
+          ) ||
+          (
+            homilyData.week_number &&
+            homilyData.week_number > 0
+          )
+        "
+        class="hero-liturgical"
+      >
 
         <div
-          v-if="homilyData.week_number"
-          class="hero-liturgical-bottom">
+          v-if="
+            homilyData.cycle ||
+            homilyData.liturgical_time ||
+            (
+              homilyData.celebration_type &&
+              homilyData.celebration_type !== 'null'
+            )
+          "
+          class="hero-liturgical-top"
+        >
+
+          <template v-if="homilyData.cycle">
+            {{ getCycleLabel(homilyData.cycle) }}
+          </template>
+
+          <template v-if="homilyData.liturgical_time">
+
+            <span>
+
+              {{ homilyData.cycle ? ', ' : '' }}
+
+              {{ homilyData.liturgical_time }}
+
+            </span>
+
+          </template>
+
+          <template
+            v-if="
+              homilyData.celebration_type &&
+              homilyData.celebration_type !== 'null'
+            "
+          >
+
+            <span>
+
+              {{
+                homilyData.cycle ||
+                homilyData.liturgical_time
+                  ? ', '
+                  : ''
+              }}
+
+              {{ homilyData.celebration_type }}
+
+            </span>
+
+          </template>
+
+        </div>
+
+        <div
+          v-if="
+            homilyData.week_number &&
+            homilyData.week_number > 0
+          "
+          class="hero-liturgical-bottom"
+        >
 
           Semana {{ homilyData.week_number }}
 
@@ -496,20 +546,46 @@ const downloadImage = () => {
   margin-bottom: 22px;
 }
 
+.hero-liturgical{
+  margin-bottom:22px;
+}
+
 .hero-liturgical-top{
-  font-size: 18px;
-  font-weight: 700;
-  color: #7c83f7;
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  padding:8px 14px;
+
+  border-radius:999px;
+
+  background:#eff6ff;
+
+  border:1px solid #dbeafe;
+
+  color:#2563eb;
+
+  font-size:15px;
+
+  font-weight:700;
+
+  width:fit-content;
 }
 
 .hero-liturgical-bottom{
-  margin-top: 6px;
 
-  font-size: 24px;
+  margin-top:12px;
 
-  font-weight: 800;
+  font-size:32px;
 
-  color: #1e1b4b;
+  font-weight:800;
+
+  color:#0f172a;
+
+  line-height:1;
 }
 
 </style>

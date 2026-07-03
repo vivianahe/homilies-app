@@ -372,7 +372,19 @@ const handleSelectGospel = (gospel) => {
 
   selectedGospel.value = gospel;
 
-  getHomilies();
+  getHomilies(
+
+      selectedDate.value,
+
+      1,
+
+      sortBy.value,
+
+      activeFilter.value === "recent"
+          ? 5
+          : 10
+
+  );
 
   if (window.innerWidth <= 1200) {
     showFiltersMobile.value = false;
@@ -394,15 +406,19 @@ const handleFilter = (filter) => {
 
   if (filter === "all") {
 
-    sortBy.value = "recent";
+      selectedDate.value = "";
 
-    getHomilies(
-      "",
-      1,
-      "recent"
-    );
+      isDateFilter.value = false;
 
-    return;
+      sortBy.value = "recent";
+
+      getHomilies(
+          "",
+          1,
+          "recent"
+      );
+
+      return;
 
   }
 
@@ -436,7 +452,7 @@ const handleSort = (sort) => {
   currentPage.value = 1;
 
   getHomilies(
-    "",
+    selectedDate.value,
     1,
     sort
   );
@@ -449,7 +465,14 @@ const handleSelectDate = (date) => {
 
   isDateFilter.value = true;
 
-  getHomilies(date);
+  getHomilies(
+      date,
+      1,
+      sortBy.value,
+      activeFilter.value === "recent"
+          ? 5
+          : 10
+  );
 
   if (window.innerWidth <= 1200) {
     showFiltersMobile.value = false;
@@ -464,7 +487,7 @@ const handleSelectSeason = (season) => {
   currentPage.value = 1;
 
   getHomilies(
-    "",
+    selectedDate.value,
     1,
     sortBy.value,
     activeFilter.value === "recent"
@@ -491,7 +514,7 @@ const changePage = (page) => {
   selectedPage.value = page;
 
   getHomilies(
-    "",
+    selectedDate.value,
     page,
     sortBy.value
   );
@@ -501,9 +524,26 @@ const changePage = (page) => {
 
 onMounted(() => {
 
-  getHomilies();
+    const today = new Date();
 
-  initFlowbite();
+    const month = String(
+        today.getMonth() + 1
+    ).padStart(2,"0");
+
+    const day = String(
+        today.getDate()
+    ).padStart(2,"0");
+
+    selectedDate.value =
+        `2000-${month}-${day}`;
+
+    isDateFilter.value = true;
+
+    getHomilies(
+        selectedDate.value
+    );
+
+    initFlowbite();
 
 });
 </script>

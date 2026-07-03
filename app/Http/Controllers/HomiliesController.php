@@ -504,10 +504,28 @@ class HomiliesController extends Controller
 
         if ($request->date) {
 
-            $query->whereDate(
-                'h.date',
-                $request->date
-            );
+            $fecha = Carbon::parse($request->date);
+
+            if ($request->date_mode == "exact") {
+
+                $query->whereDate(
+                    'h.date',
+                    $fecha
+                );
+
+            } else {
+
+                $query->whereMonth(
+                    'h.date',
+                    $fecha->month
+                );
+
+                $query->whereDay(
+                    'h.date',
+                    $fecha->day
+                );
+
+            }
 
         }
 

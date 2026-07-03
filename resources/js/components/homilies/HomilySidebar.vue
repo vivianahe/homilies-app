@@ -131,15 +131,11 @@
         @click="showCalendar = !showCalendar"
       >
 
-        <span>
+      <span>
 
-          {{
-            selectedDate
-              ? "Fecha seleccionada"
-              : "Ir a una fecha específica"
-          }}
+          Buscar por fecha
 
-        </span>
+      </span>
 
         <i
           class="fa-solid"

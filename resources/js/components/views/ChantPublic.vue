@@ -10,7 +10,7 @@
     </div>
 
     <div class="relative w-full mx-auto max-w-screen-xl px-4 sm:px-6">
-      <div class="text-center mb-8 md:mb-10">
+      <div class="text-center mb-14">
         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight text-gray-900 drop-shadow-sm">
           Para Ti es mi música Señor (Salmo 100)
         </h2>
@@ -62,15 +62,64 @@
 
       <!-- Content grid -->
       <div v-else class="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <div
-          v-for="chant in paginatedChants"
-          :key="chant.id"
-          class="group w-full overflow-hidden rounded-2xl border border-white/40 bg-white/60 backdrop-blur-xl p-4 sm:p-6 shadow-xl transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-2xl"
-        >
-          <h3 class="font-semibold text-base sm:text-lg text-gray-900 tracking-tight">{{ chant.title }}</h3>
-          <div v-if="chant.description" class="mt-2">
-            <p class="text-gray-700/90 break-all sm:break-words">
-              <em>{{ isExpanded(chant.id) ? chant.description : truncate(chant.description, collapseLimit) }}</em>
+          <div
+              v-for="(chant,index) in paginatedChants"
+              :key="chant.id"
+              class="
+              group
+              overflow-hidden
+              rounded-3xl
+              bg-white
+              border
+              border-slate-200/70
+              shadow-xl
+              hover:shadow-[0_20px_60px_rgba(99,102,241,.18)]
+              hover:-translate-y-2
+              transition-all
+              duration-300
+              p-7
+              flex
+              flex-col
+              "
+          >
+          <div class="flex items-center gap-5 mb-6">
+
+    <div
+        :class="[
+            'flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-lg transition-transform duration-300 group-hover:scale-110',
+            gradients[index % gradients.length].bg,
+            gradients[index % gradients.length].shadow
+        ]"
+          >
+              <Music4 class="w-10 h-10"/>
+          </div>
+
+          <div class="flex-1">
+
+              <h3 class="text-xl font-bold leading-tight text-slate-900 line-clamp-2">
+                  {{ chant.title }}
+              </h3>
+
+              <span
+                  :class="[
+                      'inline-flex mt-2 rounded-xl px-4 py-1.5 text-sm font-semibold',
+                      gradients[index % gradients.length].badge
+                  ]"
+              >
+                  Canto para oración
+              </span>
+
+          </div>
+
+      </div>
+          <div
+              v-if="chant.description"
+              class="mt-4 min-h-[90px]"
+          >
+            <p class="text-[15px] text-slate-600 leading-relaxed line-clamp-3">
+              {{ isExpanded(chant.id)
+              ? chant.description
+              : truncate(chant.description, collapseLimit) }}
             </p>
             <button
               v-if="chant.description && chant.description.length > collapseLimit"
@@ -81,13 +130,13 @@
               {{ isExpanded(chant.id) ? 'Ver menos' : 'Ver más' }}
             </button>
           </div>
-          <audio
-            controls
-            class="w-full max-w-full rounded-lg shadow-inner bg-white/50 ring-1 ring-inset ring-slate-200/70 mt-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60 [&::-webkit-media-controls-panel]:bg-white/60"
-          >
-            <source :src="'/support/audioChant/' + chant.audio" type="audio/mp3" />
-            Tu navegador no soporta la etiqueta de audio.
-          </audio>
+              <div class="my-6 border-t border-dashed border-slate-200"></div>
+              <div class="mt-auto">
+                  <AudioPlayer
+                      :src="'/support/audioChant/' + chant.audio"
+                      :color="gradients[index % gradients.length]"
+                  />
+              </div>
         </div>
       </div>
 
@@ -132,6 +181,8 @@ import axios from 'axios';
 import Header from "../Header.vue";
 import Footer from "../Footer.vue";
 import { initFlowbite } from "flowbite";
+import { Music4 } from "lucide-vue-next";
+import AudioPlayer from "./AudioPlayer.vue";
 
 const chants = ref([]);
 const isLoading = ref(true);
@@ -150,6 +201,34 @@ const filteredChants = computed(() => {
     normalized(c.title).includes(q) || normalized(c.description).includes(q)
   );
 });
+
+const gradients = [
+  {
+    bg: "from-violet-500 to-purple-600",
+    shadow: "shadow-violet-500/30",
+    badge: "bg-violet-50 text-violet-600",
+  },
+  {
+    bg: "from-blue-500 to-cyan-500",
+    shadow: "shadow-blue-500/30",
+    badge: "bg-blue-50 text-blue-600",
+  },
+  {
+    bg: "from-emerald-400 to-teal-500",
+    shadow: "shadow-emerald-500/30",
+    badge: "bg-emerald-50 text-emerald-600",
+  },
+  {
+    bg: "from-orange-400 to-red-500",
+    shadow: "shadow-orange-500/30",
+    badge: "bg-orange-50 text-orange-600",
+  },
+  {
+    bg: "from-pink-500 to-fuchsia-600",
+    shadow: "shadow-pink-500/30",
+    badge: "bg-pink-50 text-pink-600",
+  },
+];
 
 // pagination state
 const currentPage = ref(1);

@@ -107,25 +107,28 @@
           <div class="donation-card-info donation-card-alt">
 
             <div class="donation-card-header">
-
               <i class="fa-solid fa-mobile-screen"></i>
-
-              <h3>Nequi · Daviplata · Llave</h3>
-
+              <h3>Billeteras digitales</h3>
             </div>
 
             <div class="donation-card-body">
 
-              <p class="card-description">
+              <div class="wallet-item">
+                  <div class="wallet-name">
+                      <i class="fa-solid fa-wallet"></i>
+                      <span>Nequi</span>
+                  </div>
 
-                También puedes realizar tu aporte utilizando:
+                  <strong>318 877 2653</strong>
+              </div>
 
-              </p>
+              <div class="wallet-item">
+                  <div class="wallet-name">
+                      <i class="fa-solid fa-money-bill-transfer"></i>
+                      <span>Daviplata y Llave</span>
+                  </div>
 
-              <div class="phone-number">
-
-                312 575 4229
-
+                  <strong>312 575 4229</strong>
               </div>
 
             </div>
@@ -658,6 +661,49 @@ onMounted(() => {
 .verse-section span{
   color:#64748b;
   font-weight:600;
+}
+
+.wallet-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid rgba(255,255,255,.15);
+}
+
+.wallet-item:last-child{
+    border-bottom:none;
+}
+
+.wallet-name{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.wallet-name i{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    background:rgba(255,255,255,.15);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    font-size:16px;
+}
+
+.wallet-name span{
+    color:#fff;
+    font-size:1rem;
+    font-weight:600;
+}
+
+.wallet-item strong{
+    color:#fff;
+    font-size:1.35rem;
+    font-weight:800;
+    letter-spacing:1px;
 }
 
 @media(max-width:1200px){

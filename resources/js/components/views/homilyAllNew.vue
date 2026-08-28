@@ -298,15 +298,6 @@ const getHomilies = async (
 
     loading.value = true;
 
-    const params = {
-      page,
-      sort: sort?.trim?.() || "recent",
-      season: selectedSeason.value?.trim?.() || "",
-      gospel: selectedGospel.value?.trim?.() || "",
-      date: date || "",
-      per_page: perPage
-    };
-
     const { data } = await axios.get(
       "/homiliesNew",
       {
@@ -344,6 +335,7 @@ const getHomilies = async (
 
     homilies.value = records;
 
+    return records;
   } catch (error) {
 
     console.error(
@@ -360,12 +352,56 @@ const getHomilies = async (
 
     }
 
+    return [];
   } finally {
 
     loading.value = false;
 
   }
 
+};
+
+const cargarUltimaHomiliaDisponible = async () => {
+
+  const hoy = new Date();
+
+  let fechaBusqueda = new Date(
+    hoy.getFullYear(),
+    hoy.getMonth(),
+    hoy.getDate()
+  );
+
+  for (let i = 0; i < 3650; i++) {
+
+    const year = fechaBusqueda.getFullYear();
+
+    const month = String(
+      fechaBusqueda.getMonth() + 1
+    ).padStart(2, "0");
+
+    const day = String(
+      fechaBusqueda.getDate()
+    ).padStart(2, "0");
+
+    const fecha = `${year}-${month}-${day}`;
+    const records = await getHomilies(
+      fecha,
+      1,
+      "recent",
+      10
+    );
+
+    if (records.length > 0) {
+      selectedDate.value = fecha;
+      isDateFilter.value = true;
+      return;
+    }
+
+    fechaBusqueda.setDate(
+      fechaBusqueda.getDate() - 1
+    );
+  }
+  homilies.value = [];
 };
 
 const handleSelectGospel = (gospel) => {
@@ -522,28 +558,13 @@ const changePage = (page) => {
 };
 
 
-onMounted(() => {
+onMounted(async () => {
 
-    const today = new Date();
+  isDateFilter.value = true;
 
-    const month = String(
-        today.getMonth() + 1
-    ).padStart(2,"0");
+  await cargarUltimaHomiliaDisponible();
 
-    const day = String(
-        today.getDate()
-    ).padStart(2,"0");
-
-    selectedDate.value =
-        `2000-${month}-${day}`;
-
-    isDateFilter.value = true;
-
-    getHomilies(
-        selectedDate.value
-    );
-
-    initFlowbite();
+  initFlowbite();
 
 });
 </script>

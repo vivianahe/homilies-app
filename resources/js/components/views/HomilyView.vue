@@ -39,7 +39,7 @@ onBeforeUnmount(() => {
 <template>
   <Header />
   <carousel />
-  <HomilyDay />
+  <!-- <HomilyDay /> -->
   <MessageTip />
   <ReflectionWork />
   <Priest />

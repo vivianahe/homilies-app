@@ -247,7 +247,7 @@ onMounted(() => {
 
   margin: 0 auto;
 
-  padding: 50px 24px 70px;
+  padding: 50px 24px 0px;
 
   font-family:
     "Poppins",
@@ -265,10 +265,6 @@ onMounted(() => {
   background: #ffffff;
 
   border-radius: 18px;
-
-  box-shadow:
-    0 8px 30px
-    rgba(34, 122, 190, 0.08);
 }
 
 
@@ -298,7 +294,7 @@ onMounted(() => {
       #dceeff 100%
     );
 
-  color: #0866f5;
+  color: #273df2;
 
   font-size: 14px;
 
@@ -348,7 +344,7 @@ onMounted(() => {
 
   margin: 16px 0 15px;
 
-  color: #071e70;
+  color: #071a58;
 
   font-size: 34px;
 
@@ -366,7 +362,7 @@ onMounted(() => {
 
   margin: 0;
 
-  color: #40568f;
+  color: #20355f;
 
   font-size: 17px;
 
@@ -444,8 +440,8 @@ onMounted(() => {
   background:
     linear-gradient(
       135deg,
-      #126cff 0%,
-      #0757ed 100%
+      #273df2 0%,
+      #6636ff 100%
     );
 
   color: #ffffff;
@@ -497,7 +493,7 @@ onMounted(() => {
 
   background: #ffffff;
 
-  color: #176cf8;
+  color: #273df2;
 
   font-size: 13px;
 }
@@ -545,7 +541,7 @@ onMounted(() => {
 
   margin: 17px 0 12px;
 
-  color: #071e70;
+  color: #071a58;
 
   font-size: 34px;
 
@@ -563,7 +559,7 @@ onMounted(() => {
 
   margin: 0;
 
-  color: #40568f;
+  color: #20355f;
 
   font-size: 17px;
 
@@ -644,8 +640,8 @@ onMounted(() => {
   background:
     linear-gradient(
       135deg,
-      #0878ff,
-      #27a9dc
+      #2450ff,
+      #5537ff
     );
 
   transform: rotate(-38deg);
@@ -697,7 +693,7 @@ onMounted(() => {
 
   height: 55px;
 
-  color: #5597ff;
+  color: #5537ff;
 
   font-family: Georgia, serif;
 
@@ -713,7 +709,7 @@ onMounted(() => {
 
   margin: 6px 0 0;
 
-  color: #071e70;
+  color: #071a58;
 
   font-family: Georgia, serif;
 
@@ -786,17 +782,13 @@ onMounted(() => {
     padding:
       20px
       14px
-      45px;
+      0px;
   }
 
 
   .content-card {
 
     border-radius: 15px;
-
-    box-shadow:
-      0 5px 20px
-      rgba(34, 122, 190, 0.08);
   }
 
 

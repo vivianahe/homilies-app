@@ -396,20 +396,7 @@ function toggleOpen(index) {
 
   padding: 28px 28px 20px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #f7fbff 0%,
-      #eef6ff 50%,
-      #edf4ff 100%
-    );
-
   border-radius: 20px;
-
-  box-shadow:
-    0 10px 35px rgba(36, 78, 140, 0.08);
-
-  box-sizing: border-box;
 }
 
 

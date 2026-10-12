@@ -7,9 +7,10 @@
            ENCABEZADO
       ========================== -->
       <div class="reflection-header">
+        <span class="reflection-eyebrow"><i class="fa-solid fa-seedling" aria-hidden="true"></i> FE, ESPERANZA Y PROPÓSITO</span>
 
         <h2 class="reflection-main-title">
-          9 días de oración y reflexión para conseguir trabajo
+          <span>9 días de oración y reflexión</span> para conseguir trabajo
         </h2>
 
         <p class="reflection-subtitle">
@@ -37,11 +38,13 @@
             type="button"
             class="reflection-button"
             @click="toggleOpen(index)"
+            :aria-expanded="openIndex === index"
+            :aria-controls="`work-reflection-${index + 1}`"
           >
 
             <!-- NÚMERO -->
             <span class="reflection-number">
-              {{ index + 1 }}
+              {{ String(index + 1).padStart(2, '0') }}
             </span>
 
 
@@ -56,11 +59,13 @@
                 {{ reflection.shortTitle }}
               </span>
 
+
             </span>
 
 
             <!-- FLECHA -->
             <svg
+              aria-hidden="true"
               class="reflection-arrow"
               :class="{ 'reflection-arrow-open': openIndex === index }"
               fill="none"
@@ -83,7 +88,9 @@
           ========================== -->
           <div
             v-if="openIndex === index"
-            class="reflection-expanded animate-fadeIn"
+            class="reflection-expanded"
+            :id="`work-reflection-${index + 1}`"
+            role="region" :aria-label="`Reflexión del día ${index + 1}`"
           >
 
             <!-- TÍTULO COMPLETO -->
@@ -93,17 +100,7 @@
 
 
             <!-- AUDIO -->
-            <audio
-              controls
-              class="reflection-audio"
-            >
-              <source
-                :src="reflection.audio"
-                type="audio/mp3"
-              />
-
-              Tu navegador no soporta la etiqueta de audio.
-            </audio>
+            <HomilyAudio :source="reflection.audio" :heading="`Oración del día ${index + 1}`" subtitle="" compact slim exclusive />
 
 
             <!-- CONTENIDO -->
@@ -182,6 +179,7 @@
 <script setup>
 
 import { ref, computed } from 'vue'
+import HomilyAudio from './detailHomilies/HomilyAudio.vue'
 
 
 const reflections = [
@@ -350,933 +348,50 @@ function toggleOpen(index) {
 
 
 <style scoped>
-
-/* ==========================================================
-   RESET LOCAL
-========================================================== */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+.reflection-section { padding: 48px 24px; background: white; }
+.reflection-container { max-width: 1280px; margin: 0 auto; }
+.reflection-header { max-width: 760px; margin: 0 0 32px; padding-left: 20px; border-left: 3px solid var(--public-primary); }
+.reflection-eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--public-primary); font-size: 10px; letter-spacing: .12em; font-weight: 700; }
+.reflection-main-title { margin: 12px 0; color: var(--public-heading); font-size: clamp(25px, 3vw, 34px); line-height: 1.3; font-weight: 800; }
+.reflection-subtitle { color: var(--public-text); font-size: 14px; line-height: 1.8; }
+.reflection-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 28px; align-items: start; }
+.reflection-card { min-width: 0; border-bottom: 1px solid #e2e8f0; background: white; }
+.reflection-button { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 104px; padding: 20px 12px; border: 0; border-radius: 12px; text-align: left; background: white; cursor: pointer; transition: background .2s; }
+.reflection-button:hover, .reflection-card-open .reflection-button { background: var(--public-soft); }
+.reflection-button:focus-visible { outline: 2px solid var(--public-primary); outline-offset: -2px; }
+.reflection-number { flex-shrink: 0; width: 38px; color: var(--public-primary); font-size: 26px; font-weight: 800; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.reflection-info { display: flex; flex-direction: column; gap: 5px; min-width: 0; flex: 1; }
+.reflection-day { color: var(--public-muted); font-size: 11px; font-weight: 500; }
+.reflection-title { color: var(--public-heading); font-size: 14px; line-height: 1.5; font-weight: 600; }
+.reflection-arrow { width: 30px; height: 30px; padding: 7px; flex-shrink: 0; border-radius: 50%; background: #f8fafc; color: var(--public-muted); transition: transform .2s; }
+.reflection-card-open .reflection-arrow { background: white; color: var(--public-primary); }
+.reflection-arrow-open { transform: rotate(90deg); }
+.reflection-expanded { padding: 18px 0 22px; }
+.reflection-full-title { margin: 0 12px 16px; color: var(--public-heading); font-size: 14px; font-weight: 600; line-height: 1.7; }
+.reflection-content { margin: 18px 12px 0; padding-top: 16px; border-top: 1px solid #e2e8f0; }
+.reflection-content-item + .reflection-content-item { margin-top: 12px; }
+.reflection-question { color: var(--public-heading); font-size: 14px; font-weight: 700; line-height: 1.7; }
+.reflection-answer, .reflection-text { color: var(--public-text); font-size: 13px; line-height: 1.8; }
+.reflection-quote { display: flex; align-items: center; gap: 20px; margin-top: 28px; }
+.quote-line { height: 1px; background: #e2e8f0; flex: 1; }
+.quote-content { max-width: 650px; text-align: center; }
+.quote-text { color: var(--public-text); font-size: 12px; font-style: italic; line-height: 1.8; }
+.quote-reference { display: inline-block; margin-left: 8px; color: var(--public-muted); font-size: 11px; }
+@media (max-width: 1050px) {
+  .reflection-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; }
 }
-
-
-/* ==========================================================
-   SECCIÓN GENERAL
-
-   El bloque de los 9 días debe verse más contenido que
-   "Mensaje del día", como en el diseño de referencia.
-========================================================== */
-
-.reflection-section {
-  width: 100%;
-
-  padding: 32px 20px;
-
-  box-sizing: border-box;
-}
-
-
-/* ==========================================================
-   CONTENEDOR PRINCIPAL - WEB
-
-   Mensaje del día: 1380px
-   9 días:          1320px
-
-   Así el bloque queda ligeramente más angosto.
-========================================================== */
-
-.reflection-container {
-  width: 100%;
-
-  max-width: 1320px;
-
-  margin: 0 auto;
-
-  padding: 28px 28px 20px;
-
-  border-radius: 20px;
-}
-
-
-/* ==========================================================
-   ENCABEZADO
-========================================================== */
-
-.reflection-header {
-  text-align: center;
-
-  margin-bottom: 22px;
-}
-
-
-.reflection-main-title {
-  margin: 0;
-
-  color: var(--public-heading);
-
-  font-size: 25px;
-  font-weight: 800;
-
-  line-height: 1.2;
-
-  letter-spacing: -0.4px;
-}
-
-
-.reflection-subtitle {
-  max-width: 750px;
-
-  margin: 8px auto 0;
-
-  color: var(--public-text);
-
-  font-size: 13px;
-  font-weight: 400;
-
-  line-height: 1.5;
-}
-
-
-/* ==========================================================
-   GRID WEB
-========================================================== */
-
-.reflection-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap: 14px;
-}
-
-
-/* ==========================================================
-   TARJETAS
-========================================================== */
-
-.reflection-card {
-  min-width: 0;
-
-  background:
-    rgba(255, 255, 255, 0.96);
-
-  border: 1px solid var(--public-surface);
-
-  border-radius: 12px;
-
-  overflow: hidden;
-
-  box-shadow:
-    0 3px 10px rgba(var(--public-heading-rgb), 0.08);
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
-}
-
-
-.reflection-card:hover {
-  transform: translateY(-2px);
-
-  border-color: var(--public-soft);
-
-  box-shadow:
-    0 7px 18px rgba(var(--public-heading-rgb), 0.12);
-}
-
-
-.reflection-card-open {
-  grid-row: span 2;
-
-  border-color: var(--public-soft);
-
-  box-shadow:
-    0 8px 22px rgba(var(--public-heading-rgb), 0.12);
-}
-
-
-/* ==========================================================
-   BOTÓN DE CADA DÍA
-========================================================== */
-
-.reflection-button {
-  width: 100%;
-
-  min-height: 80px;
-
-  padding: 14px 16px;
-
-  display: flex;
-
-  align-items: center;
-
-  border: 0;
-
-  outline: none;
-
-  background: transparent;
-
-  cursor: pointer;
-
-  text-align: left;
-
-  font-family: inherit;
-
-  box-sizing: border-box;
-}
-
-
-/* ==========================================================
-   NÚMERO
-========================================================== */
-
-.reflection-number {
-  width: 38px;
-  height: 38px;
-
-  min-width: 38px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  margin-right: 14px;
-
-  border-radius: 50%;
-
-  background:
-    var(--public-soft);
-
-  color: var(--public-primary);
-
-  font-size: 16px;
-  font-weight: 800;
-
-  box-shadow:
-    inset 0 0 0 1px rgba(var(--public-primary-rgb), 0.04);
-}
-
-
-/* ==========================================================
-   INFORMACIÓN
-========================================================== */
-
-.reflection-info {
-  flex: 1;
-
-  min-width: 0;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 4px;
-}
-
-
-.reflection-day {
-  color: var(--public-heading);
-
-  font-size: 14px;
-  font-weight: 800;
-
-  line-height: 1.15;
-}
-
-
-.reflection-title {
-  color: var(--public-text);
-
-  font-size: 13px;
-  font-weight: 400;
-
-  line-height: 1.3;
-
-  overflow-wrap: anywhere;
-}
-
-
-/* ==========================================================
-   FLECHA
-========================================================== */
-
-.reflection-arrow {
-  width: 16px;
-  height: 16px;
-
-  min-width: 16px;
-
-  margin-left: 10px;
-
-  color: var(--public-primary);
-
-  transition:
-    transform 0.25s ease;
-}
-
-
-.reflection-arrow-open {
-  transform: rotate(90deg);
-}
-
-
-/* ==========================================================
-   CONTENIDO ABIERTO
-========================================================== */
-
-.reflection-expanded {
-  padding:
-    0 18px 20px 68px;
-}
-
-
-.reflection-full-title {
-  margin: 0 0 12px;
-
-  color: var(--public-heading);
-
-  font-size: 13px;
-  font-weight: 600;
-
-  line-height: 1.5;
-}
-
-
-/* ==========================================================
-   AUDIO
-========================================================== */
-
-.reflection-audio {
-  display: block;
-
-  width: 100%;
-  height: 38px;
-
-  margin-bottom: 14px;
-
-  border-radius: 20px;
-}
-
-
-/* ==========================================================
-   CONTENIDO
-========================================================== */
-
-.reflection-content {
-  color: var(--public-text);
-
-  font-size: 13px;
-
-  line-height: 1.55;
-}
-
-
-.reflection-content-item {
-  margin-bottom: 7px;
-}
-
-
-.reflection-question {
-  margin: 0;
-
-  color: var(--public-heading);
-
-  font-weight: 700;
-}
-
-
-.reflection-answer {
-  margin: 0;
-
-  padding-left: 10px;
-
-  color: var(--public-text);
-}
-
-
-.reflection-text {
-  margin: 0;
-
-  color: var(--public-text);
-}
-
-
-/* ==========================================================
-   FRASE FINAL
-========================================================== */
-
-.reflection-quote {
-  width: 100%;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 12px;
-
-  margin-top: 20px;
-
-  padding: 0;
-
-  text-align: center;
-}
-
-
-/* ==========================================================
-   LÍNEAS LATERALES
-========================================================== */
-
-.quote-line {
-  flex: 1 1 auto;
-
-  height: 1px;
-
-  min-width: 30px;
-
-  background: var(--public-soft);
-}
-
-
-/* ==========================================================
-   CONTENEDOR FRASE + REFERENCIA
-========================================================== */
-
-.quote-content {
-  flex: 0 1 auto;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 12px;
-
-  min-width: 0;
-}
-
-
-/* ==========================================================
-   FRASE
-========================================================== */
-
-.quote-text {
-  color: var(--public-text);
-
-  font-size: 13px;
-  font-style: italic;
-  font-weight: 400;
-
-  line-height: 1.4;
-
-  white-space: nowrap;
-}
-
-
-/* ==========================================================
-   REFERENCIA
-========================================================== */
-
-.quote-reference {
-  color: var(--public-muted);
-
-  font-size: 11px;
-  font-weight: 500;
-
-  white-space: nowrap;
-}
-
-
-/* ==========================================================
-   ANIMACIÓN
-========================================================== */
-
-.animate-fadeIn {
-  animation:
-    fadeIn 0.25s ease-in-out;
-}
-
-
-@keyframes fadeIn {
-
-  from {
-    opacity: 0;
-
-    transform:
-      translateY(-5px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform:
-      translateY(0);
-  }
-
-}
-
-
-/* ==========================================================
-   PANTALLAS GRANDES
-
-   Conservamos la proporción del boceto aunque el monitor
-   sea muy ancho.
-========================================================== */
-
-@media (min-width: 1400px) {
-
-  .reflection-section {
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-
-
-  .reflection-container {
-    max-width: 1320px;
-  }
-
-}
-
-
-/* ==========================================================
-   TABLET
-========================================================== */
-
-@media (max-width: 900px) {
-
-  .reflection-section {
-    padding:
-      25px 16px;
-  }
-
-
-  .reflection-container {
-    max-width: 100%;
-
-    padding:
-      25px 20px 18px;
-  }
-
-
-  .reflection-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
-    gap: 12px;
-  }
-
-
-  .reflection-main-title {
-    font-size: 22px;
-  }
-
-
-  .quote-content {
-    gap: 8px;
-  }
-
-
-  .quote-text {
-    white-space: normal;
-
-    max-width: 430px;
-  }
-
-}
-
-
-/* ==========================================================
-   MÓVIL
-========================================================== */
-
 @media (max-width: 640px) {
-
-
-  /* ========================================================
-     SECCIÓN
-
-     En móvil reducimos el espacio externo para aprovechar
-     mejor el ancho de la pantalla.
-  ======================================================== */
-
-  .reflection-section {
-    width: 100%;
-
-    padding:
-      16px 8px;
-  }
-
-
-  /* ========================================================
-     CONTENEDOR
-  ======================================================== */
-
-  .reflection-container {
-    width: 100%;
-
-    max-width: none;
-
-    margin: 0 auto;
-
-    padding:
-      20px 12px 16px;
-
-    border-radius: 16px;
-  }
-
-
-  /* ========================================================
-     CABECERA
-  ======================================================== */
-
-  .reflection-header {
-    margin-bottom: 14px;
-  }
-
-
-  .reflection-main-title {
-    max-width: 280px;
-
-    margin:
-      0 auto;
-
-    font-size: 17px;
-
-    line-height: 1.15;
-
-    letter-spacing:
-      -0.25px;
-  }
-
-
-  .reflection-subtitle {
-    display: none;
-  }
-
-
-  /* ========================================================
-     LISTA
-  ======================================================== */
-
-  .reflection-grid {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 7px;
-  }
-
-
-  /* ========================================================
-     TARJETA
-  ======================================================== */
-
-  .reflection-card {
-    width: 100%;
-
-    border-radius: 9px;
-
-    box-shadow:
-      0 2px 6px rgba(var(--public-heading-rgb), 0.08);
-  }
-
-
-  .reflection-card:hover {
-    transform: none;
-  }
-
-
-  /* ========================================================
-     BOTÓN
-  ======================================================== */
-
-  .reflection-button {
-    width: 100%;
-
-    min-height: 52px;
-
-    padding:
-      7px 10px;
-  }
-
-
-  /* ========================================================
-     NÚMERO
-  ======================================================== */
-
-  .reflection-number {
-    width: 28px;
-    height: 28px;
-
-    min-width: 28px;
-
-    margin-right: 10px;
-
-    font-size: 12px;
-  }
-
-
-  /* ========================================================
-     TEXTO
-  ======================================================== */
-
-  .reflection-info {
-    gap: 2px;
-  }
-
-
-  .reflection-day {
-    font-size: 11px;
-
-    line-height: 1.1;
-  }
-
-
-  .reflection-title {
-    font-size: 10.5px;
-
-    line-height: 1.2;
-  }
-
-
-  /* ========================================================
-     FLECHA
-  ======================================================== */
-
-  .reflection-arrow {
-    width: 13px;
-    height: 13px;
-
-    min-width: 13px;
-
-    margin-left: 7px;
-  }
-
-
-  /* ========================================================
-     CONTENIDO ABIERTO
-  ======================================================== */
-
-  .reflection-expanded {
-    padding:
-      2px 12px 14px 48px;
-  }
-
-
-  .reflection-full-title {
-    margin-bottom: 10px;
-
-    font-size: 11px;
-
-    line-height: 1.4;
-  }
-
-
-  .reflection-content {
-    font-size: 11px;
-
-    line-height: 1.5;
-  }
-
-
-  .reflection-audio {
-    width: 100%;
-
-    height: 34px;
-
-    margin-bottom: 10px;
-  }
-
-
-  /* ========================================================
-     FRASE FINAL MÓVIL
-  ======================================================== */
-
-  .reflection-quote {
-    width: 100%;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 6px;
-
-    margin-top: 16px;
-
-    padding: 0;
-  }
-
-
-  /* LÍNEAS */
-
-  .quote-line {
-    flex: 1 1 0;
-
-    min-width: 10px;
-
-    height: 1px;
-
-    background: var(--public-soft);
-  }
-
-
-  /* BLOQUE CENTRAL */
-
-  .quote-content {
-    flex: 0 1 auto;
-
-    min-width: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 6px;
-  }
-
-
-  /* FRASE */
-
-  .quote-text {
-    flex: 0 1 auto;
-
-    max-width: 225px;
-
-    color: var(--public-text);
-
-    font-size: 9px;
-
-    font-style: italic;
-    font-weight: 400;
-
-    line-height: 1.25;
-
-    white-space: normal;
-
-    text-align: center;
-  }
-
-
-  /* REFERENCIA */
-
-  .quote-reference {
-    flex: 0 0 auto;
-
-    color: var(--public-muted);
-
-    font-size: 8px;
-    font-weight: 500;
-
-    line-height: 1.2;
-
-    white-space: nowrap;
-  }
-
+  .reflection-section { padding: 32px 20px; }
+  .reflection-header { margin-bottom: 20px; padding-left: 14px; }
+  .reflection-subtitle { font-size: 13px; }
+  .reflection-grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .reflection-button { min-height: 90px; padding: 18px 8px; gap: 12px; }
+  .reflection-number { width: 34px; font-size: 24px; }
+  .reflection-expanded { padding: 14px 0 20px; }
+  .quote-line { display: none; }
+  .reflection-quote { margin-top: 24px; justify-content: center; }
 }
-
-
-/* ==========================================================
-   MÓVILES PEQUEÑOS
-========================================================== */
-
-@media (max-width: 380px) {
-
-  .reflection-section {
-    padding:
-      12px 6px;
-  }
-
-
-  .reflection-container {
-    padding:
-      18px 9px 14px;
-  }
-
-
-  .reflection-main-title {
-    max-width: 250px;
-
-    font-size: 16px;
-  }
-
-
-  .reflection-button {
-    min-height: 49px;
-
-    padding:
-      6px 8px;
-  }
-
-
-  .reflection-number {
-    width: 26px;
-    height: 26px;
-
-    min-width: 26px;
-
-    margin-right: 8px;
-
-    font-size: 11px;
-  }
-
-
-  .reflection-day {
-    font-size: 10.5px;
-  }
-
-
-  .reflection-title {
-    font-size: 10px;
-  }
-
-
-  .reflection-expanded {
-    padding:
-      2px 10px 12px 42px;
-  }
-
-
-  /* ========================================================
-     FRASE
-  ======================================================== */
-
-  .reflection-quote {
-    gap: 4px;
-
-    margin-top: 14px;
-  }
-
-
-  .quote-line {
-    min-width: 6px;
-  }
-
-
-  .quote-content {
-    gap: 4px;
-  }
-
-
-  .quote-text {
-    max-width: 180px;
-
-    font-size: 8.5px;
-
-    line-height: 1.25;
-  }
-
-
-  .quote-reference {
-    font-size: 7.5px;
-  }
-
+@media (prefers-reduced-motion: reduce) {
+  .reflection-button, .reflection-arrow { transition: none; }
 }
-
 </style>

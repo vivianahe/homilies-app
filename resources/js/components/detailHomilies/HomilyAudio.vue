@@ -1,21 +1,21 @@
 <template>
-    <section class="homily-player" aria-label="Audio de la homilía">
+    <section class="homily-player" :class="{ compact, slim }" :aria-label="heading">
         <audio v-if="audioSrc" :key="audioSrc" ref="audio" :src="audioSrc" preload="metadata"
             @loadedmetadata="updateDuration" @durationchange="updateDuration"
-            @timeupdate="current = audio.currentTime" @play="playing = true"
+            @timeupdate="current = audio.currentTime" @play="handlePlay"
             @pause="playing = false" @ended="playing = false"
             @waiting="buffering = true" @playing="buffering = false"
             @canplay="buffering = false" @error="handleError" />
 
-        <div class="player-heading">
+        <div v-if="!slim" class="player-heading">
             <div class="player-title">
                 <span class="headphone-icon"><i class="fa-solid fa-headphones" aria-hidden="true"></i></span>
                 <div>
-                    <h2>Escucha la homilía</h2>
-                    <p>Un momento para escuchar y reflexionar</p>
+                    <h2>{{ heading }}</h2>
+                    <p v-if="subtitle">{{ subtitle }}</p>
                 </div>
             </div>
-            <a v-if="audioSrc" :href="audioSrc" :download="homily.audio" class="icon-button download"
+            <a v-if="audioSrc" :href="audioSrc" :download="homily?.audio || ''" class="icon-button download"
                 aria-label="Descargar audio" title="Descargar audio">
                 <i class="fa-solid fa-download" aria-hidden="true"></i>
             </a>
@@ -23,16 +23,16 @@
 
         <div class="player-main">
             <div class="playback-controls">
-                <button type="button" class="skip-button" :disabled="!duration || !!error"
+                <button v-if="!slim" type="button" class="skip-button" :disabled="!duration || !!error"
                     aria-label="Retroceder 15 segundos" @click="skip(-15)">
                     <i class="fa-solid fa-rotate-left" aria-hidden="true"></i><span>15</span>
                 </button>
                 <button type="button" class="play-button" :disabled="!audioSrc || !!error"
-                    :aria-label="playing ? 'Pausar homilía' : 'Reproducir homilía'" @click="togglePlay">
+                    :aria-label="playing ? 'Pausar audio' : 'Reproducir audio'" @click="togglePlay">
                     <i :class="buffering ? 'fa-solid fa-spinner fa-spin' : playing ? 'fa-solid fa-pause' : 'fa-solid fa-play'"
                         aria-hidden="true"></i>
                 </button>
-                <button type="button" class="skip-button" :disabled="!duration || !!error"
+                <button v-if="!slim" type="button" class="skip-button" :disabled="!duration || !!error"
                     aria-label="Avanzar 15 segundos" @click="skip(15)">
                     <i class="fa-solid fa-rotate-right" aria-hidden="true"></i><span>15</span>
                 </button>
@@ -47,7 +47,7 @@
                 <div class="time-labels"><span>{{ formatTime(current) }}</span><span>{{ formatTime(duration) }}</span></div>
             </div>
 
-            <div class="extra-controls">
+            <div v-if="!slim" class="extra-controls">
                 <button type="button" class="speed-button" :disabled="!audioSrc"
                     :aria-label="`Velocidad ${speed} por uno. Cambiar velocidad`" @click="changeSpeed">{{ speed }}×</button>
                 <button type="button" class="icon-button" :disabled="!audioSrc"
@@ -55,9 +55,13 @@
                     <i :class="muted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high'" aria-hidden="true"></i>
                 </button>
             </div>
+            <a v-if="slim && audioSrc" :href="audioSrc" :download="homily?.audio || ''"
+                class="icon-button download" aria-label="Descargar audio" title="Descargar audio">
+                <i class="fa-solid fa-download" aria-hidden="true"></i>
+            </a>
         </div>
         <p v-if="error || !audioSrc" class="player-error" role="status">
-            {{ error || 'Esta homilía no tiene audio disponible.' }}
+            {{ error || 'No hay audio disponible.' }}
         </p>
     </section>
 </template>
@@ -65,7 +69,15 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 
-const props = defineProps({ homily: { type: Object, default: null } });
+const props = defineProps({
+    homily: { type: Object, default: null },
+    source: { type: String, default: '' },
+    heading: { type: String, default: 'Escucha la homilía' },
+    subtitle: { type: String, default: 'Un momento para escuchar y reflexionar' },
+    compact: Boolean,
+    slim: Boolean,
+    exclusive: Boolean,
+});
 const audio = ref(null);
 const playing = ref(false);
 const buffering = ref(false);
@@ -74,7 +86,7 @@ const duration = ref(0);
 const speed = ref(1);
 const muted = ref(false);
 const error = ref('');
-const audioSrc = computed(() => props.homily?.audio ? '/support/audioHomily/' + props.homily.audio : '');
+const audioSrc = computed(() => props.source || (props.homily?.audio ? '/support/audioHomily/' + props.homily.audio : ''));
 
 watch(audioSrc, () => {
     audio.value?.pause();
@@ -87,6 +99,14 @@ watch(audioSrc, () => {
     error.value = '';
 }, { flush: 'pre' });
 
+const handlePlay = () => {
+    playing.value = true;
+    if (props.exclusive) {
+        document.querySelectorAll('audio').forEach(player => {
+            if (player !== audio.value) player.pause();
+        });
+    }
+};
 const updateDuration = () => {
     duration.value = Number.isFinite(audio.value?.duration) ? audio.value.duration : 0;
 };
@@ -159,6 +179,19 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid 
 .speed-button { padding: 0 10px; font-size: 13px; font-weight: 700; }
 .icon-button:hover, .speed-button:hover { background: var(--public-surface); }
 .player-error { margin-top: 16px; font-size: 13px; color: #b45309; }
+.compact { padding: 16px; border-radius: 18px; background: #f8fafc; border-color: #e2e8f0; }
+.compact .icon-button, .compact .speed-button { color: var(--public-text); border-color: #e2e8f0; background: white; }
+.compact .icon-button:hover, .compact .speed-button:hover { background: #f1f5f9; }
+.compact .progress-slider { background: linear-gradient(to right, var(--public-primary) var(--progress), #e2e8f0 var(--progress)); }
+.compact .headphone-icon { display: none; }
+.compact h2 { font-size: 13px; }
+.compact .player-heading { margin-bottom: 10px; }
+.compact .player-main { flex-wrap: wrap; gap: 12px 6px; justify-content: space-between; }
+.compact .progress-area { order: -1; flex-basis: 100%; }
+.compact .playback-controls { gap: 2px; }
+.compact .play-button { width: 48px; height: 48px; font-size: 18px; }
+.compact .skip-button { width: 32px; }
+.compact .extra-controls { gap: 4px; }
 @media (max-width: 768px) {
     .homily-player { padding: 20px 16px; border-radius: 20px; }
     .player-title p { font-size: 11px; }
@@ -170,4 +203,14 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid 
     .play-button { width: 54px; height: 54px; }
     .extra-controls { gap: 6px; }
 }
+/* Barra de audio para los días de reflexión, también en pantallas pequeñas. */
+.homily-player.slim { padding: 12px; border-radius: 16px; background: var(--public-surface); border-color: #e2e8f0; }
+.slim .player-main { flex-wrap: nowrap; gap: 12px; }
+.slim .playback-controls { flex-shrink: 0; }
+.slim .play-button { width: 44px; height: 44px; font-size: 16px; box-shadow: 0 3px 8px rgb(37 99 235 / 15%); }
+.slim .progress-area { order: 0; flex: 1; min-width: 0; }
+.slim .progress-slider { margin: 9px 0; height: 4px; }
+.slim .time-labels { font-size: 10px; }
+.slim .download { flex-shrink: 0; color: var(--public-text); background: transparent; border-color: transparent; }
+.slim .download:hover { background: white; color: var(--public-primary); }
 </style>

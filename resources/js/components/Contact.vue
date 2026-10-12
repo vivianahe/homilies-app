@@ -64,7 +64,7 @@
           puedes escribirnos. Estaremos felices de escucharte.
         </p>
 
-        <form @submit.prevent="submitForm" class="family-form">
+        <form @submit.prevent="submitForm" class="family-form" :aria-busy="!loader">
 
           <!-- Nombre + correo -->
           <div class="form-row">
@@ -76,6 +76,7 @@
                 type="text"
                 placeholder="Nombre completo"
                 v-model="formData.name"
+                aria-label="Nombre completo" autocomplete="name" :disabled="!loader"
                 required
               />
             </div>
@@ -87,6 +88,7 @@
                 type="email"
                 placeholder="Correo electrónico"
                 v-model="formData.email"
+                aria-label="Correo electrónico" autocomplete="email" :disabled="!loader"
                 required
               />
             </div>
@@ -98,9 +100,10 @@
             <i class="fas fa-phone"></i>
 
             <input
-              type="text"
+              type="tel"
               placeholder="Teléfono"
               v-model="formData.phone"
+                aria-label="Teléfono" autocomplete="tel" :disabled="!loader"
               required
             />
           </div>
@@ -113,6 +116,7 @@
               rows="4"
               placeholder="Mensaje"
               v-model="formData.message"
+                aria-label="Mensaje" autocomplete="off" :disabled="!loader"
               required
             ></textarea>
           </div>
@@ -176,11 +180,13 @@ const formData = ref({
 });
 
 const submitForm = () => {
+  if (!loader.value) return;
   loader.value = false;
 
   axios
     .post("/contact", formData.value)
     .then((response) => {
+      if (response.data.success === false) throw new Error("No se pudo enviar");
       formData.value.name = "";
       formData.value.email = "";
       formData.value.phone = "";
@@ -197,6 +203,7 @@ const submitForm = () => {
     .catch((error) => {
       console.error(error);
       loader.value = true;
+      Swal.fire("No se pudo enviar", "Tu mensaje se ha conservado. Inténtalo de nuevo.", "error");
     });
 };
 </script>
@@ -907,4 +914,23 @@ const submitForm = () => {
   }
 }
 
+/* Formulario destacado, coherente con la página de contacto. */
+.family-content { min-width: 0; }
+.family-form {
+  padding: 24px;
+  background: white;
+  border: 1px solid var(--public-border);
+  border-radius: 20px;
+  box-shadow: 0 8px 28px rgba(var(--public-heading-rgb), .04);
+}
+.form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.input-group { min-width: 0; border-color: #cbd5e1; background: var(--public-surface); box-shadow: none; }
+.input-group input, .input-group textarea { min-width: 0; font-size: 16px; }
+.input-group input::placeholder, .input-group textarea::placeholder { color: var(--public-muted); opacity: 1; font-size: 13px; }
+.input-group input:disabled, .input-group textarea:disabled { opacity: .6; }
+@media (max-width: 767px) {
+  .family-content { order: -1; width: 100%; }
+  .family-form { padding: 18px; }
+  .form-row { grid-template-columns: minmax(0, 1fr); }
+}
 </style>

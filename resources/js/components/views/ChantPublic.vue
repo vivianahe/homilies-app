@@ -1,250 +1,127 @@
 <template>
   <Header />
+  <main class="chants-page">
+    <div class="chants-container">
+      <header class="chants-heading">
+        <span class="eyebrow">MÚSICA PARA ACOMPAÑAR TU FE</span>
+        <h1>Canta y ora</h1>
+        <p>Para Ti es mi música, Señor. <span>(Salmo 100)</span></p>
+      </header>
 
-  <section class="relative py-10 md:py-14 overflow-hidden">
-    <!-- Background blurred blobs -->
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-      <div class="absolute -top-40 -right-16 h-96 w-96 rounded-full bg-blue-600/25 blur-3xl"></div>
-      <div class="absolute -bottom-40 -left-20 h-[28rem] w-[28rem] rounded-full bg-slate-600/20 blur-3xl"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[36rem] w-[36rem] rounded-full bg-blue-600/10 blur-[110px]"></div>
-    </div>
-
-    <div class="relative w-full mx-auto max-w-screen-xl px-4 sm:px-6">
-      <div class="text-center mb-14">
-        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight text-gray-900 drop-shadow-sm">
-          Para Ti es mi música Señor (Salmo 100)
-        </h2>
-        <p class="text-sm md:text-base font-medium text-gray-700/90 mt-2">
-          <em>Canta y ora&nbsp;para&nbsp;Dios</em>
-        </p>
-      </div>
-
-      <!-- Error state -->
-      <div v-if="error" class="mb-6 rounded-xl border border-red-200/60 bg-red-50/70 p-4 text-red-800">
-        {{ error }}
-      </div>
-
-      <!-- Search -->
-      <div v-if="!isLoading" class="mb-6">
-        <label for="chant-search" class="sr-only">Buscar cantos</label>
-        <div class="relative">
-          <input
-            id="chant-search"
-            v-model.trim="searchQuery"
-            type="search"
-            autocomplete="off"
-            placeholder="Buscar por título o descripción..."
-            class="w-full rounded-xl border border-slate-200/70 bg-white/70 py-2.5 pl-10 pr-3 text-sm text-slate-800 placeholder:text-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600/60"
-          />
-          <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">🔎</span>
-        </div>
-      </div>
-
-      <!-- Loading skeletons -->
-      <div v-if="isLoading" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        <div v-for="n in 6" :key="n" class="animate-pulse rounded-2xl border border-white/40 bg-white/60 backdrop-blur-xl p-6 shadow-xl">
-          <div class="h-5 w-2/3 bg-slate-200/80 rounded"></div>
-          <div class="mt-3 h-4 w-5/6 bg-slate-200/70 rounded"></div>
-          <div class="mt-6 h-12 w-full bg-slate-200/60 rounded-lg"></div>
-        </div>
-      </div>
-
-      <!-- Empty state -->
-      <div v-else-if="!filteredChants.length" class="mx-auto max-w-xl">
-        <div class="rounded-2xl border border-white/40 bg-white/60 backdrop-blur-xl p-8 shadow-xl text-center">
-          <div class="mx-auto mb-3 h-10 w-10 rounded-full bg-blue-600/10 ring-1 ring-blue-600/30 flex items-center justify-center">
-            <span class="text-blue-600 text-xl">♪</span>
-          </div>
-          <p class="font-semibold text-gray-800">No se encontraron cantos</p>
-          <p class="mt-1 text-gray-600 text-sm">Intenta con otro término de búsqueda.</p>
-        </div>
-      </div>
-
-      <!-- Content grid -->
-      <div v-else class="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <div
-              v-for="(chant,index) in paginatedChants"
-              :key="chant.id"
-              class="
-              group
-              overflow-hidden
-              rounded-3xl
-              bg-white
-              border
-              border-slate-200/70
-              shadow-xl
-              hover:shadow-[0_20px_60px_rgba(37,99,235,.18)]
-              hover:-translate-y-2
-              transition-all
-              duration-300
-              p-7
-              flex
-              flex-col
-              "
-          >
-          <div class="flex items-center gap-5 mb-6">
-
-    <div
-        :class="[
-            'flex h-20 w-20 items-center justify-center rounded-2xl text-white shadow-lg transition-transform duration-300 group-hover:scale-110',
-            chantColors.bg,
-            chantColors.shadow
-        ]"
-          >
-              <Music4 class="w-10 h-10"/>
-          </div>
-
-          <div class="flex-1">
-
-              <h3 class="text-xl font-bold leading-tight text-slate-900 line-clamp-2">
-                  {{ chant.title }}
-              </h3>
-
-              <span
-                  :class="[
-                      'inline-flex mt-2 rounded-xl px-4 py-1.5 text-sm font-semibold',
-                      chantColors.badge
-                  ]"
-              >
-                  Canto para oración
-              </span>
-
-          </div>
-
-      </div>
-          <div
-              v-if="chant.description"
-              class="mt-4 min-h-[90px]"
-          >
-            <p class="text-[15px] text-slate-600 leading-relaxed line-clamp-3">
-              {{ isExpanded(chant.id)
-              ? chant.description
-              : truncate(chant.description, collapseLimit) }}
-            </p>
-            <button
-              v-if="chant.description && chant.description.length > collapseLimit"
-              @click="toggleExpanded(chant.id)"
-              class="mt-1 text-blue-600 hover:text-blue-600 font-medium text-sm"
-              type="button"
-            >
-              {{ isExpanded(chant.id) ? 'Ver menos' : 'Ver más' }}
+      <section class="search-card" aria-label="Buscar cantos">
+        <label for="chant-search">Encuentra un canto</label>
+        <div class="search-row">
+          <div class="search-input">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input id="chant-search" ref="searchInput" v-model="searchQuery" type="search"
+              placeholder="Buscar por título o descripción…" autocomplete="off" />
+            <button v-if="searchQuery" type="button" aria-label="Limpiar búsqueda" @click="clearSearch">
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
           </div>
-              <div class="my-6 border-t border-dashed border-slate-200"></div>
-              <div class="mt-auto">
-                  <AudioPlayer
-                      :src="'/support/audioChant/' + chant.audio"
-                      :color="chantColors"
-                  />
-              </div>
+          <span class="result-count" role="status">
+            {{ isLoading ? 'Cargando cantos…' : `${filteredChants.length} ${filteredChants.length === 1 ? 'canto' : 'cantos'}` }}
+          </span>
+        </div>
+      </section>
+
+      <div v-if="isLoading" class="chant-grid" role="status" aria-label="Cargando cantos">
+        <div v-for="n in 6" :key="n" class="chant-card animate-pulse" aria-hidden="true">
+          <div class="h-12 w-12 rounded-xl bg-slate-200"></div>
+          <div class="mt-5 h-5 w-3/4 rounded bg-slate-200"></div>
+          <div class="mt-3 h-4 w-full rounded bg-slate-100"></div>
+          <div class="mt-6 h-32 rounded-xl bg-slate-100"></div>
         </div>
       </div>
-
-      <!-- Pagination -->
-      <div v-if="totalPages > 1" class="mt-6 flex items-center justify-center gap-2 select-none">
-        <button
-          type="button"
-          @click="prevPage"
-          :disabled="currentPage === 1"
-          class="px-3 py-2 rounded-lg text-sm font-medium ring-1 ring-slate-200/70 bg-white/70 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Anterior
-        </button>
-        <button
-          v-for="p in pages"
-          :key="p"
-          type="button"
-          @click="goToPage(p)"
-          class="px-3 py-2 rounded-lg text-sm font-semibold ring-1 ring-slate-200/70"
-          :class="p === currentPage ? 'bg-blue-600 text-white ring-blue-600' : 'bg-white/70 hover:bg-white text-slate-700'"
-        >
-          {{ p }}
-        </button>
-        <button
-          type="button"
-          @click="nextPage"
-          :disabled="currentPage === totalPages"
-          class="px-3 py-2 rounded-lg text-sm font-medium ring-1 ring-slate-200/70 bg-white/70 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Siguiente
-        </button>
+      <div v-else-if="error" class="empty-card" role="alert">
+        <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+        <h2>No pudimos cargar los cantos</h2><p>{{ error }}</p>
+        <button type="button" @click="fetchChants">Intentar de nuevo</button>
       </div>
-    </div>
-  </section>
+      <div v-else-if="!filteredChants.length" class="empty-card">
+        <i class="fa-solid fa-music" aria-hidden="true"></i>
+        <h2>{{ searchQuery ? 'No encontramos ese canto' : 'Pronto habrá cantos disponibles' }}</h2>
+        <p>{{ searchQuery ? 'Prueba con otro título o una palabra de la descripción.' : 'Vuelve más adelante para escuchar y orar.' }}</p>
+        <button v-if="searchQuery" type="button" @click="clearSearch">Ver todos los cantos</button>
+      </div>
+      <div v-else class="chant-grid">
+        <article v-for="chant in paginatedChants" :key="chant.id" class="chant-card">
+          <div class="chant-heading">
+            <span class="music-icon"><i class="fa-solid fa-music" aria-hidden="true"></i></span>
+            <span class="chant-badge">Canto para oración</span>
+          </div>
+          <h2>{{ chant.title }}</h2>
+          <div v-if="chant.description" class="chant-description">
+            <p :class="{ collapsed: !expandedDescriptions.has(chant.id) }">{{ chant.description }}</p>
+            <button v-if="chant.description.length > 120" type="button"
+              :aria-expanded="expandedDescriptions.has(chant.id)" @click="toggleExpanded(chant.id)">
+              {{ expandedDescriptions.has(chant.id) ? 'Ver menos' : 'Leer descripción' }}
+            </button>
+          </div>
+          <div class="chant-audio">
+            <AudioPlayer :src="chant.audio ? '/support/audioChant/' + chant.audio : ''" />
+          </div>
+        </article>
+      </div>
 
+      <nav v-if="!isLoading && !error && totalPages > 1" class="pagination-wrapper" aria-label="Paginación de cantos">
+        <button type="button" class="pagination-button" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">
+          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i><span>Anterior</span>
+        </button>
+        <div class="pagination-pages">
+          <template v-for="(page, index) in visiblePages" :key="index">
+            <span v-if="page === '…'" class="pagination-gap" aria-hidden="true">…</span>
+            <button v-else type="button" class="pagination-number" :class="{ active: currentPage === page }"
+              :aria-label="`Página ${page}`" :aria-current="currentPage === page ? 'page' : undefined" @click="goToPage(page)">{{ page }}</button>
+          </template>
+        </div>
+        <button type="button" class="pagination-button" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">
+          <span>Siguiente</span><i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+        </button>
+        <p class="pagination-summary" aria-live="polite">Página <strong>{{ currentPage }}</strong> de {{ totalPages }}</p>
+      </nav>
+    </div>
+  </main>
   <Footer />
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import axios from 'axios';
-import Header from "../Header.vue";
-import Footer from "../Footer.vue";
-import { initFlowbite } from "flowbite";
-import { Music4 } from "lucide-vue-next";
-import AudioPlayer from "./AudioPlayer.vue";
+import Header from '../Header.vue';
+import Footer from '../Footer.vue';
+import AudioPlayer from './AudioPlayer.vue';
 
 const chants = ref([]);
 const isLoading = ref(true);
 const error = ref('');
-const expandedDescriptions = ref(new Set());
-// límite adaptativo para móviles/desktop
-const collapseLimit = computed(() => (window.innerWidth < 640 ? 80 : 180));
-
-// search
+const searchInput = ref(null);
 const searchQuery = ref('');
-const normalized = (s) => (s || '').toString().toLowerCase();
-const filteredChants = computed(() => {
-  const q = normalized(searchQuery.value);
-  if (!q) return chants.value;
-  return chants.value.filter((c) =>
-    normalized(c.title).includes(q) || normalized(c.description).includes(q)
-  );
-});
-
-const chantColors = {
-  bg: "bg-blue-600",
-  shadow: "shadow-blue-600/20",
-  badge: "bg-blue-50 text-blue-600",
-};
-
-// pagination state
 const currentPage = ref(1);
 const pageSize = 6;
-const totalPages = computed(() => {
-  return Math.max(1, Math.ceil(filteredChants.value.length / pageSize));
+const expandedDescriptions = ref(new Set());
+const normalized = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+const filteredChants = computed(() => {
+  const query = normalized(searchQuery.value);
+  return chants.value.filter(chant => !query || normalized(chant.title).includes(query) || normalized(chant.description).includes(query));
 });
-const paginatedChants = computed(() => {
-  const start = (currentPage.value - 1) * pageSize;
-  return filteredChants.value.slice(start, start + pageSize);
+const totalPages = computed(() => Math.max(1, Math.ceil(filteredChants.value.length / pageSize)));
+const paginatedChants = computed(() => filteredChants.value.slice((currentPage.value - 1) * pageSize, currentPage.value * pageSize));
+const visiblePages = computed(() => {
+  const total = totalPages.value;
+  const current = currentPage.value;
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  if (current <= 4) return [1, 2, 3, 4, 5, '…', total];
+  if (current >= total - 3) return [1, '…', total - 4, total - 3, total - 2, total - 1, total];
+  return [1, '…', current - 1, current, current + 1, '…', total];
 });
-const pages = computed(() => Array.from({ length: totalPages.value }, (_, i) => i + 1));
-const goToPage = (p) => {
-  if (p < 1) p = 1;
-  if (p > totalPages.value) p = totalPages.value;
-  currentPage.value = p;
+watch(searchQuery, () => { currentPage.value = 1; });
+const goToPage = page => { currentPage.value = Math.max(1, Math.min(page, totalPages.value)); };
+const clearSearch = () => { searchQuery.value = ''; searchInput.value?.focus(); };
+const toggleExpanded = id => {
+  if (expandedDescriptions.value.has(id)) expandedDescriptions.value.delete(id);
+  else expandedDescriptions.value.add(id);
 };
-const nextPage = () => goToPage(currentPage.value + 1);
-const prevPage = () => goToPage(currentPage.value - 1);
-
-const isExpanded = (id) => expandedDescriptions.value.has(id);
-const toggleExpanded = (id) => {
-  const set = expandedDescriptions.value;
-  if (set.has(id)) {
-    set.delete(id);
-  } else {
-    set.add(id);
-  }
-  // force reactivity for Set changes
-  expandedDescriptions.value = new Set(set);
-};
-
-const truncate = (text, max = 180) => {
-  if (!text) return '';
-  if (text.length <= max) return text;
-  return text.slice(0, max).trimEnd() + '…';
-};
-
 const fetchChants = async () => {
   isLoading.value = true;
   error.value = '';
@@ -252,17 +129,111 @@ const fetchChants = async () => {
     const { data } = await axios.get('/chants');
     chants.value = data;
     currentPage.value = 1;
-  } catch (e) {
-    error.value = 'No se pudieron cargar los cantos. Intenta nuevamente.';
+  } catch {
+    error.value = 'Inténtalo de nuevo en unos momentos.';
   } finally {
     isLoading.value = false;
   }
 };
-
-onMounted(() => {
-  fetchChants();
-  initFlowbite();
-});
+onMounted(fetchChants);
 </script>
 
+<style scoped>
+.chants-page { padding: 48px 24px 64px; background: var(--public-surface); }
+.chants-container { max-width: 1280px; margin: auto; }
+.chants-heading { margin-bottom: 32px; }
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .12em; color: var(--public-muted); }
+.chants-heading h1 { margin: 10px 0; font-size: clamp(32px, 4vw, 48px); font-weight: 800; color: var(--public-heading); }
+.chants-heading p { color: var(--public-text); font-size: 15px; }
+.chants-heading p span { color: var(--public-muted); font-size: 13px; }
+.search-card { padding: 22px; margin-bottom: 28px; background: white; border: 1px solid #e2e8f0; border-radius: 20px; }
+.search-card label { display: block; font-size: 13px; font-weight: 600; color: var(--public-heading); margin-bottom: 10px; }
+.search-row { display: flex; align-items: center; gap: 20px; }
+.search-input { display: flex; align-items: center; flex: 1; min-width: 0; border: 1px solid #cbd5e1; background: var(--public-surface); border-radius: 12px; }
+.search-input:focus-within { border-color: var(--public-primary); box-shadow: 0 0 0 3px rgba(var(--public-primary-rgb), .10); }
+.search-input > i { margin-left: 16px; color: var(--public-muted); }
+.search-input input { width: 100%; min-width: 0; border: 0; background: transparent; padding: 13px 12px; color: var(--public-heading); font-size: 16px; outline: none; box-shadow: none; }
+.search-input input::-webkit-search-cancel-button { appearance: none; }
+.search-input button { width: 44px; height: 44px; flex-shrink: 0; color: var(--public-muted); }
+.result-count { white-space: nowrap; padding: 8px 12px; border-radius: 10px; background: #f1f5f9; color: var(--public-text); font-size: 12px; font-weight: 600; }
+.chant-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.chant-card { display: flex; flex-direction: column; min-width: 0; padding: 22px; border: 1px solid #e2e8f0; border-radius: 24px; background: white; box-shadow: 0 4px 16px rgba(var(--public-heading-rgb), .03); }
+.chant-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.music-icon { display: grid; place-items: center; width: 46px; height: 46px; flex-shrink: 0; border-radius: 14px; background: #f1f5f9; color: var(--public-text); font-size: 20px; }
+.chant-badge { color: var(--public-muted); font-size: 11px; font-weight: 500; }
+.chant-card h2 { color: var(--public-heading); font-size: 20px; line-height: 1.45; font-weight: 700; overflow-wrap: anywhere; }
+.chant-description { margin: 12px 0 0; }
+.chant-description p { color: var(--public-text); font-size: 13px; line-height: 1.8; overflow-wrap: anywhere; }
+.chant-description p.collapsed { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.chant-description button { color: var(--public-primary); font-size: 12px; font-weight: 600; margin-top: 6px; min-height: 32px; }
+.chant-audio { margin-top: auto; padding-top: 22px; }
+.empty-card { text-align: center; padding: 48px 20px; border-radius: 24px; background: white; border: 1px solid var(--public-border); }
+.empty-card > i { font-size: 28px; color: var(--public-primary); }
+.empty-card h2 { font-size: 20px; font-weight: 700; margin: 16px 0 8px; color: var(--public-heading); }
+.empty-card p { font-size: 14px; color: var(--public-muted); }
+.empty-card button { margin-top: 20px; background: var(--public-primary); color: white; padding: 12px 20px; border-radius: 12px; font-weight: 600; font-size: 14px; }
+button:focus-visible { outline: 3px solid var(--public-primary); outline-offset: 3px; }
+@media (max-width: 1100px) { .chant-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) {
+  .chants-page { padding: 28px 16px 48px; }
+  .chant-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .chant-card { padding: 20px; }
+  .search-card { padding: 18px; }
+  .search-row { flex-wrap: wrap; gap: 12px; }
+  .search-input { flex-basis: 100%; }
+  .search-input input { font-size: 16px; }
+}
+.pagination-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px 0;
+}
+.pagination-pages { display: flex; align-items: center; gap: 6px; }
+.pagination-button, .pagination-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  border: 1px solid var(--public-soft);
+  border-radius: 12px;
+  background: white;
+  color: var(--public-text);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.pagination-button { gap: 10px; padding: 0 16px; }
+.pagination-number { min-width: 44px; padding: 0 8px; }
+.pagination-button:hover:not(:disabled), .pagination-number:hover:not(.active) {
+  background: var(--public-surface);
+  border-color: var(--public-border);
+  color: var(--public-primary);
+}
+.pagination-number.active {
+  background: var(--public-primary);
+  border-color: var(--public-primary);
+  color: white;
+  box-shadow: 0 4px 10px rgb(37 99 235 / 18%);
+}
+.pagination-button:disabled { opacity: .4; cursor: not-allowed; }
+.pagination-button:focus-visible, .pagination-number:focus-visible {
+  outline: 3px solid var(--public-border);
+  outline-offset: 3px;
+}
+.pagination-gap { width: 20px; text-align: center; color: var(--public-primary); }
+.pagination-summary { width: 100%; text-align: center; font-size: 13px; color: var(--public-text); }
+.pagination-summary strong { color: var(--public-heading); }
 
+@media (max-width: 768px) {
+  .pagination-wrapper { gap: 12px; padding: 16px 0; }
+  .pagination-pages { order: -1; width: 100%; justify-content: center; gap: 4px; }
+  .pagination-number { min-width: 36px; height: 44px; padding: 0 6px; font-size: 13px; }
+  .pagination-gap { width: 16px; }
+  .pagination-button { flex: 1; max-width: 160px; font-size: 13px; }
+}
+
+
+</style>

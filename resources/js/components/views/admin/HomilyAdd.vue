@@ -1,4 +1,5 @@
 <template>
+    <SavingOverlay v-if="!loader" />
     <div class="p-4 sm:ml-64 bg-gray-50 min-h-screen">
 
         <!-- HEADER -->
@@ -653,6 +654,7 @@
 
 <script setup>
 import Editor from "../../Admin/Editor.vue";
+import SavingOverlay from "../../Admin/SavingOverlay.vue";
 import { ref, reactive, computed, onMounted, nextTick, watch } from "vue";
 import Alerta from "../../Admin/Alerta.vue";
 import axios from "axios";
@@ -874,6 +876,8 @@ const editorDataTips = (text = "") => {
     homilia.value.messag = text;
 };
 const submit = () => {
+    if (!loader.value) return;
+
     // Crear un objeto FormData para manejar la solicitud
     const formData = new FormData();
     formData.append("date", homilia.value.date);
@@ -933,7 +937,6 @@ const submit = () => {
                     emit("closeMod");
                     emit("getData");
                     clearFrm();
-                    loader.value = true;
                     router.push({ name: 'homilyAllAdm' });
                 } else {
                     loader.value = true;

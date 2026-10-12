@@ -261,7 +261,7 @@ watch(
   padding:12px 18px;
 
   background:#fff;
-  color:#2563eb;
+  color:var(--public-primary);
 
   font-size:.95rem;
   font-weight:700;
@@ -297,7 +297,7 @@ watch(
   width:56px;
   height:56px;
 
-  border:4px solid #3b82f6;
+  border:4px solid var(--public-primary);
   border-top-color:transparent;
 
   border-radius:50%;
@@ -310,7 +310,7 @@ watch(
 .loading-content p{
   margin-top:16px;
 
-  color:#64748b;
+  color:var(--public-text);
 
   font-weight:600;
 }

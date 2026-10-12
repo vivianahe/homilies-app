@@ -320,7 +320,7 @@ onMounted(() => {
 .sidebar-card{
   background: #ffffff;
 
-  border: 1px solid #e9edf5;
+  border: 1px solid var(--public-soft);
 
   border-radius: 20px;
 
@@ -334,7 +334,7 @@ onMounted(() => {
 
   font-weight: 800;
 
-  color: #0f172a;
+  color: var(--public-heading);
 
   line-height: 1.3;
 
@@ -342,7 +342,7 @@ onMounted(() => {
 
   padding-bottom: 10px;
 
-  border-bottom: 1px solid #eef2f7;
+  border-bottom: 1px solid var(--public-soft);
 }
 
 .sidebar-menu{
@@ -371,7 +371,7 @@ onMounted(() => {
 
   transition: all 0.18s ease;
 
-  color: #334155;
+  color: var(--public-heading);
 
   font-size: 14px;
 
@@ -381,7 +381,7 @@ onMounted(() => {
 }
 
 .sidebar-link:hover{
-  background: #f8fafc;
+  background: var(--public-surface);
 }
 
 .sidebar-link i{
@@ -391,7 +391,7 @@ onMounted(() => {
 
   font-size: 12px;
 
-  color: #475569;
+  color: var(--public-text);
 }
 
 .sidebar-link span{
@@ -401,15 +401,15 @@ onMounted(() => {
 }
 
 .sidebar-link.active{
-  background: #f3f0ff;
+  background: var(--public-surface);
 
-  color: #5b21b6;
+  color: var(--public-primary);
 
   font-weight: 700;
 }
 
 .sidebar-link.active i{
-  color: #7c3aed;
+  color: var(--public-primary);
 }
 
 .calendar-button{
@@ -421,11 +421,7 @@ onMounted(() => {
 
   border-radius: 12px;
 
-  background: linear-gradient(
-    135deg,
-    #2563eb,
-    #1d4ed8
-  );
+  background: var(--public-primary);
 
   color: white;
 
@@ -440,17 +436,12 @@ onMounted(() => {
   transform: translateY(-1px);
 
   box-shadow:
-    0 8px 20px rgba(
-      37,
-      99,
-      235,
-      .25
-    );
+    0 8px 20px rgba(var(--public-primary-rgb), .25);
 }
 .calendar-button:hover{
   transform: translateY(-1px);
 
-  background: #1e40af;
+  background: var(--public-primary);
 }
 
 @media (max-width: 1200px){
@@ -485,11 +476,7 @@ onMounted(() => {
   min-height: 42px !important;
 }
 .sidebar-card:last-child{
-  background: linear-gradient(
-    to bottom,
-    #ffffff,
-    #fafbff
-  );
+  background: var(--public-surface);
 }
 
 .accordion-header{
@@ -507,7 +494,7 @@ onMounted(() => {
 
   font-weight: 800;
 
-  color: #0f172a;
+  color: var(--public-heading);
 
   padding: 0;
 

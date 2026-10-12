@@ -301,7 +301,17 @@ class HomiliesController extends Controller
 
     public function getDescHomily()
     {
-        $homily = Homilie::orderBy('date', 'desc')->first();
+        $today = Carbon::today();
+
+        // Priorizar el mismo día y mes; si no existe, retroceder en el calendario.
+        $homily = Homilie::whereDate('date', '<=', $today)
+            ->orderByRaw(
+                "CASE WHEN DATE_FORMAT(date, '%m-%d') <= ? THEN 0 ELSE 1 END",
+                [$today->format('m-d')]
+            )
+            ->orderByRaw("DATE_FORMAT(date, '%m-%d') DESC")
+            ->orderBy('date', 'desc')
+            ->first();
 
         if ($homily) {
             return $homily;

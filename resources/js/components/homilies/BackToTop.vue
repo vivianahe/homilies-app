@@ -53,11 +53,7 @@ onBeforeUnmount(() => {
   align-items:center;
   justify-content:center;
 
-  background:linear-gradient(
-    135deg,
-    #2563eb,
-    #1d4ed8
-  );
+  background:var(--public-primary);
 
   color:#fff;
 

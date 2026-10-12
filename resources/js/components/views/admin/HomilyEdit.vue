@@ -1,4 +1,5 @@
 <template>
+    <SavingOverlay v-if="!loader" />
     <div class="p-4 sm:ml-64 bg-gray-50 min-h-screen">
 
         <!-- HEADER -->
@@ -654,6 +655,7 @@
 
 <script setup>
 import Editor from "../../Admin/Editor.vue";
+import SavingOverlay from "../../Admin/SavingOverlay.vue";
 import LoaderVue from '../../Admin/Loader.vue';
 import { ref, reactive, computed, onMounted, nextTick, watch } from "vue";
 import Alerta from "../../Admin/Alerta.vue";
@@ -818,6 +820,8 @@ const getSolemnityId = (id, name) => {
 }
 
 const submit = () => {
+    if (!loader.value) return;
+
     // Crear un objeto FormData para manejar la solicitud
     const formData = new FormData();
     formData.append("id", HomilyId);
@@ -877,8 +881,6 @@ const submit = () => {
                             icon: 'border-emerald-200'
                         }
                     });
-
-                    loader.value = true;
 
                     setTimeout(() => {
 

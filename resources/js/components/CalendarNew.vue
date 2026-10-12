@@ -51,7 +51,7 @@ const calendarOptions = computed(() => ({
         {
           start: props.selectedDate,
           display: "background",
-          color: "#4f46e5"
+          color: "#2563eb"
         }
       ]
     : []
@@ -95,7 +95,7 @@ const calendarOptions = computed(() => ({
 :deep(.fc-toolbar-title){
   font-size: 17px !important;
   font-weight: 700 !important;
-  color: #0f172a;
+  color: var(--public-heading);
   text-transform: lowercase;
 }
 
@@ -111,21 +111,21 @@ const calendarOptions = computed(() => ({
 
   border-radius: 999px !important;
 
-  background: #f1f5f9 !important;
+  background: var(--public-surface) !important;
 
   border: none !important;
 
-  color: #334155 !important;
+  color: var(--public-heading) !important;
 
   box-shadow: none !important;
 }
 
 :deep(.fc-button:hover){
-  background: #e2e8f0 !important;
+  background: var(--public-soft) !important;
 }
 
 :deep(.fc-button-active){
-  background: #e2e8f0 !important;
+  background: var(--public-soft) !important;
 }
 
 /*
@@ -156,7 +156,7 @@ const calendarOptions = computed(() => ({
 :deep(.fc-col-header-cell-cushion){
   font-size: 11px;
   font-weight: 700;
-  color: #64748b;
+  color: var(--public-text);
   text-transform: lowercase;
   text-decoration: none !important;
 }
@@ -187,7 +187,7 @@ const calendarOptions = computed(() => ({
 
   border-radius: 999px;
 
-  color: #334155;
+  color: var(--public-heading);
 
   font-weight: 500;
 
@@ -205,8 +205,8 @@ const calendarOptions = computed(() => ({
 }
 
 :deep(.fc-day-today .fc-daygrid-day-number){
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--public-soft);
+  color: var(--public-primary);
   font-weight: 700;
 }
 
@@ -217,12 +217,12 @@ const calendarOptions = computed(() => ({
 */
 
 :deep(.fc-bg-event){
-  background: #2563eb !important;
+  background: var(--public-primary) !important;
   opacity: .15 !important;
 }
 
 :deep(.fc-highlight){
-  background: #2563eb !important;
+  background: var(--public-primary) !important;
   opacity: .15 !important;
 }
 

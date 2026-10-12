@@ -119,11 +119,11 @@ const currentYear = ref(
 
   border-radius:16px;
 
-  background:#f8fbff;
+  background:var(--public-surface);
 
-  border:1px solid #dbeafe;
+  border:1px solid var(--public-soft);
 
-  color:#2563eb;
+  color:var(--public-primary);
 
   display:flex;
   align-items:center;
@@ -138,14 +138,14 @@ const currentYear = ref(
 
 .footer-social a:hover{
 
-  background:#2563eb;
+  background:var(--public-primary);
 
   color:#fff;
 
   transform:translateY(-4px);
 
   box-shadow:
-    0 12px 24px rgba(37,99,235,.25);
+    0 12px 24px rgba(var(--public-primary-rgb), .25);
 }
 
 .footer{
@@ -153,13 +153,9 @@ const currentYear = ref(
   margin-top:0;
 
   background:
-    linear-gradient(
-      180deg,
-      #f8fafc 0%,
-      #eef6ff 100%
-    );
+    var(--public-surface);
 
-  border-top:1px solid #dbeafe;
+  border-top:1px solid var(--public-soft);
 }
 
 .footer-container{
@@ -185,7 +181,7 @@ const currentYear = ref(
 
   border-radius:20px;
 
-  background:#2563eb;
+  background:var(--public-primary);
 
   display:flex;
   align-items:center;
@@ -196,7 +192,7 @@ const currentYear = ref(
   font-size:30px;
 
   box-shadow:
-    0 12px 30px rgba(37,99,235,.25);
+    0 12px 30px rgba(var(--public-primary-rgb), .25);
 }
 
 .footer-brand h3{
@@ -205,7 +201,7 @@ const currentYear = ref(
 
   font-weight:800;
 
-  color:#0f172a;
+  color:var(--public-heading);
 
   margin-bottom:10px;
 }
@@ -216,7 +212,7 @@ const currentYear = ref(
 
   margin:0 auto;
 
-  color:#64748b;
+  color:var(--public-text);
 
   line-height:1.8;
 }
@@ -242,7 +238,7 @@ const currentYear = ref(
 
   border-radius:14px;
 
-  border:1px solid #dbeafe;
+  border:1px solid var(--public-soft);
 
   background:white;
 
@@ -252,7 +248,7 @@ const currentYear = ref(
 
   text-decoration:none;
 
-  color:#334155;
+  color:var(--public-heading);
 
   font-weight:700;
 
@@ -266,14 +262,14 @@ const currentYear = ref(
 
 .footer-button.primary{
 
-  background:#2563eb;
+  background:var(--public-primary);
 
   color:white;
 
   border:none;
 
   box-shadow:
-    0 10px 25px rgba(37,99,235,.25);
+    0 10px 25px rgba(var(--public-primary-rgb), .25);
 }
 
 .footer-bottom{
@@ -282,11 +278,11 @@ const currentYear = ref(
 
   padding-top:24px;
 
-  border-top:1px solid #dbeafe;
+  border-top:1px solid var(--public-soft);
 
   text-align:center;
 
-  color:#94a3b8;
+  color:var(--public-primary);
 
   font-size:.9rem;
 }

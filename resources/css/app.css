@@ -6,3 +6,16 @@
     list-style:square !important;
     margin: 10px 0 0 30px  !important;
 }
+
+/* Shared palette for public components; admin and authentication keep their own styles. */
+:root {
+    --public-primary: #2563eb;
+    --public-primary-rgb: 37, 99, 235;
+    --public-heading: #0f172a;
+    --public-heading-rgb: 15, 23, 42;
+    --public-text: #475569;
+    --public-muted: #64748b;
+    --public-surface: #f8fafc;
+    --public-soft: #eff6ff;
+    --public-border: #dbeafe;
+}

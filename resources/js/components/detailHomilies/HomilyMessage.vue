@@ -37,7 +37,7 @@ defineProps({
   position:relative;
   height:100%;
   padding:24px;
-  background:#fff7fb;
+  background:var(--public-surface);
   border-radius:24px;
   display:flex;
   flex-direction:column;
@@ -57,8 +57,8 @@ defineProps({
 
   border-radius:50%;
 
-  background:#ffe2ee;
-  color:#ec4899;
+  background:var(--public-soft);
+  color:var(--public-primary);
 
   display:flex;
   align-items:center;
@@ -73,11 +73,11 @@ defineProps({
   font-size:1.4rem;
   font-weight:800;
 
-  color:#18244a;
+  color:var(--public-heading);
 }
 
 .message-text{
-  color:#334155;
+  color:var(--public-heading);
 
   font-size:1.05rem;
   line-height:1.9;
@@ -99,7 +99,7 @@ defineProps({
 
   font-size:72px;
 
-  color:#fbcfe8;
+  color:var(--public-border);
 
   line-height:1;
 }

@@ -331,7 +331,7 @@ onUnmounted(() => {
     border-radius: 0;
 
     box-shadow:
-        0 6px 22px rgba(15, 35, 90, 0.06);
+        0 6px 22px rgba(var(--public-heading-rgb), 0.06);
 }
 
 
@@ -407,7 +407,7 @@ onUnmounted(() => {
 
     padding: 13px 14px;
 
-    color: #071a58;
+    color: var(--public-heading);
 
     font-size: 14px;
     font-weight: 500;
@@ -429,7 +429,7 @@ onUnmounted(() => {
 .nav-link i {
     font-size: 18px;
 
-    color: #071a58;
+    color: var(--public-heading);
 
     transition: color 0.2s ease;
 }
@@ -440,12 +440,12 @@ onUnmounted(() => {
 ========================================================= */
 
 .nav-link:hover {
-    color: #1646e8;
-    background: #f7f9ff;
+    color: var(--public-primary);
+    background: var(--public-surface);
 }
 
 .nav-link:hover i {
-    color: #1646e8;
+    color: var(--public-primary);
 }
 
 
@@ -454,15 +454,15 @@ onUnmounted(() => {
 ========================================================= */
 
 .nav-link.router-link-active {
-    color: #1646e8;
+    color: var(--public-primary);
 
     font-weight: 600;
 
-    background: #f1f5ff;
+    background: var(--public-surface);
 }
 
 .nav-link.router-link-active i {
-    color: #1646e8;
+    color: var(--public-primary);
 }
 
 .nav-link.router-link-active::after {
@@ -478,7 +478,7 @@ onUnmounted(() => {
 
     transform: translateX(-50%);
 
-    background: #1646e8;
+    background: var(--public-primary);
 
     border-radius: 999px;
 }
@@ -516,11 +516,7 @@ onUnmounted(() => {
     border-radius: 999px;
 
     background:
-        linear-gradient(
-            135deg,
-            #2144ef 0%,
-            #6137ff 100%
-        );
+        var(--public-primary);
 
     color: #ffffff;
 
@@ -530,7 +526,7 @@ onUnmounted(() => {
     text-decoration: none;
 
     box-shadow:
-        0 8px 18px rgba(69, 57, 239, 0.22);
+        0 8px 18px rgba(var(--public-primary-rgb), 0.22);
 
     transition:
         transform 0.2s ease,
@@ -547,7 +543,7 @@ onUnmounted(() => {
     transform: translateY(-1px);
 
     box-shadow:
-        0 10px 24px rgba(69, 57, 239, 0.30);
+        0 10px 24px rgba(var(--public-primary-rgb), 0.30);
 }
 
 
@@ -601,7 +597,7 @@ onUnmounted(() => {
         border-radius: 0;
 
         box-shadow:
-            0 3px 12px rgba(15, 35, 90, 0.07);
+            0 3px 12px rgba(var(--public-heading-rgb), 0.07);
     }
 
 
@@ -635,7 +631,7 @@ onUnmounted(() => {
 
         background: transparent;
 
-        color: #1646e8;
+        color: var(--public-primary);
 
         font-size: 24px;
 
@@ -645,7 +641,7 @@ onUnmounted(() => {
     }
 
     .mobile-menu-button:hover {
-        color: #6137ff;
+        color: var(--public-primary);
     }
 
     .mobile-menu-button:focus {
@@ -718,7 +714,7 @@ onUnmounted(() => {
         font-size: 14px;
 
         box-shadow:
-            0 6px 15px rgba(69, 57, 239, 0.22);
+            0 6px 15px rgba(var(--public-primary-rgb), 0.22);
     }
 
     .navbar-actions--mobile-open .donate-button i {
@@ -741,10 +737,10 @@ onUnmounted(() => {
 
         background: #ffffff;
 
-        border-top: 1px solid #e9edf5;
+        border-top: 1px solid var(--public-soft);
 
         box-shadow:
-            0 12px 25px rgba(15, 35, 90, 0.08);
+            0 12px 25px rgba(var(--public-heading-rgb), 0.08);
 
         z-index: 4;
     }
@@ -778,7 +774,7 @@ onUnmounted(() => {
         padding-right: 0;
         padding-left: 18px;
 
-        border-left: 1px solid #e3e7ef;
+        border-left: 1px solid var(--public-soft);
     }
 
 
@@ -803,7 +799,7 @@ onUnmounted(() => {
 
         padding: 7px 10px;
 
-        color: #071a58;
+        color: var(--public-heading);
 
         font-size: 14px;
         font-weight: 500;
@@ -820,15 +816,15 @@ onUnmounted(() => {
     }
 
     .mobile-nav-link:hover {
-        background: #f7f8fc;
+        background: var(--public-surface);
 
-        color: #1646e8;
+        color: var(--public-primary);
     }
 
     .mobile-nav-link > i:first-child {
         width: 22px;
 
-        color: #1646e8;
+        color: var(--public-primary);
 
         font-size: 18px;
 
@@ -839,15 +835,15 @@ onUnmounted(() => {
     /* ACTIVO MÓVIL */
 
     .mobile-nav-link.router-link-active {
-        color: #1646e8;
+        color: var(--public-primary);
 
         font-weight: 600;
 
-        background: #eef4ff;
+        background: var(--public-surface);
     }
 
     .mobile-nav-link.router-link-active > i:first-child {
-        color: #1646e8;
+        color: var(--public-primary);
     }
 
     .mobile-nav-link.router-link-active::before {
@@ -863,7 +859,7 @@ onUnmounted(() => {
 
         transform: translateY(-50%);
 
-        background: #1646e8;
+        background: var(--public-primary);
 
         border-radius: 0 4px 4px 0;
     }
@@ -883,7 +879,7 @@ onUnmounted(() => {
         align-items: center;
         justify-content: center;
 
-        border-top: 1px solid #e3e7ef;
+        border-top: 1px solid var(--public-soft);
     }
 
 
@@ -909,19 +905,19 @@ onUnmounted(() => {
 
         flex-shrink: 0;
 
-        border: 1px solid #e2e7f0;
+        border: 1px solid var(--public-soft);
         border-radius: 50%;
 
         background: #ffffff;
 
-        color: #071a58;
+        color: var(--public-heading);
 
         font-size: 17px;
 
         text-decoration: none;
 
         box-shadow:
-            0 3px 8px rgba(15, 35, 90, 0.07);
+            0 3px 8px rgba(var(--public-heading-rgb), 0.07);
 
         transition:
             color 0.2s ease,
@@ -931,14 +927,14 @@ onUnmounted(() => {
     }
 
     .social-button:hover {
-        color: #1646e8;
+        color: var(--public-primary);
 
-        background: #f7f8fc;
+        background: var(--public-surface);
 
         transform: translateY(-2px);
 
         box-shadow:
-            0 5px 12px rgba(15, 35, 90, 0.10);
+            0 5px 12px rgba(var(--public-heading-rgb), 0.10);
     }
 }
 

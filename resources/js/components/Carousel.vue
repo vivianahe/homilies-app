@@ -244,7 +244,7 @@ onMounted(() => {
 
     border-radius: 0;
 
-    background: #f8fafc;
+    background: var(--public-surface);
 }
 
 
@@ -356,11 +356,7 @@ onMounted(() => {
     border-radius: 999px;
 
     background:
-        linear-gradient(
-            180deg,
-            #2450ff 0%,
-            #5537ff 100%
-        );
+        var(--public-primary);
 }
 
 
@@ -375,7 +371,7 @@ onMounted(() => {
 .hero-text h1 {
     margin: 0 0 9px;
 
-    color: #071a58;
+    color: var(--public-heading);
 
     font-size: 21px;
     font-weight: 800;
@@ -391,7 +387,7 @@ onMounted(() => {
 .hero-week {
     margin: 0 0 18px;
 
-    color: #1646e8;
+    color: var(--public-primary);
 
     font-size: 15px;
     font-weight: 700;
@@ -409,7 +405,7 @@ onMounted(() => {
 
     margin: 0;
 
-    color: #20355f;
+    color: var(--public-heading);
 
     font-size: 14px;
     font-weight: 400;
@@ -442,11 +438,7 @@ onMounted(() => {
     border-radius: 13px;
 
     background:
-        linear-gradient(
-            135deg,
-            #273df2 0%,
-            #6636ff 100%
-        );
+        var(--public-primary);
 
     color: #ffffff;
 
@@ -458,7 +450,7 @@ onMounted(() => {
     text-decoration: none;
 
     box-shadow:
-        0 10px 25px rgba(75, 55, 245, .28);
+        0 10px 25px rgba(var(--public-primary-rgb), .28);
 
     transition:
         transform .2s ease,
@@ -471,7 +463,7 @@ onMounted(() => {
     transform: translateY(-2px);
 
     box-shadow:
-        0 14px 30px rgba(75, 55, 245, .35);
+        0 14px 30px rgba(var(--public-primary-rgb), .35);
 }
 
 
@@ -493,7 +485,7 @@ onMounted(() => {
 
     background: #ffffff;
 
-    color: #4438f5;
+    color: var(--public-primary);
 
     font-size: 8px;
 }
@@ -561,7 +553,7 @@ onMounted(() => {
 
         border-radius: 0;
 
-        background: #eef3f8;
+        background: var(--public-soft);
     }
 
 
@@ -585,8 +577,8 @@ onMounted(() => {
                 180deg,
                 rgba(0, 0, 0, 0) 0%,
                 rgba(0, 0, 0, 0) 50%,
-                rgba(5, 18, 45, .03) 72%,
-                rgba(5, 18, 45, .10) 100%
+                rgba(var(--public-heading-rgb), .03) 72%,
+                rgba(var(--public-heading-rgb), .10) 100%
             );
     }
 
@@ -621,7 +613,7 @@ onMounted(() => {
         border-radius: 18px;
 
         box-shadow:
-            0 14px 34px rgba(15, 35, 90, .16);
+            0 14px 34px rgba(var(--public-heading-rgb), .16);
 
         backdrop-filter: blur(7px);
 
@@ -651,7 +643,7 @@ onMounted(() => {
     .hero-text h1 {
         margin: 0 0 5px;
 
-        color: #071a58;
+        color: var(--public-heading);
 
         font-size: 18px;
 
@@ -666,7 +658,7 @@ onMounted(() => {
     .hero-week {
         margin: 0 0 11px;
 
-        color: #1646e8;
+        color: var(--public-primary);
 
         font-size: 12px;
 
@@ -685,7 +677,7 @@ onMounted(() => {
 
         margin: 0;
 
-        color: #20355f;
+        color: var(--public-heading);
 
         font-size: 11.5px;
 
@@ -715,7 +707,7 @@ onMounted(() => {
         font-size: 11.5px;
 
         box-shadow:
-            0 8px 20px rgba(75, 55, 245, .25);
+            0 8px 20px rgba(var(--public-primary-rgb), .25);
     }
 
     .listen-icon {
@@ -764,8 +756,8 @@ onMounted(() => {
                 180deg,
                 rgba(0, 0, 0, 0) 0%,
                 rgba(0, 0, 0, 0) 55%,
-                rgba(5, 18, 45, .03) 75%,
-                rgba(5, 18, 45, .09) 100%
+                rgba(var(--public-heading-rgb), .03) 75%,
+                rgba(var(--public-heading-rgb), .09) 100%
             );
     }
 
@@ -793,7 +785,7 @@ onMounted(() => {
             rgba(255, 255, 255, .96);
 
         box-shadow:
-            0 12px 30px rgba(15, 35, 90, .17);
+            0 12px 30px rgba(var(--public-heading-rgb), .17);
     }
 
 

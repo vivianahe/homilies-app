@@ -59,7 +59,7 @@ onBeforeUnmount(() => {
 
     <!-- Más código HTML si es necesario -->
 
-    <button v-show="showBackToTopButton" @click="scrollToTop" class="fixed bottom-4 right-4 w-12 h-12 bg-custom-blue text-white rounded-full shadow-lg hover:bg-blue-700 transition-all 
+    <button v-show="showBackToTopButton" @click="scrollToTop" class="fixed bottom-4 right-4 w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-600 transition-all
     duration-300 z-40">
       <i class="fa-solid fa-arrow-up"></i>
     </button>

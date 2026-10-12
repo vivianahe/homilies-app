@@ -213,19 +213,7 @@ const submitForm = () => {
   padding: 80px 24px;
   overflow: hidden;
   background:
-    radial-gradient(
-      circle at 8% 85%,
-      rgba(39, 61, 242, 0.07) 0,
-      rgba(39, 61, 242, 0.07) 14%,
-      transparent 14.2%
-    ),
-    radial-gradient(
-      circle at 95% 10%,
-      rgba(102, 54, 255, 0.05) 0,
-      rgba(102, 54, 255, 0.05) 17%,
-      transparent 17.2%
-    ),
-    #ffffff;
+    var(--public-surface);
 }
 
 .family-container {
@@ -269,7 +257,7 @@ const submitForm = () => {
   z-index: 4;
 
   box-shadow:
-    0 22px 55px rgba(7, 26, 88, 0.13);
+    0 22px 55px rgba(var(--public-heading-rgb), 0.13);
 }
 
 .family-photo {
@@ -299,11 +287,7 @@ const submitForm = () => {
   top: 12px;
   left: 125px;
 
-  background: linear-gradient(
-    135deg,
-    #273df2 0%,
-    #6636ff 100%
-  );
+  background: var(--public-primary);
 
   transform: rotate(-4deg);
 
@@ -317,11 +301,7 @@ const submitForm = () => {
   right: 5px;
   bottom: 25px;
 
-  background: linear-gradient(
-    135deg,
-    rgba(39, 61, 242, 0.08),
-    rgba(102, 54, 255, 0.13)
-  );
+  background: var(--public-soft);
 
   transform: rotate(4deg);
 
@@ -354,7 +334,7 @@ const submitForm = () => {
 
   border-radius: 50%;
 
-  background: #6636ff;
+  background: var(--public-primary);
   opacity: 0.25;
 }
 
@@ -379,7 +359,7 @@ const submitForm = () => {
   border-radius: 17px;
 
   box-shadow:
-    0 18px 50px rgba(7, 26, 88, 0.12);
+    0 18px 50px rgba(var(--public-heading-rgb), 0.12);
 
   z-index: 6;
 }
@@ -387,7 +367,7 @@ const submitForm = () => {
 .quote-icon {
   height: 39px;
 
-  color: #6636ff;
+  color: var(--public-primary);
 
   font-family: Georgia, serif;
   font-size: 55px;
@@ -398,7 +378,7 @@ const submitForm = () => {
 .quote-card p {
   margin: 4px 0 20px;
 
-  color: #071a58;
+  color: var(--public-heading);
 
   font-size: 16px;
   font-weight: 700;
@@ -411,11 +391,7 @@ const submitForm = () => {
 
   border-radius: 10px;
 
-  background: linear-gradient(
-    135deg,
-    #273df2 0%,
-    #6636ff 100%
-  );
+  background: var(--public-primary);
 }
 
 
@@ -440,12 +416,12 @@ const submitForm = () => {
 
   background: #ffffff;
 
-  color: #6636ff;
+  color: var(--public-primary);
 
   font-size: 35px;
 
   box-shadow:
-    0 15px 40px rgba(7, 26, 88, 0.13);
+    0 15px 40px rgba(var(--public-heading-rgb), 0.13);
 
   z-index: 7;
 }
@@ -470,7 +446,7 @@ const submitForm = () => {
 }
 
 .section-label span {
-  color: #6636ff;
+  color: var(--public-primary);
 
   font-size: 13px;
   font-weight: 800;
@@ -482,13 +458,13 @@ const submitForm = () => {
   width: 48px;
   height: 2px;
 
-  background: #6636ff;
+  background: var(--public-primary);
 }
 
 .family-title {
   margin: 0 0 7px;
 
-  color: #071a58;
+  color: var(--public-heading);
 
   font-size: 44px;
   font-weight: 800;
@@ -502,7 +478,7 @@ const submitForm = () => {
 
   margin: 0 0 25px;
 
-  color: #20355f;
+  color: var(--public-heading);
 
   font-size: 16px;
   line-height: 1.6;
@@ -537,11 +513,11 @@ const submitForm = () => {
 
   background: #ffffff;
 
-  border: 1px solid rgba(32, 53, 95, 0.09);
+  border: 1px solid rgba(var(--public-heading-rgb), 0.09);
   border-radius: 11px;
 
   box-shadow:
-    0 7px 22px rgba(7, 26, 88, 0.07);
+    0 7px 22px rgba(var(--public-heading-rgb), 0.07);
 
   transition:
     border-color 0.2s ease,
@@ -550,10 +526,10 @@ const submitForm = () => {
 }
 
 .input-group:focus-within {
-  border-color: rgba(102, 54, 255, 0.45);
+  border-color: rgba(var(--public-primary-rgb), 0.45);
 
   box-shadow:
-    0 8px 25px rgba(102, 54, 255, 0.12);
+    0 8px 25px rgba(var(--public-primary-rgb), 0.12);
 }
 
 .input-group i {
@@ -563,7 +539,7 @@ const submitForm = () => {
 
   text-align: center;
 
-  color: #6636ff;
+  color: var(--public-primary);
 
   font-size: 16px;
 }
@@ -579,7 +555,7 @@ const submitForm = () => {
 
   background: transparent;
 
-  color: #20355f;
+  color: var(--public-heading);
 
   font-family: inherit;
   font-size: 14px;
@@ -599,7 +575,7 @@ const submitForm = () => {
 
 .input-group input::placeholder,
 .input-group textarea::placeholder {
-  color: #20355f;
+  color: var(--public-heading);
   opacity: 0.65;
 }
 
@@ -635,11 +611,7 @@ const submitForm = () => {
   border: 0;
   border-radius: 11px;
 
-  background: linear-gradient(
-    135deg,
-    #273df2 0%,
-    #6636ff 100%
-  );
+  background: var(--public-primary);
 
   color: #ffffff;
 
@@ -650,7 +622,7 @@ const submitForm = () => {
   cursor: pointer;
 
   box-shadow:
-    0 10px 25px rgba(39, 61, 242, 0.23);
+    0 10px 25px rgba(var(--public-primary-rgb), 0.23);
 
   transition:
     transform 0.2s ease,
@@ -661,7 +633,7 @@ const submitForm = () => {
   transform: translateY(-2px);
 
   box-shadow:
-    0 14px 30px rgba(39, 61, 242, 0.3);
+    0 14px 30px rgba(var(--public-primary-rgb), 0.3);
 }
 
 .submit-button:disabled {

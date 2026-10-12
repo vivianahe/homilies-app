@@ -16,7 +16,7 @@
       <div class="text-center">
 
         <div
-          class="w-14 h-14 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto">
+          class="w-14 h-14 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto">
         </div>
 
         <p class="mt-4 text-gray-600 font-medium">
@@ -138,74 +138,37 @@
       />
 
       <!-- PAGINACIÓN -->
-      <div
-        v-if="
-          !isDateFilter &&
-          activeFilter !== 'recent' &&
-          pagination.last_page > 1
-        "
-        class="pagination-wrapper"
+      <nav
+        v-if="!isDateFilter && activeFilter !== 'recent' && pagination.last_page > 1"
+        class="pagination-wrapper" aria-label="Paginación de homilías"
       >
-
-        <button
-          @click="changePage(currentPage - 1)"
-          :disabled="currentPage === 1"
-          class="pagination-button secondary"
-        >
-          <i class="fa-solid fa-chevron-left"></i>
+        <button type="button" class="pagination-button" aria-label="Página anterior"
+          :disabled="currentPage === 1 || loading" @click="changePage(currentPage - 1)">
+          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
           <span>Anterior</span>
         </button>
 
-        <div class="pagination-status">
-
-          <span class="pagination-label">
-            Página
-          </span>
-
-          <!-- AQUÍ VA -->
-          <div class="pagination-select-wrapper">
-
-            <select
-              v-model="selectedPage"
-              class="pagination-select"
-              @change="changePage(Number(selectedPage))"
-            >
-
-              <option
-                v-for="page in pagination.last_page"
-                :key="page"
-                :value="page"
-              >
-                {{ page }}
-              </option>
-
-            </select>
-
-            <i class="fa-solid fa-chevron-down"></i>
-
-          </div>
-
-          <span class="pagination-separator">
-            de
-          </span>
-
-          <span class="pagination-total">
-            {{ pagination.last_page }}
-          </span>
-
+        <div class="pagination-pages">
+          <template v-for="(page, index) in visiblePages" :key="index">
+            <span v-if="page === '…'" class="pagination-gap" aria-hidden="true">…</span>
+            <button v-else type="button" class="pagination-number"
+              :class="{ active: page === currentPage }"
+              :aria-label="`Página ${page}`" :aria-current="page === currentPage ? 'page' : undefined"
+              :disabled="loading" @click="changePage(page)">
+              {{ page }}
+            </button>
+          </template>
         </div>
 
-        <button
-          @click="changePage(currentPage + 1)"
-          :disabled="
-            currentPage === pagination.last_page
-          "
-          class="pagination-button primary"
-        >
+        <button type="button" class="pagination-button" aria-label="Página siguiente"
+          :disabled="currentPage === pagination.last_page || loading" @click="changePage(currentPage + 1)">
           <span>Siguiente</span>
-          <i class="fa-solid fa-chevron-right"></i>
+          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
         </button>
-      </div>
+        <p class="pagination-summary" aria-live="polite">
+          Página <strong>{{ currentPage }}</strong> de {{ pagination.last_page }}
+        </p>
+      </nav>
     </div>
       <BackToTop />
     </div>
@@ -256,7 +219,6 @@ const sortBy = ref("recent");
 
 const currentPage = ref(1);
 
-const selectedPage = ref(1);
 
 const isDateFilter = ref(false);
 
@@ -271,6 +233,15 @@ const pagination = ref({
 | COMPUTED
 |--------------------------------------------------------------------------
 */
+
+const visiblePages = computed(() => {
+  const total = pagination.value.last_page;
+  const current = currentPage.value;
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  if (current <= 4) return [1, 2, 3, 4, 5, '…', total];
+  if (current >= total - 3) return [1, '…', total - 4, total - 3, total - 2, total - 1, total];
+  return [1, '…', current - 1, current, current + 1, '…', total];
+});
 
 const featuredHomily = computed(() => {
 
@@ -331,7 +302,6 @@ const getHomilies = async (
     };
 
     currentPage.value = page;
-    selectedPage.value = page;
 
     homilies.value = records;
 
@@ -547,7 +517,6 @@ const changePage = (page) => {
   }
 
   currentPage.value = page;
-  selectedPage.value = page;
 
   getHomilies(
     selectedDate.value,
@@ -607,7 +576,7 @@ onMounted(async () => {
   display: none;
 
   position: fixed;
-  bottom: 24px;
+  bottom: 92px;
   right: 24px;
 
   width: 58px;
@@ -615,7 +584,7 @@ onMounted(async () => {
 
   border-radius: 999px;
 
-  background: #2563eb;
+  background: var(--public-primary);
   color: white;
 
   border: none;
@@ -665,13 +634,13 @@ onMounted(async () => {
 
   margin-bottom: 20px;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--public-soft);
 }
 
 .mobile-filters-header h3{
   font-size: 20px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--public-heading);
 }
 
 .mobile-filters-header button{
@@ -682,9 +651,9 @@ onMounted(async () => {
 
   border: none;
 
-  background: #f1f5f9;
+  background: var(--public-surface);
 
-  color: #475569;
+  color: var(--public-text);
 }
 .fade-enter-active,
 .fade-leave-active{
@@ -733,9 +702,9 @@ onMounted(async () => {
 
   background: #ffffff;
 
-  color: #475569;
+  color: var(--public-text);
 
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--public-soft);
 
   display: flex;
   align-items: center;
@@ -752,203 +721,49 @@ onMounted(async () => {
   transform: translateY(-2px);
 }
 
-.pagination-wrapper{
+.pagination-wrapper {
   display: flex;
-
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-
-  gap: 20px;
-
-  margin-top: 10px;
+  gap: 12px;
   padding: 24px 0;
 }
-
-.pagination-status{
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 12px 18px;
-
-  border-radius: 16px;
-
-  background: white;
-
-  border: 1px solid #e2e8f0;
-
-  box-shadow:
-    0 8px 20px rgba(15,23,42,.04);
-}
-
-.pagination-label{
-  color: #64748b;
-
-  font-size: 14px;
-}
-
-.pagination-current{
-  width: 34px;
-  height: 34px;
-
-  border-radius: 10px;
-
-  background: #2563eb;
-
-  color: white;
-
-  display: flex;
+.pagination-pages { display: flex; align-items: center; gap: 6px; }
+.pagination-button, .pagination-number {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  font-weight: 700;
-}
-
-.pagination-select{
-
-  height: 34px;
-
-  min-width: 70px;
-
-  padding: 0 12px;
-
-  border: 1px solid #dbe2ea;
-
-  border-radius: 10px;
-
-  background: #2563eb;
-
-  color: white;
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  outline: none;
-
-  appearance: none;
-
-  text-align: center;
-}
-
-.pagination-select:hover{
-
-  background: #1d4ed8;
-}
-
-.pagination-select:focus{
-
-  box-shadow:
-    0 0 0 4px rgba(37,99,235,.15);
-}
-
-.pagination-separator{
-  color: #94a3b8;
-}
-
-.pagination-total{
-  font-weight: 700;
-
-  color: #0f172a;
-}
-
-.pagination-button{
-  height: 48px;
-
-  padding: 0 20px;
-
-  border-radius: 14px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  font-weight: 600;
-
-  transition: all .25s ease;
-}
-
-.pagination-button:disabled{
-  opacity: .45;
-
-  cursor: not-allowed;
-}
-
-.pagination-button.primary{
-  background: #2563eb;
-
-  color: white;
-
-  box-shadow:
-    0 10px 25px rgba(37,99,235,.25);
-}
-
-.pagination-button.primary:hover:not(:disabled){
-  transform: translateY(-2px);
-}
-
-.pagination-button.secondary{
+  height: 44px;
+  border: 1px solid var(--public-soft);
+  border-radius: 12px;
   background: white;
-
-  color: #334155;
-
-  border: 1px solid #e2e8f0;
+  color: var(--public-text);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background .2s, border-color .2s, color .2s;
 }
-
-.pagination-button.secondary:hover:not(:disabled){
-  background: #f8fafc;
+.pagination-button { gap: 10px; padding: 0 16px; }
+.pagination-number { min-width: 44px; padding: 0 8px; }
+.pagination-button:hover:not(:disabled), .pagination-number:hover:not(.active) {
+  background: var(--public-surface);
+  border-color: var(--public-border);
+  color: var(--public-primary);
 }
-
-.pagination-select-wrapper{
-  position: relative;
-}
-
-.pagination-select{
-
-  height: 34px;
-
-  min-width: 70px;
-
-  padding: 0 30px 0 12px;
-
-  border: 1px solid #dbe2ea;
-
-  border-radius: 10px;
-
-  background: #2563eb;
-
+.pagination-number.active {
+  background: var(--public-primary);
+  border-color: var(--public-primary);
   color: white;
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  appearance: none;
-
-  outline: none;
-
-  text-align: center;
+  box-shadow: 0 4px 10px rgb(37 99 235 / 18%);
 }
-
-.pagination-select-wrapper i{
-
-  position: absolute;
-
-  right: 10px;
-  top: 50%;
-
-  transform: translateY(-50%);
-
-  color: white;
-
-  font-size: 10px;
-
-  pointer-events: none;
+.pagination-button:disabled { opacity: .4; cursor: not-allowed; }
+.pagination-button:focus-visible, .pagination-number:focus-visible {
+  outline: 3px solid var(--public-border);
+  outline-offset: 3px;
 }
+.pagination-gap { width: 20px; text-align: center; color: var(--public-primary); }
+.pagination-summary { width: 100%; text-align: center; font-size: 13px; color: var(--public-text); }
+.pagination-summary strong { color: var(--public-heading); }
 
 @media (max-width: 1600px){
 
@@ -992,69 +807,12 @@ onMounted(async () => {
 
 }
 
-@media (max-width: 768px){
-
-  .pagination-wrapper{
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 8px;
-
-    width: 100%;
-
-    padding: 8px 0;
-  }
-
-  .pagination-status{
-    padding: 8px 10px;
-
-    gap: 4px;
-
-    border-radius: 10px;
-
-    min-width: auto;
-
-    flex: 0 0 auto;
-  }
-
-  .pagination-label{
-    font-size: 12px;
-  }
-
-  .pagination-current{
-    width: 24px;
-    height: 24px;
-
-    border-radius: 7px;
-
-    font-size: 12px;
-  }
-
-  .pagination-separator,
-  .pagination-total{
-    font-size: 12px;
-  }
-
-  .pagination-button{
-    height: 36px;
-
-    padding: 0 12px;
-
-    border-radius: 10px;
-
-    font-size: 12px;
-
-    gap: 6px;
-
-    flex-shrink: 0;
-  }
-
-  .pagination-button i{
-    font-size: 10px;
-  }
-
+@media (max-width: 768px) {
+  .pagination-wrapper { gap: 12px; padding: 16px 0; }
+  .pagination-pages { order: -1; width: 100%; justify-content: center; gap: 4px; }
+  .pagination-number { min-width: 36px; height: 44px; padding: 0 6px; font-size: 13px; }
+  .pagination-gap { width: 16px; }
+  .pagination-button { flex: 1; max-width: 160px; font-size: 13px; }
 }
 
 /* MÓVIL */
@@ -1064,9 +822,11 @@ onMounted(async () => {
     margin-bottom: 90px;
   }
 
-  .floating-filter-button {
-    bottom: 100px;
+  .mobile-filter-button {
+    bottom: 76px;
     right: 16px;
+    width: 48px;
+    height: 48px;
   }
 
 }

@@ -59,7 +59,7 @@ const isLongText = computed(() => {
 <style scoped>
 
 .gospel-card{
-  background:#fdfcf8;
+  background:var(--public-surface);
   padding:32px 48px;
 }
 
@@ -76,8 +76,8 @@ const isLongText = computed(() => {
 
   border-radius:50%;
 
-  background:#fff4dd;
-  color:#d89a17;
+  background:var(--public-soft);
+  color:var(--public-primary);
 
   display:flex;
   align-items:center;
@@ -91,20 +91,20 @@ const isLongText = computed(() => {
   margin:0;
   font-size:2rem;
   font-weight:800;
-  color:#18244a;
+  color:var(--public-heading);
 }
 
 .gospel-citation{
   margin-top:4px;
   font-size:.9rem;
   font-weight:600;
-  color:#64748b;
+  color:var(--public-text);
 }
 
 .gospel-content{
   max-width:900px;
 
-  color:#2d3b66;
+  color:var(--public-heading);
 
   font-size:1rem;
   line-height:1.7;
@@ -135,7 +135,7 @@ const isLongText = computed(() => {
 
 
 .gospel-content :deep(strong){
-  color:#18244a;
+  color:var(--public-heading);
   font-weight:700;
 }
 
@@ -145,12 +145,12 @@ const isLongText = computed(() => {
   margin:16px 0;
   padding:14px 18px;
 
-  border-left:4px solid #d89a17;
-  background:#fff9ec;
+  border-left:4px solid var(--public-primary);
+  background:var(--public-surface);
 
   border-radius:12px;
 
-  color:#7c4f00;
+  color:var(--public-heading);
 }
 
 .gospel-content{
@@ -173,11 +173,7 @@ const isLongText = computed(() => {
 
   height:120px;
 
-  background:linear-gradient(
-    to bottom,
-    rgba(253,252,248,0),
-    rgba(253,252,248,1)
-  );
+  background:var(--public-soft);
 }
 
 .gospel-actions{
@@ -194,12 +190,12 @@ const isLongText = computed(() => {
 
   padding:12px 20px;
 
-  border:1px solid #e2e8f0;
+  border:1px solid var(--public-soft);
   border-radius:12px;
 
   background:#fff;
 
-  color:#1e40af;
+  color:var(--public-primary);
 
   font-size:.95rem;
   font-weight:600;
@@ -210,8 +206,8 @@ const isLongText = computed(() => {
 }
 
 .btn-read-more:hover{
-  background:#f8fafc;
-  border-color:#cbd5e1;
+  background:var(--public-surface);
+  border-color:var(--public-border);
 }
 
 @media(max-width:768px){

@@ -4,9 +4,9 @@
   <section class="relative py-10 md:py-14 overflow-hidden">
     <!-- Background blurred blobs -->
     <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-      <div class="absolute -top-40 -right-16 h-96 w-96 rounded-full bg-indigo-400/25 blur-3xl"></div>
+      <div class="absolute -top-40 -right-16 h-96 w-96 rounded-full bg-blue-600/25 blur-3xl"></div>
       <div class="absolute -bottom-40 -left-20 h-[28rem] w-[28rem] rounded-full bg-slate-600/20 blur-3xl"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[36rem] w-[36rem] rounded-full bg-blue-400/10 blur-[110px]"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[36rem] w-[36rem] rounded-full bg-blue-600/10 blur-[110px]"></div>
     </div>
 
     <div class="relative w-full mx-auto max-w-screen-xl px-4 sm:px-6">
@@ -34,7 +34,7 @@
             type="search"
             autocomplete="off"
             placeholder="Buscar por título o descripción..."
-            class="w-full rounded-xl border border-slate-200/70 bg-white/70 py-2.5 pl-10 pr-3 text-sm text-slate-800 placeholder:text-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/60"
+            class="w-full rounded-xl border border-slate-200/70 bg-white/70 py-2.5 pl-10 pr-3 text-sm text-slate-800 placeholder:text-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600/60"
           />
           <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">🔎</span>
         </div>
@@ -52,8 +52,8 @@
       <!-- Empty state -->
       <div v-else-if="!filteredChants.length" class="mx-auto max-w-xl">
         <div class="rounded-2xl border border-white/40 bg-white/60 backdrop-blur-xl p-8 shadow-xl text-center">
-          <div class="mx-auto mb-3 h-10 w-10 rounded-full bg-indigo-500/10 ring-1 ring-indigo-400/30 flex items-center justify-center">
-            <span class="text-indigo-600 text-xl">♪</span>
+          <div class="mx-auto mb-3 h-10 w-10 rounded-full bg-blue-600/10 ring-1 ring-blue-600/30 flex items-center justify-center">
+            <span class="text-blue-600 text-xl">♪</span>
           </div>
           <p class="font-semibold text-gray-800">No se encontraron cantos</p>
           <p class="mt-1 text-gray-600 text-sm">Intenta con otro término de búsqueda.</p>
@@ -73,7 +73,7 @@
               border
               border-slate-200/70
               shadow-xl
-              hover:shadow-[0_20px_60px_rgba(99,102,241,.18)]
+              hover:shadow-[0_20px_60px_rgba(37,99,235,.18)]
               hover:-translate-y-2
               transition-all
               duration-300
@@ -86,9 +86,9 @@
 
     <div
         :class="[
-            'flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-lg transition-transform duration-300 group-hover:scale-110',
-            gradients[index % gradients.length].bg,
-            gradients[index % gradients.length].shadow
+            'flex h-20 w-20 items-center justify-center rounded-2xl text-white shadow-lg transition-transform duration-300 group-hover:scale-110',
+            chantColors.bg,
+            chantColors.shadow
         ]"
           >
               <Music4 class="w-10 h-10"/>
@@ -103,7 +103,7 @@
               <span
                   :class="[
                       'inline-flex mt-2 rounded-xl px-4 py-1.5 text-sm font-semibold',
-                      gradients[index % gradients.length].badge
+                      chantColors.badge
                   ]"
               >
                   Canto para oración
@@ -124,7 +124,7 @@
             <button
               v-if="chant.description && chant.description.length > collapseLimit"
               @click="toggleExpanded(chant.id)"
-              class="mt-1 text-indigo-600 hover:text-indigo-700 font-medium text-sm"
+              class="mt-1 text-blue-600 hover:text-blue-600 font-medium text-sm"
               type="button"
             >
               {{ isExpanded(chant.id) ? 'Ver menos' : 'Ver más' }}
@@ -134,7 +134,7 @@
               <div class="mt-auto">
                   <AudioPlayer
                       :src="'/support/audioChant/' + chant.audio"
-                      :color="gradients[index % gradients.length]"
+                      :color="chantColors"
                   />
               </div>
         </div>
@@ -156,7 +156,7 @@
           type="button"
           @click="goToPage(p)"
           class="px-3 py-2 rounded-lg text-sm font-semibold ring-1 ring-slate-200/70"
-          :class="p === currentPage ? 'bg-indigo-600 text-white ring-indigo-600' : 'bg-white/70 hover:bg-white text-slate-700'"
+          :class="p === currentPage ? 'bg-blue-600 text-white ring-blue-600' : 'bg-white/70 hover:bg-white text-slate-700'"
         >
           {{ p }}
         </button>
@@ -202,33 +202,11 @@ const filteredChants = computed(() => {
   );
 });
 
-const gradients = [
-  {
-    bg: "from-violet-500 to-purple-600",
-    shadow: "shadow-violet-500/30",
-    badge: "bg-violet-50 text-violet-600",
-  },
-  {
-    bg: "from-blue-500 to-cyan-500",
-    shadow: "shadow-blue-500/30",
-    badge: "bg-blue-50 text-blue-600",
-  },
-  {
-    bg: "from-emerald-400 to-teal-500",
-    shadow: "shadow-emerald-500/30",
-    badge: "bg-emerald-50 text-emerald-600",
-  },
-  {
-    bg: "from-orange-400 to-red-500",
-    shadow: "shadow-orange-500/30",
-    badge: "bg-orange-50 text-orange-600",
-  },
-  {
-    bg: "from-pink-500 to-fuchsia-600",
-    shadow: "shadow-pink-500/30",
-    badge: "bg-pink-50 text-pink-600",
-  },
-];
+const chantColors = {
+  bg: "bg-blue-600",
+  shadow: "shadow-blue-600/20",
+  badge: "bg-blue-50 text-blue-600",
+};
 
 // pagination state
 const currentPage = ref(1);

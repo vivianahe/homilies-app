@@ -355,11 +355,11 @@ const toggleAll = () => {
 /* =========================================================
    PALETA
 
-   #071a58  Títulos
-   #20355f  Texto
-   #273df2  Azul principal
-   #1646e8  Azul secundario
-   #6636ff  Violeta
+   var(--public-heading)  Títulos
+   var(--public-heading)  Texto
+   var(--public-primary)  Azul principal
+   var(--public-primary)  Azul secundario
+   var(--public-primary)  Violeta
    #ffffff  Fondo
 ========================================================= */
 
@@ -446,7 +446,7 @@ const toggleAll = () => {
 
   border-left:
     2px solid
-    #6636ff;
+    var(--public-primary);
 
   z-index: 4;
 }
@@ -467,7 +467,7 @@ const toggleAll = () => {
 
 
 .section-label span {
-  color: #273df2;
+  color: var(--public-primary);
 
   font-size: 12px;
   font-weight: 800;
@@ -489,11 +489,7 @@ const toggleAll = () => {
   border-radius: 10px;
 
   background:
-    linear-gradient(
-      135deg,
-      #273df2 0%,
-      #6636ff 100%
-    );
+    var(--public-primary);
 }
 
 
@@ -507,7 +503,7 @@ const toggleAll = () => {
     0
     12px;
 
-  color: #071a58;
+  color: var(--public-heading);
 
   font-size: 38px;
   font-weight: 800;
@@ -527,7 +523,7 @@ const toggleAll = () => {
 
   margin: 0;
 
-  color: #20355f;
+  color: var(--public-heading);
 
   font-size: 16px;
   font-weight: 400;
@@ -575,9 +571,9 @@ const toggleAll = () => {
   border-radius: 50%;
 
   background:
-    rgba(39, 61, 242, 0.035);
+    rgba(var(--public-primary-rgb), 0.035);
 
-  color: #273df2;
+  color: var(--public-primary);
 
   font-size: 66px;
 
@@ -602,7 +598,7 @@ const toggleAll = () => {
     0;
 
   background:
-    rgba(39, 61, 242, 0.055);
+    rgba(var(--public-primary-rgb), 0.055);
 
   transform-origin:
     bottom center;
@@ -703,7 +699,7 @@ const toggleAll = () => {
 
   border:
     1px solid
-    rgba(39, 61, 242, 0.07);
+    rgba(var(--public-primary-rgb), 0.07);
 
   border-radius: 12px;
 
@@ -711,7 +707,7 @@ const toggleAll = () => {
 
   box-shadow:
     0 5px 18px
-    rgba(7, 26, 88, 0.065);
+    rgba(var(--public-heading-rgb), 0.065);
 
   transition:
     transform 0.2s ease,
@@ -725,11 +721,11 @@ const toggleAll = () => {
     translateY(-2px);
 
   border-color:
-    rgba(39, 61, 242, 0.16);
+    rgba(var(--public-primary-rgb), 0.16);
 
   box-shadow:
     0 9px 24px
-    rgba(7, 26, 88, 0.10);
+    rgba(var(--public-heading-rgb), 0.10);
 }
 
 
@@ -779,7 +775,7 @@ const toggleAll = () => {
 
   overflow: hidden;
 
-  color: #20355f;
+  color: var(--public-heading);
 
   font-size: 13px;
   font-weight: 500;
@@ -806,7 +802,7 @@ const toggleAll = () => {
 
   margin: 0;
 
-  accent-color: #273df2;
+  accent-color: var(--public-primary);
 }
 
 
@@ -859,11 +855,7 @@ const toggleAll = () => {
   border-radius: 10px;
 
   background:
-    linear-gradient(
-      135deg,
-      #273df2 0%,
-      #6636ff 100%
-    );
+    var(--public-primary);
 
   color: #ffffff;
 
@@ -876,7 +868,7 @@ const toggleAll = () => {
 
   box-shadow:
     0 9px 22px
-    rgba(39, 61, 242, 0.20);
+    rgba(var(--public-primary-rgb), 0.20);
 
   transition:
     transform 0.2s ease,
@@ -890,7 +882,7 @@ const toggleAll = () => {
 
   box-shadow:
     0 12px 28px
-    rgba(39, 61, 242, 0.28);
+    rgba(var(--public-primary-rgb), 0.28);
 }
 
 
@@ -1163,9 +1155,9 @@ and
     font-size: 37px;
 
     background:
-      rgba(39, 61, 242, 0.035);
+      rgba(var(--public-primary-rgb), 0.035);
 
-    color: #273df2;
+    color: var(--public-primary);
 
     opacity: 0.68;
   }
@@ -1178,7 +1170,7 @@ and
     height: 65px;
 
     background:
-      rgba(39, 61, 242, 0.055);
+      rgba(var(--public-primary-rgb), 0.055);
   }
 
 
@@ -1240,11 +1232,11 @@ and
 
     border:
       1px solid
-      rgba(39, 61, 242, 0.07);
+      rgba(var(--public-primary-rgb), 0.07);
 
     box-shadow:
       0 4px 14px
-      rgba(7, 26, 88, 0.065);
+      rgba(var(--public-heading-rgb), 0.065);
   }
 
 

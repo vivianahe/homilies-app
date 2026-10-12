@@ -4,9 +4,7 @@
         rounded-3xl
         border
         border-slate-200
-        bg-gradient-to-br
-        from-slate-50
-        to-white
+        bg-slate-50
         p-5
         shadow-inner
         "
@@ -74,7 +72,7 @@
                         w-full
                         h-2
                         cursor-pointer
-                        accent-indigo-600
+                        accent-blue-600
                     "
                 />
 
@@ -116,26 +114,7 @@ const duration = ref(0)
 
 const current = ref(0)
 
-const buttonColor = computed(() => {
-
-    if (props.color.bg.includes('violet'))
-        return 'bg-violet-600'
-
-    if (props.color.bg.includes('blue'))
-        return 'bg-blue-600'
-
-    if (props.color.bg.includes('emerald'))
-        return 'bg-emerald-600'
-
-    if (props.color.bg.includes('orange'))
-        return 'bg-orange-500'
-
-    if (props.color.bg.includes('pink'))
-        return 'bg-pink-600'
-
-    return 'bg-indigo-600'
-
-})
+const buttonColor = computed(() => 'bg-blue-600')
 
 const togglePlay = () => {
 

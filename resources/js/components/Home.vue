@@ -13,7 +13,16 @@
                 </RouterLink>
             </div>
         </div>
-        <Table :dataHomilies="dataHomilies" :columns="columnConfig" @editar="editar" @datelle="datelle"
+        <div v-if="loading"
+            class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50"
+            role="status" aria-live="polite">
+            <div class="bg-white p-6 rounded-2xl shadow-xl text-center">
+                <div class="w-14 h-14 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mx-auto"
+                    aria-hidden="true"></div>
+                <p class="mt-4 font-semibold text-gray-700">Cargando información...</p>
+            </div>
+        </div>
+        <Table v-else :dataHomilies="dataHomilies" :columns="columnConfig" @editar="editar" @datelle="datelle"
             @eliminar="eliminar" />
     </div>
 </template>
@@ -28,12 +37,16 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const dataHomilies = ref([]);
+const loading = ref(true);
 const getDataHomilies = async () => {
+    loading.value = true;
     try {
         const { data } = await axios.get('/getHomilies');
         dataHomilies.value = data;
     } catch (error) {
         console.error("Error al obtener los datos de Homilies:", error);
+    } finally {
+        loading.value = false;
     }
 };
 const columnConfig = [

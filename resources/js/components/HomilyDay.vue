@@ -1,11 +1,11 @@
 <template>
-  <section class="w-full h-1/2 bg-gradient-to-b from-gray-50 to-custom-gray-me rounded-b-3xl">
+  <section class="w-full h-1/2 bg-blue-50 rounded-b-3xl">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
       <p class="tracking-widest text-center text-gray-500 md:text-lg">
         ENRIQUECE TU VIDA ESPIRITUAL Y ENCUENTRA INSPIRACIÓN ESCUCHANDO LA
         PALABRA DE DIOS
       </p>
-      <p class="font-semibold text-center text-custom-text md:text-2xl">
+      <p class="font-semibold text-center text-blue-600 md:text-2xl">
         Homilías
       </p>
       <div class="grid md:grid-cols-2 mt-4">
@@ -47,7 +47,7 @@
                 name: 'HomilyDetailNew',
                 params: { id: dataHomilyDesc.id },
               }"
-                class="px-3 py-2 text-sm font-medium justify-end text-end text-white bg-custom-icon rounded-full hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                class="px-3 py-2 text-sm font-medium justify-end text-end text-white bg-blue-600 rounded-full hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300"
                 title="Ver más">
                 <i class="fa-solid fa-plus"></i>
               </RouterLink>

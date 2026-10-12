@@ -97,7 +97,7 @@ const formatDate = (date) => {
 }
 
 .related-content p{
-  color:#64748b;
+  color:var(--public-text);
   line-height:1.5;
 
   display:-webkit-box;
@@ -110,7 +110,7 @@ const formatDate = (date) => {
 .sidebar-card{
   background:#fff;
 
-  border:1px solid #edf1f7;
+  border:1px solid var(--public-soft);
 
   border-radius:24px;
   padding:28px;
@@ -132,15 +132,15 @@ const formatDate = (date) => {
   font-size:2.3rem;
   font-weight:800;
   line-height:1.1;
-  color:#0f172a;
+  color:var(--public-heading);
 }
 
 .btn-all{
   padding:10px 16px;
-  border:1px solid #dbeafe;
+  border:1px solid var(--public-soft);
   border-radius:12px;
   background:white;
-  color:#2563eb;
+  color:var(--public-primary);
 }
 
 .related-list{
@@ -154,7 +154,7 @@ const formatDate = (date) => {
 
   padding:24px 0;
 
-  border-bottom:1px solid #e5e7eb;
+  border-bottom:1px solid var(--public-soft);
 
   cursor:pointer;
 
@@ -179,7 +179,7 @@ const formatDate = (date) => {
 .related-content h3{
   font-size:1.7rem;
   font-weight:800;
-  color:#0f172a;
+  color:var(--public-heading);
 
   margin:10px 0;
 
@@ -192,7 +192,7 @@ const formatDate = (date) => {
 }
 
 .related-content p{
-  color:#64748b;
+  color:var(--public-text);
   line-height:1.6;
   font-size:.95rem;
 
@@ -210,13 +210,13 @@ const formatDate = (date) => {
 }
 
 .related-meta span:first-child{
-  color:#64748b;
+  color:var(--public-text);
   font-size:.85rem;
 }
 
 .badge{
-  background:#eff6ff;
-  color:#2563eb;
+  background:var(--public-surface);
+  color:var(--public-primary);
   padding:4px 10px;
   border-radius:999px;
   font-size:.75rem;
@@ -227,10 +227,10 @@ const formatDate = (date) => {
   width:100%;
   margin-top:24px;
   padding:14px;
-  border:1px solid #c7d2fe;
+  border:1px solid var(--public-border);
   border-radius:14px;
   background:white;
-  color:#2563eb;
+  color:var(--public-primary);
   font-weight:600;
 }
 

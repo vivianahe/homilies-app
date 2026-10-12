@@ -26,7 +26,7 @@ const calendarOptions = ref({
     style="background-image: url('/img/rectangle.png')"
   >
     <div class="flex items-center justify-center p-4">
-      <p class="text-3xl text-custom-text font-semibold text-center mt-5">
+      <p class="text-3xl text-blue-600 font-semibold text-center mt-5">
         Homilías
       </p>
     </div>

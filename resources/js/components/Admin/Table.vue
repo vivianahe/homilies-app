@@ -1,9 +1,27 @@
 <template>
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <div
-      v-if="busqueda"
-      class="bg-gradient-to-r from-gray-900 to-gray-800 p-5 rounded-t-lg"
+  <button v-if="busqueda && isMobile" type="button" class="filter-fab"
+    aria-haspopup="dialog" :aria-expanded="filtersOpen" @click="openFilters">
+    <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+    <span>Filtros</span>
+    <span v-if="activeFilterCount" class="filter-count">{{ activeFilterCount }}</span>
+  </button>
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg" :class="{ 'mobile-filter-space': busqueda }">
+    <dialog
+      v-if="busqueda" ref="filterDialog" :open="!isMobile"
+      class="table-filters bg-gray-800 p-5 rounded-t-lg"
+      aria-label="Filtros de búsqueda" @close="filtersOpen = false"
+      @click="closeOnBackdrop"
     >
+      <div v-if="isMobile" class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl font-bold text-white">Filtrar resultados</h2>
+          <p class="text-sm text-gray-300 mt-1">Encuentra lo que buscas</p>
+        </div>
+        <button type="button" aria-label="Cerrar filtros" @click="filterDialog.close()"
+          class="w-11 h-11 rounded-full bg-white/10 text-white hover:bg-white/20">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
@@ -60,7 +78,11 @@
           Limpiar filtros
         </button>
       </div>
-    </div>
+      <button v-if="isMobile" type="button" @click="filterDialog.close()"
+        class="mt-5 w-full rounded-xl bg-sky-500 hover:bg-sky-600 px-4 py-3 font-semibold text-white">
+        Ver resultados ({{ totalItems }})
+      </button>
+    </dialog>
     <div class="overflow-x-auto">
       <table class="w-full table-auto text-sm text-left text-gray-300">
         <thead class="text-sm uppercase bg-gray-700">
@@ -242,7 +264,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 
 const props = defineProps({
   dataHomilies: Array,
@@ -283,6 +305,31 @@ const props = defineProps({
   }
 });
 
+const mobileQuery = window.matchMedia('(max-width: 767px)');
+const isMobile = ref(mobileQuery.matches);
+const filtersOpen = ref(false);
+const filterDialog = ref(null);
+
+const openFilters = () => {
+  filterDialog.value?.showModal();
+  filtersOpen.value = true;
+};
+const closeOnBackdrop = (event) => {
+  if (!isMobile.value || event.target !== filterDialog.value) return;
+  const rect = filterDialog.value.getBoundingClientRect();
+  if (event.clientX < rect.left || event.clientX > rect.right ||
+      event.clientY < rect.top || event.clientY > rect.bottom) {
+    filterDialog.value.close();
+  }
+};
+const updateMobile = () => {
+  filterDialog.value?.close();
+  filtersOpen.value = false;
+  isMobile.value = mobileQuery.matches;
+};
+onMounted(() => mobileQuery.addEventListener('change', updateMobile));
+onBeforeUnmount(() => mobileQuery.removeEventListener('change', updateMobile));
+
 const currentPage = ref(1);
 const itemsPerPage = ref(10);
 
@@ -297,6 +344,10 @@ const emit = defineEmits([
 const searchTerm = ref('');
 const filterDate = ref('');
 const citationFilter = ref('');
+const activeFilterCount = computed(() =>
+  [searchTerm.value, props.showDateFilters && filterDate.value, citationFilter.value]
+    .filter(Boolean).length
+);
 
 const filteredData = computed(() => {
 
@@ -476,3 +527,69 @@ const confirmarDescarga = (dataHomi) => {
   });
 };
 </script>
+
+<style scoped>
+.table-filters {
+  position: static;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
+}
+.table-filters::backdrop {
+  background: rgb(15 23 42 / 55%);
+  backdrop-filter: blur(4px);
+}
+.filter-fab {
+  position: fixed;
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  color: white;
+  background: #0ea5e9;
+  box-shadow: 0 8px 24px rgb(15 23 42 / 20%);
+  font-weight: 600;
+}
+.filter-fab:focus-visible {
+  outline: 3px solid #7dd3fc;
+  outline-offset: 3px;
+}
+.filter-count {
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  color: #0369a1;
+  font-size: 12px;
+}
+@media (max-width: 767px) {
+  .mobile-filter-space {
+    margin-bottom: 88px;
+  }
+  .table-filters {
+    position: fixed;
+    inset: auto 0 0;
+    max-height: 85vh;
+    max-height: 85dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: 24px 24px 0 0;
+    padding: 24px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -12px 40px rgb(15 23 42 / 20%);
+  }
+  .table-filters input {
+    min-width: 0;
+    font-size: 16px;
+    min-height: 46px;
+  }
+}
+</style>

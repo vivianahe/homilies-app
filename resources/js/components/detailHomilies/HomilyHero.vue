@@ -207,11 +207,11 @@ const downloadImage = () => {
 
   border-radius:999px;
 
-  background:#eff6ff;
+  background:var(--public-surface);
 
-  border:1px solid #dbeafe;
+  border:1px solid var(--public-soft);
 
-  color:#2563eb;
+  color:var(--public-primary);
 
   font-size:.92rem;
   font-weight:700;
@@ -223,14 +223,14 @@ const downloadImage = () => {
   font-size:1rem;
   font-weight:800;
 
-  color:#0f172a;
+  color:var(--public-heading);
 }
 
 .hero-content h1{
   font-size:3.3rem;
   line-height:1.05;
   font-weight:800;
-  color:#0f172a;
+  color:var(--public-heading);
   margin:6px 0 14px;
 }
 
@@ -238,7 +238,7 @@ const downloadImage = () => {
   max-width:850px;
   font-size:1.02rem;
   line-height:1.7;
-  color:#475569;
+  color:var(--public-text);
 }
 
 .hero-citation{
@@ -255,18 +255,18 @@ const downloadImage = () => {
 
   font-size:1rem;
   font-weight:700;
-  color:#0f172a;
+  color:var(--public-heading);
 }
 
 .hero-citation i{
-  color:#2563eb;
+  color:var(--public-primary);
   font-size:18px;
 }
 
 .citation-icon{
   width:20px;
   height:20px;
-  color:#2563eb;
+  color:var(--public-primary);
   flex-shrink:0;
 }
 
@@ -283,11 +283,11 @@ const downloadImage = () => {
 
   font-size:1.05rem;
   font-weight:700;
-  color:#0f172a;
+  color:var(--public-heading);
 }
 
 .hero-citation i{
-  color:#2563eb;
+  color:var(--public-primary);
   font-size:18px;
 }
 
@@ -305,8 +305,8 @@ const downloadImage = () => {
 
   border-radius:10px;
 
-  background:#dbeafe;
-  color:#2563eb;
+  background:var(--public-soft);
+  color:var(--public-primary);
 
   font-size:15px;
 }
@@ -314,7 +314,7 @@ const downloadImage = () => {
 .citation-text{
   font-size:1rem;
   font-weight:700;
-  color:#0f172a;
+  color:var(--public-heading);
   line-height:1.3;
 }
 
@@ -327,12 +327,12 @@ const downloadImage = () => {
 
   font-size:1.05rem;
   font-weight:700;
-  color:#0f172a;
+  color:var(--public-heading);
 }
 
 .hero-citation i{
   font-size:18px;
-  color:#2563eb;
+  color:var(--public-primary);
   flex-shrink:0;
 }
 
@@ -371,7 +371,7 @@ const downloadImage = () => {
   font-size:.92rem;
   font-weight:700;
 
-  color:#0f172a;
+  color:var(--public-heading);
 
   cursor:pointer;
 
@@ -385,7 +385,7 @@ const downloadImage = () => {
 }
 
 .hero-action-btn.primary{
-  background:#2563eb;
+  background:var(--public-primary);
   color:#fff;
 }
 

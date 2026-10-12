@@ -414,7 +414,7 @@ function toggleOpen(index) {
 .reflection-main-title {
   margin: 0;
 
-  color: #15157a;
+  color: var(--public-heading);
 
   font-size: 25px;
   font-weight: 800;
@@ -430,7 +430,7 @@ function toggleOpen(index) {
 
   margin: 8px auto 0;
 
-  color: #45456f;
+  color: var(--public-text);
 
   font-size: 13px;
   font-weight: 400;
@@ -463,14 +463,14 @@ function toggleOpen(index) {
   background:
     rgba(255, 255, 255, 0.96);
 
-  border: 1px solid #edf1ff;
+  border: 1px solid var(--public-surface);
 
   border-radius: 12px;
 
   overflow: hidden;
 
   box-shadow:
-    0 3px 10px rgba(35, 55, 110, 0.08);
+    0 3px 10px rgba(var(--public-heading-rgb), 0.08);
 
   transition:
     transform 0.2s ease,
@@ -482,20 +482,20 @@ function toggleOpen(index) {
 .reflection-card:hover {
   transform: translateY(-2px);
 
-  border-color: #dfe7ff;
+  border-color: var(--public-soft);
 
   box-shadow:
-    0 7px 18px rgba(35, 55, 110, 0.12);
+    0 7px 18px rgba(var(--public-heading-rgb), 0.12);
 }
 
 
 .reflection-card-open {
   grid-row: span 2;
 
-  border-color: #dce5ff;
+  border-color: var(--public-soft);
 
   box-shadow:
-    0 8px 22px rgba(35, 55, 110, 0.12);
+    0 8px 22px rgba(var(--public-heading-rgb), 0.12);
 }
 
 
@@ -550,19 +550,15 @@ function toggleOpen(index) {
   border-radius: 50%;
 
   background:
-    linear-gradient(
-      135deg,
-      #e6edff,
-      #dce6ff
-    );
+    var(--public-soft);
 
-  color: #3232ff;
+  color: var(--public-primary);
 
   font-size: 16px;
   font-weight: 800;
 
   box-shadow:
-    inset 0 0 0 1px rgba(90, 110, 255, 0.04);
+    inset 0 0 0 1px rgba(var(--public-primary-rgb), 0.04);
 }
 
 
@@ -584,7 +580,7 @@ function toggleOpen(index) {
 
 
 .reflection-day {
-  color: #18184d;
+  color: var(--public-heading);
 
   font-size: 14px;
   font-weight: 800;
@@ -594,7 +590,7 @@ function toggleOpen(index) {
 
 
 .reflection-title {
-  color: #37375f;
+  color: var(--public-text);
 
   font-size: 13px;
   font-weight: 400;
@@ -617,7 +613,7 @@ function toggleOpen(index) {
 
   margin-left: 10px;
 
-  color: #626cff;
+  color: var(--public-primary);
 
   transition:
     transform 0.25s ease;
@@ -642,7 +638,7 @@ function toggleOpen(index) {
 .reflection-full-title {
   margin: 0 0 12px;
 
-  color: #292956;
+  color: var(--public-heading);
 
   font-size: 13px;
   font-weight: 600;
@@ -672,7 +668,7 @@ function toggleOpen(index) {
 ========================================================== */
 
 .reflection-content {
-  color: #51516e;
+  color: var(--public-text);
 
   font-size: 13px;
 
@@ -688,7 +684,7 @@ function toggleOpen(index) {
 .reflection-question {
   margin: 0;
 
-  color: #252550;
+  color: var(--public-heading);
 
   font-weight: 700;
 }
@@ -699,14 +695,14 @@ function toggleOpen(index) {
 
   padding-left: 10px;
 
-  color: #555572;
+  color: var(--public-text);
 }
 
 
 .reflection-text {
   margin: 0;
 
-  color: #555572;
+  color: var(--public-text);
 }
 
 
@@ -743,7 +739,7 @@ function toggleOpen(index) {
 
   min-width: 30px;
 
-  background: #d8e3f5;
+  background: var(--public-soft);
 }
 
 
@@ -770,7 +766,7 @@ function toggleOpen(index) {
 ========================================================== */
 
 .quote-text {
-  color: #373782;
+  color: var(--public-text);
 
   font-size: 13px;
   font-style: italic;
@@ -787,7 +783,7 @@ function toggleOpen(index) {
 ========================================================== */
 
 .quote-reference {
-  color: #62627e;
+  color: var(--public-muted);
 
   font-size: 11px;
   font-weight: 500;
@@ -986,7 +982,7 @@ function toggleOpen(index) {
     border-radius: 9px;
 
     box-shadow:
-      0 2px 6px rgba(35, 55, 110, 0.08);
+      0 2px 6px rgba(var(--public-heading-rgb), 0.08);
   }
 
 
@@ -1126,7 +1122,7 @@ function toggleOpen(index) {
 
     height: 1px;
 
-    background: #d8e3f5;
+    background: var(--public-soft);
   }
 
 
@@ -1153,7 +1149,7 @@ function toggleOpen(index) {
 
     max-width: 225px;
 
-    color: #373782;
+    color: var(--public-text);
 
     font-size: 9px;
 
@@ -1173,7 +1169,7 @@ function toggleOpen(index) {
   .quote-reference {
     flex: 0 0 auto;
 
-    color: #62627e;
+    color: var(--public-muted);
 
     font-size: 8px;
     font-weight: 500;

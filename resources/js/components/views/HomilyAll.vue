@@ -3,7 +3,7 @@
   <Calendar @date-calendar="getDataHomilies" />
   <div class="flex justify-center items-center" v-if="showBtnAll">
     <button type="button"
-      class="text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2"
+      class="text-white bg-blue-600 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2"
       @click="getDataHomiliesAll">
       Mostrar todas
     </button>
@@ -23,7 +23,7 @@
         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">
           {{ homilies.date ? convertirFecha(homilies.date) : "" }}
         </h5>
-        <p class="mb-3 font-normal text-custom-text">{{ homilies.citation }}</p>
+        <p class="mb-3 font-normal text-blue-600">{{ homilies.citation }}</p>
         <p class="mb-3 font-semibold italic text-gray-700">
           {{ homilies.title }}
         </p>
@@ -37,7 +37,7 @@
           Tu navegador no admite el elemento de audio.
         </audio>
         <RouterLink :to="{ name: 'HomilyDetailNew', params: { id: homilies.id } }" type="button"
-          class="mt-3 text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+          class="mt-3 text-white bg-blue-600 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
           Ver
         </RouterLink>
       </div>
@@ -57,9 +57,9 @@
         </a>
       </li>
       <li v-for="page in visiblePages" :key="page">
-        <a href="#" 
-          class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 
-            {{ page === currentPage ? 'bg-gray-700 text-white' : 'bg-white' }}" 
+        <a href="#"
+          class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100
+            {{ page === currentPage ? 'bg-gray-700 text-white' : 'bg-white' }}"
           @click.prevent="changePage(page)">
           {{ page }}
         </a>
@@ -77,7 +77,7 @@
       </li>
     </ul>
   </nav>
-  <button v-show="showBackToTopButton" @click="scrollToTop" class="fixed bottom-4 right-4 w-12 h-12 bg-custom-blue text-white rounded-full shadow-lg hover:bg-blue-700 transition-all 
+  <button v-show="showBackToTopButton" @click="scrollToTop" class="fixed bottom-4 right-4 w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-600 transition-all
       duration-300 z-50">
     <i class="fa-solid fa-arrow-up"></i>
   </button>

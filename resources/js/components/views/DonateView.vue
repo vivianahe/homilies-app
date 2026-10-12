@@ -28,7 +28,7 @@
           <div class="donation-actions">
 
             <a
-              href="https://wa.link/kw36eo"
+              href="https://wa.link/w0acfb"
               target="_blank"
               class="donate-btn"
             >
@@ -235,7 +235,7 @@ onMounted(() => {
 <style scoped>
 
 .donation-section{
-  background:#f8fafc;
+  background:var(--public-surface);
   padding:70px 24px 50px;
 }
 
@@ -262,8 +262,8 @@ onMounted(() => {
 
   border-radius:999px;
 
-  background:#eff6ff;
-  color:#2563eb;
+  background:var(--public-surface);
+  color:var(--public-primary);
 
   font-weight:700;
 
@@ -275,7 +275,7 @@ onMounted(() => {
   line-height:1.05;
   font-weight:800;
 
-  color:#0f172a;
+  color:var(--public-heading);
 
   margin-bottom:18px;
 }
@@ -283,7 +283,7 @@ onMounted(() => {
 .donation-content p{
   max-width:720px;
 
-  color:#64748b;
+  color:var(--public-text);
 
   line-height:1.8;
   font-size:1.05rem;
@@ -303,7 +303,7 @@ onMounted(() => {
 
   border-radius:18px;
 
-  background:#2563eb;
+  background:var(--public-primary);
   color:#fff;
 
   font-weight:700;
@@ -320,7 +320,7 @@ onMounted(() => {
   transform:translateY(-3px);
 
   box-shadow:
-    0 16px 35px rgba(37,99,235,.25);
+    0 16px 35px rgba(var(--public-primary-rgb), .25);
 }
 
 .donation-image-wrapper{
@@ -338,7 +338,7 @@ onMounted(() => {
 
   border-radius:28px;
 
-  background:#fbbf24;
+  background:var(--public-primary);
 
   z-index:1;
 }
@@ -355,7 +355,7 @@ onMounted(() => {
   border-radius:32px;
 
   box-shadow:
-    0 30px 60px rgba(15,23,42,.10);
+    0 30px 60px rgba(var(--public-heading-rgb), .10);
 }
 
 .section-title{
@@ -367,13 +367,13 @@ onMounted(() => {
   font-size:2.2rem;
   font-weight:800;
 
-  color:#0f172a;
+  color:var(--public-heading);
 
   margin-bottom:10px;
 }
 
 .section-title p{
-  color:#64748b;
+  color:var(--public-text);
   line-height:1.7;
 }
 
@@ -398,7 +398,7 @@ onMounted(() => {
 
   background:#fff;
 
-  border:1px solid #e2e8f0;
+  border:1px solid var(--public-soft);
 
   border-radius:28px;
 
@@ -412,16 +412,16 @@ onMounted(() => {
   transform:translateY(-4px);
 
   box-shadow:
-    0 20px 40px rgba(15,23,42,.08);
+    0 20px 40px rgba(var(--public-heading-rgb), .08);
 }
 
 .donation-card-header{
 
   padding:24px;
 
-  background:#eff6ff;
+  background:var(--public-surface);
 
-  border-bottom:1px solid #dbeafe;
+  border-bottom:1px solid var(--public-soft);
 
   display:flex;
 
@@ -437,7 +437,7 @@ onMounted(() => {
 
   border-radius:16px;
 
-  background:#2563eb;
+  background:var(--public-primary);
 
   color:white;
 
@@ -456,7 +456,7 @@ onMounted(() => {
 
   font-weight:800;
 
-  color:#0f172a;
+  color:var(--public-heading);
 }
 
 .donation-card-body{
@@ -476,7 +476,7 @@ onMounted(() => {
 
   padding:14px 0;
 
-  border-bottom:1px solid #f1f5f9;
+  border-bottom:1px solid var(--public-surface);
 }
 
 .info-row:last-child{
@@ -486,14 +486,14 @@ onMounted(() => {
 
 .info-row span{
 
-  color:#64748b;
+  color:var(--public-text);
 
   font-size:.95rem;
 }
 
 .info-row strong{
 
-  color:#0f172a;
+  color:var(--public-heading);
 
   font-weight:800;
 
@@ -502,7 +502,7 @@ onMounted(() => {
 
 .highlight strong{
 
-  color:#2563eb;
+  color:var(--public-primary);
 
   font-size:1.2rem;
 }
@@ -510,11 +510,7 @@ onMounted(() => {
 .donation-card-alt{
 
   background:
-    linear-gradient(
-      135deg,
-      #2563eb,
-      #1d4ed8
-    );
+    var(--public-primary);
 
   color:white;
 }
@@ -535,7 +531,7 @@ onMounted(() => {
 
   background:white;
 
-  color:#2563eb;
+  color:var(--public-primary);
 }
 
 .card-description{
@@ -571,7 +567,7 @@ onMounted(() => {
 .impact-item{
   background:#fff;
 
-  border:1px solid #e2e8f0;
+  border:1px solid var(--public-soft);
 
   border-radius:24px;
 
@@ -586,7 +582,7 @@ onMounted(() => {
   transform:translateY(-4px);
 
   box-shadow:
-    0 15px 35px rgba(15,23,42,.06);
+    0 15px 35px rgba(var(--public-heading-rgb), .06);
 }
 
 .impact-item i{
@@ -601,9 +597,9 @@ onMounted(() => {
 
   border-radius:18px;
 
-  background:#eff6ff;
+  background:var(--public-surface);
 
-  color:#2563eb;
+  color:var(--public-primary);
 
   font-size:24px;
 }
@@ -612,13 +608,13 @@ onMounted(() => {
   font-size:1.15rem;
   font-weight:800;
 
-  color:#0f172a;
+  color:var(--public-heading);
 
   margin-bottom:10px;
 }
 
 .impact-item p{
-  color:#64748b;
+  color:var(--public-text);
   line-height:1.7;
 }
 
@@ -632,7 +628,7 @@ onMounted(() => {
 
   background:#fff;
 
-  border:1px solid #e2e8f0;
+  border:1px solid var(--public-soft);
 
   border-radius:28px;
 
@@ -642,7 +638,7 @@ onMounted(() => {
 .verse-section i{
   font-size:30px;
 
-  color:#2563eb;
+  color:var(--public-primary);
 
   margin-bottom:18px;
 }
@@ -651,7 +647,7 @@ onMounted(() => {
   font-size:1.35rem;
   font-weight:700;
 
-  color:#0f172a;
+  color:var(--public-heading);
 
   line-height:1.6;
 
@@ -659,7 +655,7 @@ onMounted(() => {
 }
 
 .verse-section span{
-  color:#64748b;
+  color:var(--public-text);
   font-weight:600;
 }
 

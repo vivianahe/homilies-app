@@ -46,7 +46,7 @@ defineProps({
 
 .description-card{
   position:relative;
-  background:#fafaff;
+  background:var(--public-surface);
   border-radius:24px;
   padding:28px;
   height:100%;
@@ -70,8 +70,8 @@ defineProps({
 
   border-radius:50%;
 
-  background:#eef3ff;
-  color:#2563eb;
+  background:var(--public-surface);
+  color:var(--public-primary);
 
   display:flex;
   align-items:center;
@@ -86,7 +86,7 @@ defineProps({
   font-size:1.5rem;
   font-weight:800;
 
-  color:#18244a;
+  color:var(--public-heading);
 }
 
 .description-body{
@@ -97,7 +97,7 @@ defineProps({
   position:relative;
   z-index:2;
 
-  color:#475569;
+  color:var(--public-text);
 
   font-size:1rem;
   line-height:2;

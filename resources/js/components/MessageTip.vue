@@ -186,17 +186,12 @@ onMounted(() => {
 
     overflow: hidden;
 
-    background: linear-gradient(
-        110deg,
-        #f3f9ff 0%,
-        #edf6ff 55%,
-        #e8f3ff 100%
-    );
+    background: var(--public-surface);
 
     border-radius: 15px;
 
     box-shadow:
-        0 8px 25px rgba(53, 105, 180, 0.08);
+        0 8px 25px rgba(var(--public-primary-rgb), 0.08);
 
     transition:
         transform 0.25s ease,
@@ -207,7 +202,7 @@ onMounted(() => {
     transform: translateY(-2px);
 
     box-shadow:
-        0 12px 30px rgba(53, 105, 180, 0.12);
+        0 12px 30px rgba(var(--public-primary-rgb), 0.12);
 }
 
 
@@ -233,15 +228,10 @@ onMounted(() => {
 
     border-radius: 14px;
 
-    background: linear-gradient(
-        145deg,
-        #4930f2 0%,
-        #661cff 55%,
-        #3e1ee8 100%
-    );
+    background: var(--public-primary);
 
     box-shadow:
-        0 7px 18px rgba(81, 46, 238, 0.20);
+        0 7px 18px rgba(var(--public-primary-rgb), 0.20);
 }
 
 .message-icon i {
@@ -279,7 +269,7 @@ onMounted(() => {
 .message-title {
     margin: 0;
 
-    color: #1c0c69;
+    color: var(--public-heading);
 
     font-size: 22px;
     font-weight: 800;
@@ -291,7 +281,7 @@ onMounted(() => {
 
     margin-top: 5px;
 
-    color: #3458df;
+    color: var(--public-primary);
 
     font-size: 13px;
     font-weight: 500;
@@ -306,7 +296,7 @@ onMounted(() => {
 .message-text {
     max-width: 900px;
 
-    color: #191451;
+    color: var(--public-heading);
 
     font-size: 15px;
     font-weight: 400;
@@ -322,7 +312,7 @@ onMounted(() => {
 }
 
 .message-text :deep(strong) {
-    color: #1c0c69;
+    color: var(--public-heading);
 
     font-weight: 700;
 }
@@ -352,7 +342,7 @@ onMounted(() => {
 
     text-align: center;
 
-    color: #26139c;
+    color: var(--public-primary);
 
     pointer-events: none;
 }
@@ -436,7 +426,7 @@ onMounted(() => {
 
     margin: 10px auto 0;
 
-    background: #3045f4;
+    background: var(--public-primary);
 
     border-radius: 100%;
 
@@ -465,7 +455,7 @@ onMounted(() => {
     width: 56px;
     height: 1px;
 
-    background: rgba(48, 69, 244, 0.45);
+    background: rgba(var(--public-primary-rgb), 0.45);
 
     border-radius: 100%;
 

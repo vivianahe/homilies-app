@@ -183,7 +183,7 @@ const changeFilter = (filter) => {
 
   border-radius: 14px;
 
-  border: 1px solid #dbe2ea;
+  border: 1px solid var(--public-border);
 
   background: white;
 
@@ -197,25 +197,25 @@ const changeFilter = (filter) => {
 
   font-weight: 600;
 
-  color: #334155;
+  color: var(--public-heading);
 
   transition: all 0.2s ease;
 }
 
 .filter-button:hover{
-  border-color: #c7d2fe;
+  border-color: var(--public-border);
 
-  background: #f8fafc;
+  background: var(--public-surface);
 }
 
 .filter-button.active{
-  background: #1d4ed8;
+  background: var(--public-primary);
 
-  border-color: #1d4ed8;
+  border-color: var(--public-primary);
 
   color: white;
 
-  box-shadow: 0 10px 24px rgba(29, 78, 216, 0.15);
+  box-shadow: 0 10px 24px rgba(var(--public-primary-rgb), 0.15);
 }
 
 /*
@@ -231,7 +231,7 @@ const changeFilter = (filter) => {
 
   border-radius: 14px;
 
-  border: 1px solid #dbe2ea;
+  border: 1px solid var(--public-border);
 
   background: white;
 
@@ -245,13 +245,13 @@ const changeFilter = (filter) => {
 
   font-weight: 600;
 
-  color: #334155;
+  color: var(--public-heading);
 
   transition: all 0.2s ease;
 }
 
 .sort-button:hover{
-  background: #f8fafc;
+  background: var(--public-surface);
 }
 
 /*
@@ -301,7 +301,7 @@ const changeFilter = (filter) => {
   position: absolute;
   left: 16px;
 
-  color: #64748b;
+  color: var(--public-text);
 
   pointer-events: none;
 
@@ -312,7 +312,7 @@ const changeFilter = (filter) => {
   position: absolute;
   right: 16px;
 
-  color: #64748b;
+  color: var(--public-text);
 
   pointer-events: none;
 
@@ -334,7 +334,7 @@ const changeFilter = (filter) => {
 
   border-radius: 14px;
 
-  border: 1px solid #dbe2ea;
+  border: 1px solid var(--public-border);
 
   background: white;
 
@@ -342,7 +342,7 @@ const changeFilter = (filter) => {
 
   font-weight: 600;
 
-  color: #334155;
+  color: var(--public-heading);
 
   cursor: pointer;
 
@@ -351,18 +351,18 @@ const changeFilter = (filter) => {
 
 .sort-button:hover{
 
-  background: #f8fafc;
+  background: var(--public-surface);
 
-  border-color: #cbd5e1;
+  border-color: var(--public-border);
 }
 
 .sort-button:focus{
 
   outline: none;
 
-  border-color: #2563eb;
+  border-color: var(--public-primary);
 
-  box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+  box-shadow: 0 0 0 4px rgba(var(--public-primary-rgb), .12);
 }
 
 </style>

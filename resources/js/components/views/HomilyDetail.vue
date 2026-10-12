@@ -127,7 +127,7 @@ onMounted(() => {
   </div>
   <hr />
   <br />
-  <button v-show="showBackToTopButton" @click="scrollToTop" class="fixed bottom-4 right-4 w-12 h-12 bg-custom-blue text-white rounded-full shadow-lg hover:bg-blue-700 transition-all 
+  <button v-show="showBackToTopButton" @click="scrollToTop" class="fixed bottom-4 right-4 w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-600 transition-all
       duration-300 z-50">
     <i class="fa-solid fa-arrow-up"></i>
   </button>
@@ -167,7 +167,7 @@ onMounted(() => {
     flex-direction: column;
     position: relative;
     overflow: hidden;
-    background-color: #2A8EB8;
+    background-color: var(--public-primary);
     border-radius: 5px 25px 5px 50px;
     transition: transform 0.1s linear, box-shadow 0.2s;
 
@@ -197,7 +197,7 @@ onMounted(() => {
     left: 18px;
     width: 100%;
     height: auto;
-    color: #0072ae;
+    color: var(--public-primary);
     padding: 0.5rem;
     border-radius: 5px 0 0 5px;
     transform: rotate(-3.3deg);
@@ -207,7 +207,7 @@ onMounted(() => {
     position: relative;
     overflow: hidden;
     z-index: 1;
-    background-color: #e6f4f1;
+    background-color: var(--public-soft);
 }
 
 .card_text {
@@ -231,7 +231,7 @@ onMounted(() => {
         overflow: auto;
         max-height: 20rem;
         scrollbar-width: thin;
-        scrollbar-color: #b4fee7 #0072ae;
+        scrollbar-color: var(--public-border) var(--public-primary);
     }
 
     .card_text::-webkit-scrollbar {
@@ -239,16 +239,16 @@ onMounted(() => {
     }
 
     .card_text::-webkit-scrollbar-track {
-        background: #0072ae;
+        background: var(--public-primary);
     }
 
     .card_text::-webkit-scrollbar-thumb {
-        background-color: #b4fee7;
+        background-color: var(--public-border);
     }
 }
 
 .card_text strong {
-    color: #b4fee7;
+    color: var(--public-border);
 }
 
 @keyframes fly-in {

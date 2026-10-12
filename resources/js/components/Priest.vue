@@ -288,13 +288,9 @@ onMounted(() => {
   border-radius: 30px;
 
   background:
-    linear-gradient(
-      90deg,
-      #edf7ff 0%,
-      #dceeff 100%
-    );
+    var(--public-surface);
 
-  color: #273df2;
+  color: var(--public-primary);
 
   font-size: 14px;
 
@@ -344,7 +340,7 @@ onMounted(() => {
 
   margin: 16px 0 15px;
 
-  color: #071a58;
+  color: var(--public-heading);
 
   font-size: 34px;
 
@@ -362,7 +358,7 @@ onMounted(() => {
 
   margin: 0;
 
-  color: #20355f;
+  color: var(--public-heading);
 
   font-size: 17px;
 
@@ -438,11 +434,7 @@ onMounted(() => {
   border-radius: 10px;
 
   background:
-    linear-gradient(
-      135deg,
-      #273df2 0%,
-      #6636ff 100%
-    );
+    var(--public-primary);
 
   color: #ffffff;
 
@@ -464,7 +456,7 @@ onMounted(() => {
 
   box-shadow:
     0 8px 20px
-    rgba(13, 99, 245, 0.25);
+    rgba(var(--public-primary-rgb), 0.25);
 }
 
 
@@ -493,7 +485,7 @@ onMounted(() => {
 
   background: #ffffff;
 
-  color: #273df2;
+  color: var(--public-primary);
 
   font-size: 13px;
 }
@@ -541,7 +533,7 @@ onMounted(() => {
 
   margin: 17px 0 12px;
 
-  color: #071a58;
+  color: var(--public-heading);
 
   font-size: 34px;
 
@@ -559,7 +551,7 @@ onMounted(() => {
 
   margin: 0;
 
-  color: #20355f;
+  color: var(--public-heading);
 
   font-size: 17px;
 
@@ -638,11 +630,7 @@ onMounted(() => {
   height: 55px;
 
   background:
-    linear-gradient(
-      135deg,
-      #2450ff,
-      #5537ff
-    );
+    var(--public-primary);
 
   transform: rotate(-38deg);
 }
@@ -681,11 +669,7 @@ onMounted(() => {
   border-radius: 15px;
 
   background:
-    linear-gradient(
-      135deg,
-      #f1f9ff 0%,
-      #e4f3ff 100%
-    );
+    var(--public-surface);
 }
 
 
@@ -693,7 +677,7 @@ onMounted(() => {
 
   height: 55px;
 
-  color: #5537ff;
+  color: var(--public-primary);
 
   font-family: Georgia, serif;
 
@@ -709,7 +693,7 @@ onMounted(() => {
 
   margin: 6px 0 0;
 
-  color: #071a58;
+  color: var(--public-heading);
 
   font-family: Georgia, serif;
 

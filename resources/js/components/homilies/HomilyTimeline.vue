@@ -356,21 +356,21 @@ const shareHomily = async (homily) => {
   font-size: 34px;
   font-weight: 800;
 
-  color: #0f172a;
+  color: var(--public-heading);
 
   margin-bottom: 8px;
 }
 
 .timeline-description{
-  color: #64748b;
+  color: var(--public-text);
 
   font-size: 16px;
 }
 
 .timeline-counter{
-  background: #eff6ff;
+  background: var(--public-surface);
 
-  color: #1d4ed8;
+  color: var(--public-primary);
 
   font-weight: 700;
 
@@ -388,7 +388,7 @@ const shareHomily = async (homily) => {
 .timeline-empty{
   background: white;
 
-  border: 1px dashed #cbd5e1;
+  border: 1px dashed var(--public-border);
 
   border-radius: 24px;
 
@@ -400,7 +400,7 @@ const shareHomily = async (homily) => {
 .timeline-empty i{
   font-size: 52px;
 
-  color: #94a3b8;
+  color: var(--public-primary);
 
   margin-bottom: 20px;
 }
@@ -409,13 +409,13 @@ const shareHomily = async (homily) => {
   font-size: 24px;
   font-weight: 700;
 
-  color: #0f172a;
+  color: var(--public-heading);
 
   margin-bottom: 12px;
 }
 
 .timeline-empty p{
-  color: #64748b;
+  color: var(--public-text);
 }
 
 /*
@@ -470,7 +470,7 @@ const shareHomily = async (homily) => {
 
   width: 2px;
 
-  background: #dbeafe;
+  background: var(--public-soft);
 }
 
 .timeline-year{
@@ -486,7 +486,7 @@ const shareHomily = async (homily) => {
   font-size: 26px;
   font-weight: 800;
 
-  color: #2563eb;
+  color: var(--public-primary);
 
   line-height: 1;
 
@@ -504,7 +504,7 @@ const shareHomily = async (homily) => {
 
   border-radius: 999px;
 
-  background: #2563eb;
+  background: var(--public-primary);
 
   border: 3px solid white;
 
@@ -514,7 +514,7 @@ const shareHomily = async (homily) => {
 .card-content{
   background: white;
 
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--public-soft);
 
   border-radius: 28px;
 
@@ -582,15 +582,15 @@ const shareHomily = async (homily) => {
   align-items: center;
   gap: 8px;
 
-  color: #475569;
+  color: var(--public-text);
 
   font-weight: 600;
 }
 
 .card-tag{
-  background: #eff6ff;
+  background: var(--public-surface);
 
-  color: #1d4ed8;
+  color: var(--public-primary);
 
   padding: 8px 12px;
 
@@ -611,14 +611,14 @@ const shareHomily = async (homily) => {
   line-height: 1.2;
   font-weight: 800;
 
-  color: #0f172a;
+  color: var(--public-heading);
 }
 
 .card-description{
   font-size: 16px;
   line-height: 1.8;
 
-  color: #475569;
+  color: var(--public-text);
 }
 
 /*
@@ -639,9 +639,9 @@ const shareHomily = async (homily) => {
 
   border-radius: 999px;
 
-  background: #dbeafe;
+  background: var(--public-soft);
 
-  color: #1d4ed8;
+  color: var(--public-primary);
 
   display: flex;
   align-items: center;
@@ -651,11 +651,11 @@ const shareHomily = async (homily) => {
 .author-name{
   font-weight: 700;
 
-  color: #0f172a;
+  color: var(--public-heading);
 }
 
 .author-role{
-  color: #64748b;
+  color: var(--public-text);
 
   font-size: 14px;
 }
@@ -687,7 +687,7 @@ const shareHomily = async (homily) => {
 }
 
 .primary-button{
-  background: #1d4ed8;
+  background: var(--public-primary);
 
   color: white;
 
@@ -703,9 +703,9 @@ const shareHomily = async (homily) => {
 }
 
 .secondary-button{
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--public-border);
 
-  color: #334155;
+  color: var(--public-heading);
 
   padding: 14px 20px;
 
@@ -719,7 +719,7 @@ const shareHomily = async (homily) => {
 }
 
 .primary-button{
-  background: #1d4ed8;
+  background: var(--public-primary);
 
   color: white;
 
@@ -817,9 +817,9 @@ const shareHomily = async (homily) => {
 
     border-radius: 999px;
 
-    background: #eff6ff;
+    background: var(--public-surface);
 
-    color: #2563eb;
+    color: var(--public-primary);
 
     font-size: 12px;
     font-weight: 700;
@@ -878,7 +878,7 @@ const shareHomily = async (homily) => {
 
   background: white;
 
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--public-soft);
 
   border-radius: 16px;
 
@@ -901,14 +901,14 @@ const shareHomily = async (homily) => {
 
   display: block;
 
-  color: #0f172a;
+  color: var(--public-heading);
 
   margin-bottom: 4px;
 }
 
 .share-toast p{
 
-  color: #64748b;
+  color: var(--public-text);
 
   font-size: 14px;
 

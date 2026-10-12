@@ -252,7 +252,7 @@ const downloadImage = () => {
 
   font-size: 14px;
 
-  color: #64748b;
+  color: var(--public-text);
 
   font-weight: 500;
 }
@@ -260,11 +260,11 @@ const downloadImage = () => {
 .breadcrumb i{
   font-size: 11px;
 
-  color: #94a3b8;
+  color: var(--public-primary);
 }
 
 .breadcrumb-current{
-  color: #0f172a;
+  color: var(--public-heading);
 
   font-weight: 700;
 }
@@ -306,9 +306,9 @@ const downloadImage = () => {
 
   border-radius: 999px;
 
-  background: #eef2ff;
+  background: var(--public-surface);
 
-  color: #1d4ed8;
+  color: var(--public-primary);
 
   display: inline-flex;
 
@@ -320,7 +320,7 @@ const downloadImage = () => {
 
   font-weight: 700;
 
-  border: 1px solid #dbeafe;
+  border: 1px solid var(--public-soft);
 }
 
 .hero-title{
@@ -332,7 +332,7 @@ const downloadImage = () => {
 
   font-weight: 800;
 
-  color: #0f172a;
+  color: var(--public-heading);
 
   margin-bottom: 32px;
 }
@@ -342,7 +342,7 @@ const downloadImage = () => {
 
   line-height: 1.9;
 
-  color: #475569;
+  color: var(--public-text);
 
   max-width: 760px;
 
@@ -366,7 +366,7 @@ const downloadImage = () => {
 
   gap: 10px;
 
-  color: #334155;
+  color: var(--public-heading);
 
   font-size: 15px;
 
@@ -374,7 +374,7 @@ const downloadImage = () => {
 }
 
 .hero-info-item i{
-  color: #2563eb;
+  color: var(--public-primary);
 }
 
 .hero-image-container{
@@ -419,10 +419,10 @@ const downloadImage = () => {
 
   font-weight: 700;
 
-  color: #0f172a;
+  color: var(--public-heading);
 
   box-shadow:
-    0 10px 25px rgba(15,23,42,.12);
+    0 10px 25px rgba(var(--public-heading-rgb), .12);
 
   transition: .25s;
 }
@@ -432,7 +432,7 @@ const downloadImage = () => {
 }
 
 .hero-action-btn.primary{
-  background: #4f46e5;
+  background: var(--public-primary);
 
   color: white;
 }
@@ -562,11 +562,11 @@ const downloadImage = () => {
 
   border-radius:999px;
 
-  background:#eff6ff;
+  background:var(--public-surface);
 
-  border:1px solid #dbeafe;
+  border:1px solid var(--public-soft);
 
-  color:#2563eb;
+  color:var(--public-primary);
 
   font-size:15px;
 
@@ -583,7 +583,7 @@ const downloadImage = () => {
 
   font-weight:800;
 
-  color:#0f172a;
+  color:var(--public-heading);
 
   line-height:1;
 }
